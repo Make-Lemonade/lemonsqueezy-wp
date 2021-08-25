@@ -1,0 +1,83 @@
+{
+    "name": "lemonsqueezy",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "checkFormat": "prettier --check \"**/*.{js,json,css,scss}\"",
+        "format": "prettier --write \"**/*.{js,json,css,scss}\"",
+        "lint": "eslint src",
+        "start": "webpack --mode=development --watch",
+        "build": "npm run lint && webpack --mode=production && gulp bundle"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp.git"
+    },
+    "lint-staged": {
+        "linters": {
+            "src/**/*.js": "eslint",
+            "**/*.{js,json,css,scss}": [
+                "prettier --write",
+                "git add"
+            ]
+        }
+    },
+    "author": "lemonsqueezy",
+    "license": "GPL-2.0+",
+    "bugs": {
+        "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp/issues"
+    },
+    "homepage": "https://github.com/Make-Lemonade/lemonsqueezy-wp#readme",
+    "dependencies": {
+        "@wordpress/blob": "^2.13.0",
+        "@wordpress/block-editor": "^5.3.0",
+        "@wordpress/blocks": "^8.0.0",
+        "@wordpress/compose": "^3.25.0",
+        "@wordpress/data": "^4.27.0",
+        "@wordpress/edit-post": "^3.27.0",
+        "@wordpress/html-entities": "^2.11.0",
+        "@wordpress/i18n": "^3.19.0",
+        "@wordpress/plugins": "^2.25.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-sortable-hoc": "^1.11.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.10",
+        "@babel/plugin-proposal-class-properties": "^7.13.0",
+        "@babel/preset-env": "^7.13.10",
+        "@babel/preset-react": "^7.12.13",
+        "@wordpress/browserslist-config": "^3.0.1",
+        "@wordpress/components": "^13.0.0",
+        "@wordpress/editor": "^9.26.0",
+        "@wordpress/element": "^2.20.0",
+        "autoprefixer": "^10.2.5",
+        "babel-eslint": "^10.0.1",
+        "babel-loader": "^8.2.2",
+        "browserslist": "^4.16.8",
+        "classnames": "^2.2.6",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^5.1.3",
+        "eslint": "^5.16.0",
+        "eslint-config-prettier": "^8.1.0",
+        "eslint-loader": "^2.1.2",
+        "eslint-plugin-react": "^7.22.0",
+        "gulp": "^4.0.2",
+        "gulp-zip": "^5.1.0",
+        "lint-staged": "^10.5.4",
+        "loadash": "^1.0.0",
+        "mini-css-extract-plugin": "^1.3.9",
+        "node-sass": "^5.0.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.4",
+        "postcss-loader": "^3.0.0",
+        "prettier": "^2.2.1",
+        "sass-loader": "^11.0.1",
+        "style-loader": "^2.0.0",
+        "webpack": "^5.26.3",
+        "webpack-cli": "^4.5.0"
+    },
+    "browserslist": [
+        "extends @wordpress/browserslist-config"
+    ]
+}
