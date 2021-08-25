@@ -65,7 +65,7 @@ class Edit extends Component {
                             {
                                 value: backgroundColor.color,
                                 onChange: setBackgroundColor,
-                                label: __("Backgorund Colour", "lemonsqueezy")
+                                label: __("Background Colour", "lemonsqueezy")
                             },
                             {
                                 value: textColor.color,
