@@ -1,0 +1,171 @@
+* {
+	box-sizing: inherit;
+}
+
+.settings_page_lemonsqueezy {
+	background: #f6f6f6;
+	font-size: 14px;
+	position: relative;
+	box-sizing: border-box;
+	font-family: Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+}
+
+#wpcontent {
+	padding-left: 0;
+}
+
+.auto-fold { 
+	#wpcontent {
+		padding-left: 0;
+	}
+}
+
+#lsq-plugin {
+	.components-placeholder {
+		background: #f6f6f6;
+		margin-top: 25vh;
+		margin-bottom: 25vh;
+	}
+
+	.lsq-header {
+		padding: 20px 10px;
+		background-color: #7047EB;
+		box-shadow: 0 1px 0 rgba(213,213,213,0.5),0 1px 2px #eee;
+
+		.lsq-container {
+			margin: 0 auto;
+			max-width: 750px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+			.lsq-logo {
+                min-width: 350px;
+                min-height: 150px;
+                background-repeat: no-repeat;
+                background-size: contain;
+			}
+		}
+	}
+
+	.lsq-main {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 750px;
+
+		.components-panel__body {
+			margin: 25px 0;
+			background: #fff;
+			border: 1px solid #e2e4e7;
+
+			.components-panel__body-toggle {
+				border-bottom: 1px solid #d6e2ed;
+			}
+
+			.components-panel__row {
+				padding: 10px;
+				margin: 0;
+
+				.components-base-control {
+					.components-base-control__field {
+						display: flex;
+						align-items: center;
+						margin-bottom: 10px;
+					}
+
+					&.lsq-text-field {
+						width: 100%;
+
+						.components-base-control__field {
+							display: block;
+
+							label {
+								font-weight: 600;
+								margin-bottom: 10px;
+							}
+
+							input {
+								border: 1px solid #b7c9d9;
+								border-radius: 3px;
+								font-size: 14px;
+								padding: 9px 15px;
+								width: 100%;
+								box-shadow: none;
+								height: 40px;
+								margin: 0 0 10px 0;
+								color: #444;
+
+								&:disabled {
+									background: #f6f6f6;
+									border-color: #eeeeee;
+									color: #bbbbbb;
+								}
+
+								&:focus {
+									border-color: #00a0d2;
+									box-shadow: 0 0 0 1px #00a0d2;
+									outline: 2px solid transparent;
+									outline-offset: -2px;
+								}
+							}
+
+							.lsq-text-field-button-group {
+								display: flex;
+								align-items: center;
+								margin: 2px 0 15px;
+
+								.is-primary {
+									padding: 2px 20px;
+									height: auto;
+									font-size: 14px;
+									margin-right: 10px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.lsq-info {
+			padding: 0 10px 10px;
+
+			h2 {
+				font-weight: 300;
+				margin-bottom: 10px;
+			}
+
+			p {
+				margin: 0 0 1.5em 0;
+			}
+		
+			.lsq-info-button-group {
+				display: flex;
+
+				.is-default {
+					padding: 2px 20px;
+					height: auto;
+					font-size: 14px;
+
+					&:first-child {
+						margin-right: 15px;
+					}
+				}
+			}
+		}
+	}
+
+
+   .is-primary {
+        background: #7047EB;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+        transition-duration: 150ms;
+        border-radius: 9999px;
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+
+    .components-notice {
+        margin: 0;
+    }
+}
