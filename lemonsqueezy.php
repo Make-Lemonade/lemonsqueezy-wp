@@ -38,9 +38,11 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 
 		// Initialize classes.
 		require_once LSQ_PATH . 'src/class-lsq-admin.php';
+		require_once LSQ_PATH . 'src/class-lsq-rest-controller.php';
 		require_once LSQ_PATH . 'src/class-lsq-register-block.php';
 
 		lemonsqueezy\LSQ_Admin::get_instance();
+		lemonsqueezy\LSQ_Rest_Controller::get_instance();
 		lemonsqueezy\LSQ_Register_Block::get_instance();
 	}
 }
