@@ -1,16 +1,7 @@
 import { Component } from "@wordpress/element";
+import { RichText, withColors } from "@wordpress/block-editor";
+import { SelectControl, ToggleControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import {
-    RichText,
-    BlockControls,
-    InspectorControls,
-    AlignmentToolbar,
-    PanelColorSettings,
-    withColors,
-    ContrastChecker
-} from "@wordpress/block-editor";
-import { RangeControl, PanelBody } from "@wordpress/components";
-import classnames from "classnames";
 
 class Edit extends Component {
     onChangeContent = content => {
@@ -21,93 +12,51 @@ class Edit extends Component {
         this.props.setAttributes({ textAlignment });
     };
 
-    toggleShadow = () => {
-        this.props.setAttributes({ shadow: !this.props.attributes.shadow });
+    onChangeproduct = product => {
+        this.props.setAttributes({ product });
     };
 
-    onChangeShadowOpacity = shadowOpacity => {
-        this.props.setAttributes({ shadowOpacity });
+    onChangeOverlay = overlay => {
+        this.props.setAttributes({ overlay: overlay });
     };
 
     render() {
-        //console.log(this.props);
         const {
-            className,
             attributes,
-            setTextColor,
-            setBackgroundColor,
-            backgroundColor,
-            textColor
         } = this.props;
-        const { content, textAlignment, shadow, shadowOpacity } = attributes;
-        const classes = classnames(className, {
-            "has-shadow": shadow,
-            [`shadow-opacity-${shadowOpacity * 100}`]: shadowOpacity
-        });
+        const { content, product, overlay } = attributes;
+
+        // Get that dynamically via REST API endpoint.
+        const products = [
+            { label: 'Select Product', value: '' },
+            { label: 'Big', value: '100%' },
+            { label: 'Medium', value: '50%' },
+            { label: 'Small', value: '25%' },
+        ]
+
         return (
-            <>
-                <InspectorControls>
-                    <PanelBody title={__("Setting", "lemonsqueezy")}>
-                        {shadow && (
-                            <RangeControl
-                                label={__("Shadow Opacity", "lemonsqueezy")}
-                                value={shadowOpacity}
-                                onChange={this.onChangeShadowOpacity}
-                                min={0.1}
-                                max={0.4}
-                                step={0.1}
-                            />
-                        )}
-                    </PanelBody>
-                    <PanelColorSettings
-                        title={__("Panel", "lemonsqueezy")}
-                        colorSettings={[
-                            {
-                                value: backgroundColor.color,
-                                onChange: setBackgroundColor,
-                                label: __("Background Colour", "lemonsqueezy")
-                            },
-                            {
-                                value: textColor.color,
-                                onChange: setTextColor,
-                                label: __("Text Colour", "lemonsqueezy")
-                            }
-                        ]}
-                    >
-                        <ContrastChecker
-                            textColor={textColor.color}
-                            backgroundColor={backgroundColor.color}
-                        />
-                    </PanelColorSettings>
-                </InspectorControls>
-                <BlockControls
-                    controls={[
-                        {
-                            icon: "wordpress",
-                            title: __("Shadow", "lemonsqueezy"),
-                            onClick: this.toggleShadow,
-                            isActive: shadow
-                        }
-                    ]}
-                >
-                    <AlignmentToolbar
-                        value={textAlignment}
-                        onChange={this.onChangeAlignment}
-                    />
-                </BlockControls>
+            // Check if API connection is active. If not output alternative text.
+            <div className="lsq-block">
+                <h4>Lemon Squeezy Product Block</h4>
+                <SelectControl
+                    value={ product }
+                    options={ products }
+                    onChange={this.onChangeproduct}
+                />
                 <RichText
+                    placeholder={__( 'Customize Link Text', 'lemonsqueezy' )}
                     tagName="p"
-                    className={classes}
+                    className="lsq-link-text"
                     onChange={this.onChangeContent}
                     value={content}
-                    allowedFormats={["bold"]}
-                    style={{
-                        textAlign: textAlignment,
-                        backgroundColor: backgroundColor.color,
-                        color: textColor.color
-                    }}
                 />
-            </>
+                <ToggleControl
+                    label={ __( 'Use checkout overlay?', 'lemonsqueezy' ) }
+                    checked={overlay}
+                    onChange={this.onChangeOverlay}
+                />
+                <Button isPrimary>{ __( 'Insert Product Link', 'lemonsqueezy' ) }</Button>
+           </div>
         );
     }
 }
