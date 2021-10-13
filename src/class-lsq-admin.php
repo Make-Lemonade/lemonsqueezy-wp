@@ -19,7 +19,6 @@ class LSQ_Admin {
 	 * @return object
 	 */
 	public static function get_instance() {
-
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
@@ -36,6 +35,20 @@ class LSQ_Admin {
 		add_action( 'init', array( $this, 'register_settings' ) );
 	}
 
+	/**
+	 * Is this a LSQ admin page?
+	 *
+	 * @return bool
+	 */
+	public static function is_admin() {
+		global $current_screen;
+
+		if ( ! $current_screen ) {
+			return false;
+		}
+
+		return 'toplevel_page_lemonsqueezy' === $current_screen->id;
+	}
 
 	/**
 	 * Enqueue admin assets.
@@ -43,6 +56,10 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function add_admin_assets() {
+		if ( ! self::is_admin() ) {
+			return;
+		}
+
 		wp_enqueue_script( 'lemonsqueezy-admin-script', LSQ_URL . '/dist/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element' ), '1.0', true );
 		wp_enqueue_style( 'lemonsqueezy-admin-style', LSQ_URL . '/dist/admin.css', array( 'wp-edit-blocks' ), '1.0' );
 	}
