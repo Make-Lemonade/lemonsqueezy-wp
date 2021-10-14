@@ -1,0 +1,56 @@
+// Block.
+.lsq-button {
+	background: $c-brand-1;
+	height: 40px;
+	line-height: 40px;
+	white-space: nowrap;
+	display: inline-block;
+	padding: 0 20px;
+	border-radius: 20px;
+	text-decoration: none;
+	box-shadow: none;
+	transition: box-shadow .25s ease-in-out;
+
+	&:hover {
+		box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.13);
+	}
+}
+
+// Modifier.
+.lsq-button--secondary {
+	background: #fff;
+	color: $c-brand-1;
+	position: relative;
+	padding-right: 60px;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+	}
+
+	&:before {
+		right: 20px;
+		transform: rotate(45deg);
+		border: 2px solid $c-brand-1;
+		width: 6px;
+		height: 6px;
+		top: 16px;
+		border-bottom: none;
+		border-left: none;
+	}
+
+	&:after {
+		top: 19px;
+		right: 20px;
+		height: 2px;
+		width: 32px;
+		background: $c-brand-1;
+		display: block;
+	}
+
+	&:hover {
+		background: #fff;
+		color: $c-brand-1;
+	}
+}
