@@ -43,6 +43,14 @@ module.exports = (env, argv) => {
         devtool: isDevelopment() ? "cheap-module-source-map" : "source-map",
         module: {
             rules: [
+	            {
+		            test: /\.(png|jp(e*)g|svg|gif)$/,
+		            use: [
+			            {
+				            loader: 'file-loader'
+			            },
+		            ],
+	            },
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,

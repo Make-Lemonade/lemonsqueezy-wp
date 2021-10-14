@@ -1,4 +1,5 @@
-import "./admin.scss";
+import './admin.scss';
+import lsqIcon from '../../images/ls-icon.svg';
  
  const { __ } = wp.i18n;
 
@@ -91,7 +92,10 @@ import "./admin.scss";
              <Fragment>
                  <div className="lsq-header">
                      <div className="lsq-container">
-                         <div className="lsq-logo"></div>
+                         <div className="lsq-header__logo">
+                             <img src={lsqIcon} className="lsq-header__logo-icon" />
+                             { __( 'LemonSqueezy.com', 'lemonsqueezy' ) }
+                         </div>
                      </div>
                  </div>
  
