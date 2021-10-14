@@ -102,47 +102,67 @@ class AdminSettings extends Component {
 				</div>
 
 				<div className="lsq-main">
-					<PanelBody
-						title={__( 'Settings', 'lemonsqueezy' )}
-					>
-						<PanelRow>
-							<BaseControl
-								label={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
-								help={__( 'In order to use the Lemon Squeezy plugin, you need to use an API key.', 'lemonsqueezy' )}
-								id="lsq-options-lsq-api"
-								className="lsq-text-field"
-							>
-								<input
-									type="text"
+					<div className="lsq-main__column lsq-main__column--left">
+						<div className="lsq-content lsq-content--intro">
+							<h1>{__( 'Connect your store', 'lemonsqueezy' )}</h1>
+							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+						</div>
+						<div className="lsq-content lsq-content--step">
+							<h2>{__( '1. Create an API key', 'lemonsqueezy' )}</h2>
+							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+						</div>
+						<div className="lsq-content lsq-content--step">
+							<h2>{__( '2. Add your key here', 'lemonsqueezy' )}</h2>
+							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+						</div>
+						<div className="lsq-content lsq-content--step">
+							<h2>{__( '3. Add the Lemon Squeezy block and start selling!', 'lemonsqueezy' )}</h2>
+							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+						</div>
+					</div>
+					<div className="lsq-main__column lsq-main__column--right">
+						<PanelBody
+							title={__( 'Settings', 'lemonsqueezy' )}
+						>
+							<PanelRow>
+								<BaseControl
+									label={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
+									help={__( 'In order to use the Lemon Squeezy plugin, you need to use an API key.', 'lemonsqueezy' )}
 									id="lsq-options-lsq-api"
-									value={this.state.lsq_api_key}
-									placeholder={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
-									disabled={this.state.isAPISaving}
-									onChange={e => this.setState( { lsq_api_key: e.target.value } )}
-								/>
-								<div className="lsq-text-field-button-group">
-									<Button
-										isPrimary
-										isLarge
+									className="lsq-text-field"
+								>
+									<input
+										type="text"
+										id="lsq-options-lsq-api"
+										value={this.state.lsq_api_key}
+										placeholder={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
 										disabled={this.state.isAPISaving}
-										onClick={() => this.changeOptions( 'lsq_api_key', this.state.lsq_api_key )}
-									>
-										{__( 'Save', 'lemonsqueezy' )}
-									</Button>
+										onChange={e => this.setState( { lsq_api_key: e.target.value } )}
+									/>
+									<div className="lsq-text-field-button-group">
+										<Button
+											isPrimary
+											isLarge
+											disabled={this.state.isAPISaving}
+											onClick={() => this.changeOptions( 'lsq_api_key', this.state.lsq_api_key )}
+										>
+											{__( 'Save', 'lemonsqueezy' )}
+										</Button>
 
-									<ExternalLink href="#">
-										{__( 'Get API Key', 'lemonsqueezy' )}
-									</ExternalLink>
-								</div>
-								{isApiConnectable
-								 ?
-								 <Notice status="success">{__( 'Successfully connected to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
-								 :
-								 <Notice status="error">{__( 'Could not connect to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
-								}
-							</BaseControl>
-						</PanelRow>
-					</PanelBody>
+										<ExternalLink href="#">
+											{__( 'Get API Key', 'lemonsqueezy' )}
+										</ExternalLink>
+									</div>
+									{isApiConnectable
+									 ?
+									 <Notice status="success">{__( 'Successfully connected to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
+									 :
+									 <Notice status="error">{__( 'Could not connect to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
+									}
+								</BaseControl>
+							</PanelRow>
+						</PanelBody>
+					</div>
 				</div>
 			</Fragment>
 		);

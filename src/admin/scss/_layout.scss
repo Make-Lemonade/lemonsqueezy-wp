@@ -1,4 +1,25 @@
 #lsq-plugin {
 	margin: 0 0 0 -20px;
 	font-size: 14px;
+	min-height: calc( 100vh - 32px );
+	position: relative;
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 50%;
+		background: #fff;
+		z-index: -1;
+	}
+}
+
+#wpbody-content {
+	padding-bottom: 0;
+}
+
+#wpfooter {
+	display: none;
 }
