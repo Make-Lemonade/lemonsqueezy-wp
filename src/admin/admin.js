@@ -139,11 +139,17 @@ class AdminSettings extends Component {
 											onChange={e => this.setState( { lsq_api_key: e.target.value } )}
 											className="lsq-field lsq-field--text"
 										/>
-										{isApiConnectable
+										{this.state.lsq_api_key
 										 ?
-										 <span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
+											[
+												isApiConnectable
+												?
+												<span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
+												:
+												<span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
+											]
 										 :
-										 <span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
+										 ''
 										}
 									</div>
 									<div className="lsq-panel__buttons">
