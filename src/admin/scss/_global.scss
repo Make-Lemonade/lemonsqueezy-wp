@@ -1,3 +1,11 @@
+body {
+	background: $c-background;
+}
+
+#wpbody-content {
+	padding-bottom: 0;
+}
+
 #lsq-plugin {
 	margin: 0 0 0 -20px;
 	font-size: 14px;
@@ -14,10 +22,15 @@
 		background: #fff;
 		z-index: -1;
 	}
-}
 
-#wpbody-content {
-	padding-bottom: 0;
+	a {
+		color: $c-brand-1;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 #wpfooter {

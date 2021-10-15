@@ -1,0 +1,39 @@
+// Block.
+.lsq-panel {
+	padding: 0 !important;
+	border: none;
+	text-align: center;
+}
+
+// Elements.
+.lsq-panel {
+	.components-base-control__label {
+		color: $c-headings;
+		font-size: 26px;
+		margin: 0 0 40px;
+		line-height: 1.2;
+		max-width: 100%;
+	}
+
+	input[type="text"] {
+		box-sizing: border-box;
+		height: 40px;
+		border: 1px solid $c-border;
+		width: 100%;
+		line-height: 38px;
+		box-shadow: $shadow-fields;
+		border-radius: $br-1;
+		text-overflow: ellipsis;
+		margin: 0 0 20px;
+		max-width: 420px;
+	}
+
+	.lsq-button {
+		margin: 0 0 20px;
+	}
+
+	.lsq-button {
+		width: 100%;
+		max-width: 420px;
+	}
+}

@@ -1,17 +1,18 @@
 import './admin.scss';
 import lsqIcon from '../../images/ls-icon.svg';
 
-const lsqUrl = 'https://www.lemonsqueezy.com/';
+const lsqUrl = 'https://www.lemonsqueezy.com/',
+	lsqApiUrl = 'https://www.lemonsqueezy.com/';
 
 const { __ } = wp.i18n;
 
 const {
 	BaseControl,
 	Button,
-	ExternalLink,
+	// ExternalLink,
 	PanelBody,
 	PanelRow,
-	Notice,
+	// Notice,
 } = wp.components;
 
 const {
@@ -109,56 +110,57 @@ class AdminSettings extends Component {
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__( '1. Create an API key', 'lemonsqueezy' )}</h2>
-							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+							<p>{__( 'To get started, you need to create an API key via your Lemon Squeezy dashboard. In your dashboard, click your avatar in the upper right hand corner, click Account, and then scroll to the bottom of the Account Settings panel to create a new API key.', 'lemonsqueezy' )}</p>
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__( '2. Add your key here', 'lemonsqueezy' )}</h2>
-							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+							<p>{__( 'Once you have your API key, paste it in the Lemon Squeezy API Key field on the right and save it. Once saved, your store will be connected to your WordPress site!', 'lemonsqueezy' )}</p>
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__( '3. Add the Lemon Squeezy block and start selling!', 'lemonsqueezy' )}</h2>
-							<p>{__( 'The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy' )}</p>
+							<p>{__( 'To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you’d like to insert. Use the block settings to select a checkout link or a checkout overlay.', 'lemonsqueezy' )}</p>
 						</div>
 					</div>
 					<div className="lsq-main__column lsq-main__column--right">
-						<PanelBody
-							title={__( 'Settings', 'lemonsqueezy' )}
-						>
-							<PanelRow>
+						<PanelBody className="lsq-panel">
+							<PanelRow className="lsq-panel__row">
 								<BaseControl
-									label={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
-									help={__( 'In order to use the Lemon Squeezy plugin, you need to use an API key.', 'lemonsqueezy' )}
+									label={__( 'Add your Lemon Squeezy API key', 'lemonsqueezy' )}
 									id="lsq-options-lsq-api"
-									className="lsq-text-field"
+									className="lsq-panel__control"
 								>
-									<input
-										type="text"
-										id="lsq-options-lsq-api"
-										value={this.state.lsq_api_key}
-										placeholder={__( 'Lemon Squeezy API Key', 'lemonsqueezy' )}
-										disabled={this.state.isAPISaving}
-										onChange={e => this.setState( { lsq_api_key: e.target.value } )}
-									/>
-									<div className="lsq-text-field-button-group">
+									<div className="lsq-field-wrapper">
+										<input
+											type="text"
+											id="lsq-options-lsq-api"
+											value={this.state.lsq_api_key}
+											placeholder={__( 'Enter an API key', 'lemonsqueezy' )}
+											disabled={this.state.isAPISaving}
+											onChange={e => this.setState( { lsq_api_key: e.target.value } )}
+											className="lsq-field lsq-field--text"
+										/>
+										{isApiConnectable
+										 ?
+										 <span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
+										 :
+										 <span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
+										}
+									</div>
+									<div className="lsq-panel__buttons">
 										<Button
 											isPrimary
 											isLarge
 											disabled={this.state.isAPISaving}
 											onClick={() => this.changeOptions( 'lsq_api_key', this.state.lsq_api_key )}
+											className="lsq-button lsq-button--primary"
 										>
-											{__( 'Save', 'lemonsqueezy' )}
+											{__( 'Save API Key', 'lemonsqueezy' )}
 										</Button>
-
-										<ExternalLink href="#">
-											{__( 'Get API Key', 'lemonsqueezy' )}
-										</ExternalLink>
 									</div>
-									{isApiConnectable
-									 ?
-									 <Notice status="success">{__( 'Successfully connected to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
-									 :
-									 <Notice status="error">{__( 'Could not connect to Lemon Squeezy API.', 'lemonsqueezy' )}</Notice>
-									}
+									<div  className="lsq-panel__footer">
+										<p><a href={lsqApiUrl}>{__( 'View API documentation', 'lemonsqueezy' )}</a></p>
+										<p>&copy; {(new Date().getFullYear())} Lemon Squeezy, LLC <span className="lsq-u-bullet-spacer">&bull;</span> <a href={lsqUrl}>LemonSqueezy.com</a></p>
+									</div>
 								</BaseControl>
 							</PanelRow>
 						</PanelBody>
