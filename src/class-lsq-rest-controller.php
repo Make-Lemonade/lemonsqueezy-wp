@@ -51,6 +51,18 @@ class LSQ_Rest_Controller {
 				),
 			)
 		);
+
+		register_rest_route(
+			$namespace,
+			'/products/',
+			array(
+				array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_products' ),
+					'args'     => array(),
+				),
+			)
+		);
 	}
 
 	/**
@@ -91,6 +103,71 @@ class LSQ_Rest_Controller {
 		if ( $is_valid ) {
 			return new \WP_REST_Response( array( 'success' => true ), 200 );
 		}
+		return new \WP_REST_Response(
+			array(
+				'success' => false,
+				'error'   => $error_message,
+			),
+			200
+		);
+	}
+
+	/**
+	 * Get products from the Lemon Squeezy API.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Request
+	 */
+	public function get_products( $request ) {
+		// Check LS API connection.
+		$api_key       = get_option( 'lsq_api_key' );
+		$error_message = '';
+
+		$response = wp_remote_get(
+			'https://api.lemonsqueezy.com/v1/products/',
+			array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $api_key,
+					'Accept'        => 'application/vnd.api+json',
+					'Content-Type'  => 'application/vnd.api+json',
+					'Cache-Control' => 'no-cache',
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				$product_data = json_decode( $response['body'] );
+				$products     = array();
+
+				// TODO: handle pagination.
+
+				// Todo handle variations.
+
+				// Build product list.
+				if ( isset( $product_data ) && ! empty( $product_data ) ) {
+					foreach ( $product_data->data as $product ) {
+						$products[ $product->id ] = array(
+							'name'    => $product->attributes->name,
+							'buy_url' => $product->attributes->buy_now_url,
+						);
+					}
+				}
+
+				return new \WP_REST_Response(
+					array(
+						'success'  => true,
+						'products' => $products,
+					),
+					200
+				);
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+			}
+		} else {
+			$error_message = $response->get_error_message();
+		}
+
 		return new \WP_REST_Response(
 			array(
 				'success' => false,
