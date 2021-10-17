@@ -147,9 +147,9 @@ class LSQ_Rest_Controller {
 				// Build product list.
 				if ( isset( $product_data ) && ! empty( $product_data ) ) {
 					foreach ( $product_data->data as $product ) {
-						$products[ $product->id ] = array(
-							'name'    => $product->attributes->name,
-							'buy_url' => $product->attributes->buy_now_url,
+						$products[] = array(
+							'label' => $product->attributes->name,
+							'value' => $product->attributes->buy_now_url,
 						);
 					}
 				}
