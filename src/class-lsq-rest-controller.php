@@ -44,13 +44,11 @@ class LSQ_Rest_Controller {
 			$namespace,
 			'/validate/',
 			array(
-				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'validate_key' ),
-					'args'     => array(),
-				),
-				'permission_callback' => function( WP_REST_Request $request ) {
-					return current_user_can( 'manage_options' );
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'validate_key' ),
+				'args'                => array(),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
 				},
 			),
 		);
@@ -59,15 +57,13 @@ class LSQ_Rest_Controller {
 			$namespace,
 			'/products/',
 			array(
-				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_products' ),
-					'args'     => array(),
-				),
-				'permission_callback' => function( WP_REST_Request $request ) {
-					return current_user_can( 'manage_options' );
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_products' ),
+				'args'                => array(),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
 				},
-			)
+			),
 		);
 	}
 
@@ -82,6 +78,16 @@ class LSQ_Rest_Controller {
 		$api_key       = get_option( 'lsq_api_key' );
 		$is_valid      = false;
 		$error_message = '';
+
+		if ( ! isset( $api_key ) || empty( $api_key ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
 
 		$response = wp_remote_get(
 			'https://api.lemonsqueezy.com/v1/stores/',
@@ -114,7 +120,7 @@ class LSQ_Rest_Controller {
 				'success' => false,
 				'error'   => $error_message,
 			),
-			200
+			400
 		);
 	}
 
@@ -128,6 +134,16 @@ class LSQ_Rest_Controller {
 		// Check LS API connection.
 		$api_key       = get_option( 'lsq_api_key' );
 		$error_message = '';
+
+		if ( ! isset( $api_key ) || empty( $api_key ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
 
 		$response = wp_remote_get(
 			'https://api.lemonsqueezy.com/v1/products/',
@@ -179,7 +195,7 @@ class LSQ_Rest_Controller {
 				'success' => false,
 				'error'   => $error_message,
 			),
-			200
+			400
 		);
 	}
 }
