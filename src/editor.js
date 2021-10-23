@@ -1,2 +1,2 @@
-import "./blocks/buy-button";
+import "./blocks/button";
 

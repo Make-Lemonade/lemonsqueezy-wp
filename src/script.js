@@ -1,1 +1,1 @@
-import "./blocks/buy-button/script";
+import "./blocks/button/script";
