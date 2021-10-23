@@ -32,6 +32,7 @@ class LSQ_Register_Block {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_filter( 'render_block', array( $this, 'filter_button_block_markup' ), 10, 2 );
 	}
 
 	/**
@@ -69,4 +70,31 @@ class LSQ_Register_Block {
 		$this->register_block_type( 'button' );
 	}
 
+	/**
+	 * Add button size class.
+	 *
+	 * @param  string $block_content Block content to be rendered.
+	 * @param  array  $block         Block attributes.
+	 * @return string
+	 */
+	public function filter_button_block_markup( $block_content = '', $block = array() ) {
+		if ( isset( $block['blockName'] ) && 'core/button' === $block['blockName'] ) {
+			$args = wp_parse_args( $block['attrs'] );
+
+			if ( ! isset( $args['product'] ) || empty( $args['product'] ) ) {
+				return $block_content;
+			}
+
+			$purchase_link = $args['product'];
+
+			// If overlay is activated we have to include the script and add parameter to URL.
+			if ( $args['overlay'] ) {
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+				$purchase_link = $purchase_link . '?embed=1';
+			}
+
+			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="wp-block-button__link lemonsqueezy-button" href="' . $purchase_link . '">', $block_content );
+		}
+		return $block_content;
+	}
 }
