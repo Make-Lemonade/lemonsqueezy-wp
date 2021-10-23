@@ -49,7 +49,10 @@ class LSQ_Rest_Controller {
 					'callback' => array( $this, 'validate_key' ),
 					'args'     => array(),
 				),
-			)
+				'permission_callback' => function( WP_REST_Request $request ) {
+					return current_user_can( 'manage_options' );
+				},
+			),
 		);
 
 		register_rest_route(
@@ -61,6 +64,9 @@ class LSQ_Rest_Controller {
 					'callback' => array( $this, 'get_products' ),
 					'args'     => array(),
 				),
+				'permission_callback' => function( WP_REST_Request $request ) {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 	}
