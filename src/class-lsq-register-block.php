@@ -33,6 +33,27 @@ class LSQ_Register_Block {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'render_block', array( $this, 'filter_button_block_markup' ), 10, 2 );
+		add_filter( 'block_categories', array( $this, 'add_block_categories' ), 10, 2 );
+	}
+
+	/**
+	 * Register block category.
+	 *
+	 * @param array  $categories given categories.
+	 * @param object $post current post.
+	 * @return array
+	 */
+	public function add_block_categories( $categories, $post ) {
+		return array_merge(
+			$categories,
+			array(
+				array(
+					'slug'  => 'lemonsqueezy',
+					'title' => __( 'Lemon Squeezy', 'lemonsqueezy' ),
+					'icon'  => 'wordpress',
+				),
+			)
+		);
 	}
 
 	/**
@@ -66,8 +87,11 @@ class LSQ_Register_Block {
 		wp_register_script( 'lemonsqueezy-editor-script', LSQ_URL . '/dist/editor.js', array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities', 'wp-compose', 'wp-block-editor' ), '1.0.0', true );
 		wp_register_script( 'lemonsqueezy-script', LSQ_URL . '/dist/script.js', array(), '1.0.0', true );
 		wp_register_style( 'lemonsqueezy-style', LSQ_URL . '/dist/style.css', array(), '1.0.0' );
+		wp_register_style( 'lemonsqueezy-editor-style', LSQ_URL . '/dist/editor.css', array( 'wp-edit-blocks' ), '1.0.0' );
 
 		$this->register_block_type( 'button' );
+		$this->register_block_type( 'ls-button' );
+
 	}
 
 	/**

@@ -99,25 +99,31 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
             <PanelBody title={__('Lemon Squeezy', 'lemonsqueezy')} initialOpen={false}>
               {this.state ?
                 [this.state.isApiConnectable ?
+                  <Fragment>
                   <p>
                     <SelectControl
                       value={product}
                       options={this.state.products}
                       onChange={this.onChangeProduct}
                     />
+                    </p>
+                    <p>
                     <ToggleControl
                       label={__('Use checkout overlay?', 'lemonsqueezy')}
                       checked={overlay}
                       onChange={this.onChangeOverlay}
                     />
                   </p>
+                  </Fragment>
                   :
                   <p>
                     {__("Uh oh! Looks like you haven't connected your store yet! Please visit the Lemon Squeezy Settings and add your API key.", 'lemonsqueezy')}
                   </p>
                 ]
                 :
-                ''
+                <p>
+                {__( "We're fetching your data, hold on for a second!.", 'lemonsqueezy' ) }
+                </p>
               }
             </PanelBody>
           </InspectorControls>

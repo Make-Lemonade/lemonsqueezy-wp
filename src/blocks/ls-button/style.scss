@@ -1,0 +1,47 @@
+.wp-block-lemonsqueezy-buy-button {
+    background-color: #524d5b;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    &.is-style-squared {
+        border-radius: 0px;
+    }
+    &.is-style-outline {
+        border-radius: 0px;
+        border: 2px solid currentColor;
+    }
+    &.has-shadow {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        &.shadow-opacity-10 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        &.shadow-opacity-20 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        &.shadow-opacity-30 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        &.shadow-opacity-40 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+    }
+}
+
+.lsq-block {
+    background: #F7F7F8;
+    padding: 20px;
+}
+.lsq-link-text {
+    background: #FFFFFF;
+    border: 1px solid rgba(10, 10, 11, 0.16);
+    box-sizing: border-box;
+    box-shadow: 0px 1px 1px rgba(10, 10, 11, 0.06);
+    border-radius: 8px;
+    font-size: 14px !important;
+    padding: 5px 10px;
+}
+
+.lsq-link-text span {
+    font-size: 13px;
+  }
+  
