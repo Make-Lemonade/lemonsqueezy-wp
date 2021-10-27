@@ -2,18 +2,32 @@
 .lsq-main {
 	display: flex;
 	align-items: flex-start;
+	flex-direction: column-reverse;
+
+	@include breakpoint($bp-mobile-2) {
+		flex-direction: row;
+	}
 }
 
 // Elements.
 .lsq-main__column {
-	width: 50%;
+	width: 100%;
 	padding: 60px 50px;
 	box-sizing: border-box;
 
+	@include breakpoint($bp-mobile-2) {
+		width: 50%;
+	}
+
 	&--right {
-		height: calc( 100vh - 114px );
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		background: #fff;
+
+		@include breakpoint($bp-mobile-2) {
+			background: transparent;
+			height: calc( 100vh - 114px );
+		}
 	}
 }

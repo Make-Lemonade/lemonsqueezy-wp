@@ -7,10 +7,18 @@ body {
 }
 
 #lsq-plugin {
-	margin: 0 0 0 -20px;
+	margin: 0 0 0 -10px;
 	font-size: 14px;
 	min-height: calc( 100vh - 32px );
 	position: relative;
+
+	@include breakpoint($bp-mobile-1) {
+		margin: 0 0 0 -20px;
+	}
+
+	.wp-responsive-open & {
+		margin: 0 0 0 -30px;
+	}
 
 	&:after {
 		content: '';
@@ -21,6 +29,11 @@ body {
 		width: 50%;
 		background: #fff;
 		z-index: -1;
+		display: none;
+
+		@include breakpoint($bp-mobile-2) {
+			display: block;
+		}
 	}
 
 	a {

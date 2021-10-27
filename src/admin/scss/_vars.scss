@@ -1,3 +1,4 @@
+// Colors.
 $c-brand-1: #7047EB;
 
 $c-background: #f7f7f8;
@@ -9,7 +10,13 @@ $c-yes-2: #24bf60;
 $c-no-1: #fff2f2;
 $c-no-2: #f44e4d;
 
+// Shadows.
 $shadow-fields: 0 1px 1px rgba(10, 10, 11, 0.06);
 
+// Border radii.
 $br-1: 8px;
 $br-2: 20px;
+
+// Breakpoints.
+$bp-mobile-1: 782px;
+$bp-mobile-2: 850px;
