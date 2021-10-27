@@ -50,7 +50,7 @@ class LSQ_Rest_Controller {
 				'permission_callback' => function( \WP_REST_Request $request ) {
 					return true;
 				},
-			),
+			)
 		);
 
 		register_rest_route(
@@ -63,7 +63,7 @@ class LSQ_Rest_Controller {
 				'permission_callback' => function( \WP_REST_Request $request ) {
 					return true;
 				},
-			),
+			)
 		);
 	}
 
