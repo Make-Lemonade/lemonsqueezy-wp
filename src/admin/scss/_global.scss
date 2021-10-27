@@ -12,7 +12,7 @@ body {
 	min-height: calc( 100vh - 32px );
 	position: relative;
 
-	@include breakpoint($bp-mobile-1) {
+	@include breakpoint($bp-sm) {
 		margin: 0 0 0 -20px;
 	}
 
@@ -31,7 +31,7 @@ body {
 		z-index: -1;
 		display: none;
 
-		@include breakpoint($bp-mobile-2) {
+		@include breakpoint($bp-md) {
 			display: block;
 		}
 	}

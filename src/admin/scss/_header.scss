@@ -8,7 +8,7 @@
 	justify-content: space-between;
 	flex-direction: column;
 
-	@include breakpoint($bp-mobile-2) {
+	@include breakpoint($bp-md) {
 		flex-direction: row;
 	}
 }
@@ -19,7 +19,7 @@
 	align-items: center;
 	margin: 0 0 30px;
 
-	@include breakpoint($bp-mobile-2) {
+	@include breakpoint($bp-md) {
 		margin: 0;
 	}
 }
@@ -36,7 +36,7 @@
 	align-items: center;
 	text-align: center;
 
-	@include breakpoint($bp-mobile-2) {
+	@include breakpoint($bp-md) {
 		text-align: left;
 		display: block;
 	}
@@ -44,7 +44,7 @@
 	.lsq-button {
 		margin: 10px 0 0;
 
-		@include breakpoint($bp-mobile-2) {
+		@include breakpoint($bp-md) {
 			margin: 0 0 0 20px;
 		}
 	}

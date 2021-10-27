@@ -4,7 +4,7 @@
 	align-items: flex-start;
 	flex-direction: column-reverse;
 
-	@include breakpoint($bp-mobile-2) {
+	@include breakpoint($bp-md) {
 		flex-direction: row;
 	}
 }
@@ -15,7 +15,7 @@
 	padding: 60px 50px;
 	box-sizing: border-box;
 
-	@include breakpoint($bp-mobile-2) {
+	@include breakpoint($bp-md) {
 		width: 50%;
 	}
 
@@ -25,7 +25,7 @@
 		justify-content: center;
 		background: #fff;
 
-		@include breakpoint($bp-mobile-2) {
+		@include breakpoint($bp-md) {
 			background: transparent;
 			height: calc( 100vh - 114px );
 		}

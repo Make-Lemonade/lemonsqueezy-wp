@@ -16,11 +16,11 @@
 		line-height: 1.2;
 		margin-top: 0;
 
-		@include breakpoint($bp-mobile-1) {
+		@include breakpoint($bp-sm) {
 			font-size: 40px;
 		}
 
-		@include breakpoint($bp-mobile-2) {
+		@include breakpoint($bp-md) {
 			font-size: 46px;
 		}
 	}
@@ -30,11 +30,11 @@
 		font-weight: 400;
 		line-height: 1.2;
 
-		@include breakpoint($bp-mobile-1) {
+		@include breakpoint($bp-sm) {
 			font-size: 20px;
 		}
 
-		@include breakpoint($bp-mobile-2) {
+		@include breakpoint($bp-md) {
 			font-size: 22px;
 		}
 	}
