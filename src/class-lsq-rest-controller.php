@@ -90,7 +90,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$response = wp_remote_get(
-			'https://api.lemonsqueezy.com/v1/stores/',
+			LSQ_API_URL . '/v1/stores/',
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -146,7 +146,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$response = wp_remote_get(
-			'https://api.lemonsqueezy.com/v1/products/',
+			LSQ_API_URL . '/v1/products/',
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
