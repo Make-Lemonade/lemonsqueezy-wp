@@ -24,6 +24,12 @@ define( 'LSQ_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 if ( ! defined( 'LSQ_API_URL' ) ) {
 	define( 'LSQ_API_URL', 'https://api.lemonsqueezy.com' );
 }
+if ( ! defined( 'LSQ_APP_URL' ) ) {
+	define( 'LSQ_APP_URL', 'https://app.lemonsqueezy.com' );
+}
+if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
+	define( 'LSQ_OAUTH_CLIENT_ID', 'TODO' );
+}
 
 // Bootmanager for Lemon Squeety plugin.
 if ( ! function_exists( 'lsq_run_plugin' ) ) {
