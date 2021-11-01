@@ -65,7 +65,6 @@ class Edit extends Component {
                             <p>
                                 <SelectControl
                                     value={product}
-                                    className="lsq-product-select"
                                     options={this.state.products}
                                     onChange={this.onChangeproduct}
                                 />

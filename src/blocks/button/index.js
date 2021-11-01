@@ -102,6 +102,7 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
                   <Fragment>
                     <p>
                       <SelectControl
+                        label={__('Select Product', 'lemonsqueezy')}
                         value={product}
                         options={this.state.products}
                         onChange={this.onChangeProduct}

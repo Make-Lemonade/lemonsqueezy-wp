@@ -1,25 +1,28 @@
 .lsq-block {
     background: #F7F7F8;
     padding: 20px;
-}
-.lsq-link-text {
-    background: #FFFFFF;
-    border: 1px solid rgba(10, 10, 11, 0.16);
-    box-sizing: border-box;
-    box-shadow: 0px 1px 1px rgba(10, 10, 11, 0.06);
-    border-radius: 8px;
-}
 
-.lsq-link-text span {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
-    color: #6C6C84;
-    top: -2px;
-    position: relative;
-    padding-left: 10px;
-}
-.lsq-block h4 img {
-    vertical-align: -5px;
-    width: 30px;
+    h4 img {
+        vertical-align: -5px;
+        width: 30px;
+        margin-right: 5px;
+    }
+
+    .lsq-link-text {
+        background: #FFFFFF;
+        border: 1px solid rgba(10, 10, 11, 0.16);
+        box-sizing: border-box;
+        box-shadow: 0px 1px 1px rgba(10, 10, 11, 0.06);
+        border-radius: 8px;
+        font-size: 14px !important;
+        padding: 5px 10px;
+
+        span {
+            font-size: 13px;
+            top: -2px;
+          }
+    }
+    select {
+        padding: 0 5px !important;
+    }
 }
