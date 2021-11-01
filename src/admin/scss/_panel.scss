@@ -15,7 +15,7 @@
 		max-width: 100%;
 	}
 
-	input[type="text"] {
+	input[type="text"], input[type="password"] {
 		box-sizing: border-box;
 		height: 40px;
 		border: 1px solid $c-border;
@@ -24,7 +24,7 @@
 		box-shadow: $shadow-fields;
 		border-radius: $br-sm;
 		text-overflow: ellipsis;
-		margin: 0 0 20px;
+		margin: 0 0 20px 0;
 		max-width: 420px;
 	}
 
@@ -35,5 +35,23 @@
 	.lsq-button {
 		width: 100%;
 		max-width: 420px;
+	}
+
+	.error {
+		color:#f44e4d;
+		margin-top: -10px;
+	}
+
+	.success {
+		color:#24bf60;
+		margin-top: -10px;
+	}
+
+	.reset {
+		color:#7047EB;
+		cursor:pointer;
+	}
+	.reset:hover {
+		text-decoration: underline;
 	}
 }
