@@ -58,7 +58,7 @@ class Edit extends Component {
             <div className="lsq-block">
                 <h4>
                     <img src={lsqIcon} />
-                    {__('Lemon Squeezy Product Block', 'lemonsqueezy')}</h4>
+                    {__('Lemon Squeezy Buy Button', 'lemonsqueezy')}</h4>
                 {this.state ?
                     [this.state.isApiConnectable ?
                         <Fragment>
