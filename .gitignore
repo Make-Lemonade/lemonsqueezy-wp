@@ -1,4 +1,5 @@
-node_modules
-bundled
-dist
+/node_modules
+/bundled
+/dist
+/vendor/
 .DS_STORE
