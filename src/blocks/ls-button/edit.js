@@ -96,7 +96,9 @@ class Edit extends Component {
                     ]
                     :
                     <p>
-                        <small>{__("We're fetching your data, hold on for a second!.", 'lemonsqueezy')}</small>
+                        <small>
+                            {__("We're fetching your data, hold on for a second!", 'lemonsqueezy')}
+                        </small>
                     </p>
                 }
             </div>

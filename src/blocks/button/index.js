@@ -124,7 +124,9 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
                 ]
                 :
                 <p>
-                  {__("We're fetching your data, hold on for a second!.", 'lemonsqueezy')}
+                  <small>
+                    {__("We're fetching your data, hold on for a second!", 'lemonsqueezy')}
+                  </small>
                 </p>
               }
             </PanelBody>
