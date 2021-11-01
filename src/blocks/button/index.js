@@ -111,6 +111,11 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
                       <ToggleControl
                         label={__('Use checkout overlay?', 'lemonsqueezy')}
                         checked={overlay}
+                        help={
+                          overlay
+                            ? __('Your checkout will be opened in a modal window.', 'lemonsqueezy')
+                            : __('Your customer will be redirected to your checkout page.', 'lemonsqueezy')
+                        }
                         onChange={this.onChangeOverlay}
                       />
                     </p>

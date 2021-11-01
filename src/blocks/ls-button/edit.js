@@ -72,7 +72,7 @@ class Edit extends Component {
                             </p>
                             <p>
                                 <RichText
-                                    placeholder={__('Customize Link Text', 'lemonsqueezy')}
+                                    placeholder={__('Button text*', 'lemonsqueezy')}
                                     tagName="p"
                                     className="lsq-link-text"
                                     onChange={this.onChangeContent}
@@ -82,6 +82,11 @@ class Edit extends Component {
                             <p>
                                 <ToggleControl
                                     label={__('Use checkout overlay?', 'lemonsqueezy')}
+                                    help={
+                                        overlay
+                                            ? __('Your checkout will be opened in a modal window.', 'lemonsqueezy')
+                                            : __('Your customer will be redirected to your checkout page.', 'lemonsqueezy')
+                                    }
                                     checked={overlay}
                                     onChange={this.onChangeOverlay}
                                 />
