@@ -104,7 +104,11 @@ class LSQ_Admin {
 	 */
 	public function register_settings() {
 		if ( ! session_id() ) {
-			session_start();
+			session_start(
+				array(
+					'read_and_close' => true,
+				)
+			);
 		}
 
 		register_setting(
