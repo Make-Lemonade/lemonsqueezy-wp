@@ -124,7 +124,7 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
                   :
                   <p>
                     <small>
-                      {__("Uh oh! Looks like you haven't connected your store yet! Please visit the", 'lemonsqueezy')} <a href={ /*global lsData, a*/ /*eslint no-undef: "error"*/ lsData.settings_url}>{__("Lemon Squeezy Settings", 'lemonsqueezy')}</a> {__("and add your API key.", 'lemonsqueezy')}
+                      {__("Uh oh! Looks like you haven't connected your store yet! Please visit the", 'lemonsqueezy')} <a href={ /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url}>{__("Lemon Squeezy Settings", 'lemonsqueezy')}</a> {__("and add your API key.", 'lemonsqueezy')}
                     </small>
                   </p>
                 ]
