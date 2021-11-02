@@ -8,7 +8,8 @@
         "format": "prettier --write \"**/*.{js,json,css,scss}\"",
         "lint": "eslint src",
         "start": "webpack --mode=development --watch",
-        "build": "npm run lint && webpack --mode=production && gulp bundle"
+        "build": "npm run lint && webpack --mode=production && gulp bundle",
+        "wp-env": "wp-env"
     },
     "repository": {
         "type": "git",
@@ -52,6 +53,7 @@
         "@wordpress/components": "^13.0.0",
         "@wordpress/editor": "^9.14.1",
         "@wordpress/element": "^2.20.0",
+        "@wordpress/env": "^4.1.2",
         "autoprefixer": "^10.2.5",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.2.2",
