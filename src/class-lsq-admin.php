@@ -123,69 +123,9 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function load_page_hook() {
-		if ( ! empty( $_GET['oauth_authorize'] ) ) {
-			if ( empty( $_SESSION['lsq_oauth_code'] ) ) {
-				$_SESSION['lsq_oauth_code'] = wp_generate_password( 40, false );
-			}
-			if ( empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
-				$_SESSION['lsq_oauth_code_verifier'] = wp_generate_password( 128, false );
-			}
-
-			$code_challenge = strtr(
-				rtrim(
-					base64_encode( hash( 'sha256', $_SESSION['lsq_oauth_code_verifier'], true ) ),
-					'='
-				),
-				'+/',
-				'-_'
-			);
-
-			$query = http_build_query(
-				array(
-					'client_id' => LSQ_OAUTH_CLIENT_ID,
-					'redirect_uri' => admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' ),
-					'response_type' => 'code',
-					'scope' => '',
-					'state' => $_SESSION['lsq_oauth_code'],
-					'code_challenge' => $code_challenge,
-					'code_challenge_method' => 'S256',
-				)
-			);
-
-			wp_redirect( LSQ_APP_URL . '/oauth/authorize?' . $query );
-			exit;
-		}
-
-		if ( ! empty( $_GET['oauth_callback'] ) ) {
-			if ( ! empty( $_SESSION['lsq_oauth_code'] ) && ! empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
-				$code = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_STRING ) : null;
-				$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_STRING ) : null;
-
-				if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
-					return new \WP_Error( 'error', __( 'Invalid state/code', 'lemon-squeezy' ) );
-				}
-
-				$response = wp_remote_post(
-					LSQ_APP_URL . '/oauth/token',
-					array(
-						'body' => array(
-							'grant_type' => 'authorization_code',
-							'client_id' => LSQ_OAUTH_CLIENT_ID,
-							'redirect_uri' => admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' ),
-							'code_verifier' => $_SESSION['lsq_oauth_code_verifier'],
-							'code' => $code,
-						),
-					)
-				);
-
-				if ( is_wp_error( $response ) ) {
-					return $response;
-				} else {
-					echo 'Response:<pre>';
-					print_r( json_decode( $response['body'] ) );
-					echo '</pre>';
-				}
-			}
-		}
+		$redirect_uri = admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' );
+		$lsq_oauth = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID, $redirect_uri );
+		$lsq_oauth->handle_authorize();
+		$lsq_oauth->handle_callback();
 	}
 }
