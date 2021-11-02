@@ -7,7 +7,7 @@
 	white-space: nowrap;
 	display: inline-block;
 	padding: 0 20px;
-	border-radius: $br-1;
+	border-radius: $br-sm;
 	text-decoration: none;
 	box-shadow: none;
 	transition: box-shadow .25s ease-in-out;
@@ -24,7 +24,7 @@
 	color: $c-brand-1 !important;
 	position: relative;
 	padding-right: 60px;
-	border-radius: $br-2;
+	border-radius: $br-md;
 
 	&:before,
 	&:after {

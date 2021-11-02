@@ -1,8 +1,7 @@
 import './admin.scss';
 import lsqIcon from '../../images/ls-icon.svg';
 
-const lsqUrl = 'https://www.lemonsqueezy.com/',
-	lsqApiUrl = 'https://www.lemonsqueezy.com/';
+const lsqUrl = 'https://www.lemonsqueezy.com/';
 
 const { __ } = wp.i18n;
 
@@ -86,6 +85,13 @@ class AdminSettings extends Component {
 			})
 	}
 
+	clearKey() {
+		this.setState({
+			lsq_api_key : '',
+			isApiConnectable: false,
+		});
+	}
+
 	render() {
 		const isApiConnectable = this.state.isApiConnectable;
 
@@ -98,7 +104,7 @@ class AdminSettings extends Component {
 					</div>
 					<div className="lsq-header__cta">
 						{__('Want to make money with digital products?', 'lemonsqueezy')}
-						<a href={lsqUrl} className="lsq-button lsq-button--secondary">{__('Start selling today', 'lemonsqueezy')}</a>
+						<a href={lsqUrl} target="_blank" rel="noreferrer" className="lsq-button lsq-button--secondary">{__('Start selling today', 'lemonsqueezy')}</a>
 					</div>
 				</div>
 
@@ -106,11 +112,11 @@ class AdminSettings extends Component {
 					<div className="lsq-main__column lsq-main__column--left">
 						<div className="lsq-content lsq-content--intro">
 							<h1>{__('Connect your store', 'lemonsqueezy')}</h1>
-							<p>{__('The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy')}</p>
+							<p>{__('The Lemon Squeezy plugin connects your Lemon Squeezy stores to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy')}</p>
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__('1. Create an API key', 'lemonsqueezy')}</h2>
-							<p>{__('To get started, you need to create an API key via your Lemon Squeezy dashboard. In your dashboard, click your avatar in the upper right hand corner, click Account, and then scroll to the bottom of the Account Settings panel to create a new API key.', 'lemonsqueezy')}</p>
+							<p>{__('To get started, you need to', 'lemonsqueezy')} <a href="https://app.lemonsqueezy.com/account" target="_blank" rel="noreferrer">{__('create an API key', 'lemonsqueezy')}</a> {__('via your Lemon Squeezy dashboard. In your dashboard, click your avatar in the upper right hand corner, click Account, and then scroll to the bottom of the Account Settings panel to create a new API key.', 'lemonsqueezy')}</p>
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__('2. Add your key here', 'lemonsqueezy')}</h2>
@@ -131,11 +137,11 @@ class AdminSettings extends Component {
 								>
 									<div className="lsq-field-wrapper">
 										<input
-											type="text"
+											type={ isApiConnectable ? 'password' : 'text' }
 											id="lsq-options-lsq-api"
 											value={this.state.lsq_api_key}
 											placeholder={__('Enter an API key', 'lemonsqueezy')}
-											disabled={this.state.isAPISaving}
+											disabled={ isApiConnectable ? 'true' : '' }
 											onChange={e => this.setState({ lsq_api_key: e.target.value })}
 											className="lsq-field lsq-field--text"
 										/>
@@ -144,9 +150,16 @@ class AdminSettings extends Component {
 											[
 												isApiConnectable
 													?
-													<span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
+													<Fragment>
+														<span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
+														<p className="success">{__('Your license key was validated successfully.', 'lemonsqueezy')}</p>
+														<p><span className="reset" onClick={() => this.clearKey()}>{__('Reset license key', 'lemonsqueezy')}</span></p>
+													</Fragment>
 													:
-													<span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
+													<Fragment>
+														<span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
+														<p className="error">{__('There was an error validating your license key.', 'lemonsqueezy')}</p>
+													</Fragment>
 											]
 											:
 											''
@@ -164,8 +177,8 @@ class AdminSettings extends Component {
 										</Button>
 									</div>
 									<div className="lsq-panel__footer">
-										<p><a href={lsqApiUrl}>{__('View API documentation', 'lemonsqueezy')}</a></p>
-										<p>&copy; {(new Date().getFullYear())} Lemon Squeezy, LLC <span className="lsq-u-bullet-spacer">&bull;</span> <a href={lsqUrl}>LemonSqueezy.com</a></p>
+										<p><a href="https://www.lemonsqueezy.com/docs/api" target="_blank" rel="noreferrer">{__('View API documentation', 'lemonsqueezy')}</a></p>
+										<p>&copy; {(new Date().getFullYear())} Lemon Squeezy, LLC <span className="lsq-u-bullet-spacer">&bull;</span> <a target="blank" rel="noreferrer" href={lsqUrl}>LemonSqueezy.com</a></p>
 									</div>
 								</BaseControl>
 							</PanelRow>

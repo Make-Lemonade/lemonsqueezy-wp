@@ -100,29 +100,39 @@ const extendControls = createHigherOrderComponent((BlockEdit) => {
               {this.state ?
                 [this.state.isApiConnectable ?
                   <Fragment>
-                  <p>
-                    <SelectControl
-                      value={product}
-                      options={this.state.products}
-                      onChange={this.onChangeProduct}
-                    />
+                    <p>
+                      <SelectControl
+                        label={__('Select Product', 'lemonsqueezy')}
+                        value={product}
+                        options={this.state.products}
+                        onChange={this.onChangeProduct}
+                      />
                     </p>
                     <p>
-                    <ToggleControl
-                      label={__('Use checkout overlay?', 'lemonsqueezy')}
-                      checked={overlay}
-                      onChange={this.onChangeOverlay}
-                    />
-                  </p>
+                      <ToggleControl
+                        label={__('Use checkout overlay?', 'lemonsqueezy')}
+                        checked={overlay}
+                        help={
+                          overlay
+                            ? __('Your checkout will be opened in a modal window.', 'lemonsqueezy')
+                            : __('Your customer will be redirected to your checkout page.', 'lemonsqueezy')
+                        }
+                        onChange={this.onChangeOverlay}
+                      />
+                    </p>
                   </Fragment>
                   :
                   <p>
-                    {__("Uh oh! Looks like you haven't connected your store yet! Please visit the Lemon Squeezy Settings and add your API key.", 'lemonsqueezy')}
+                    <small>
+                      {__("Uh oh! Looks like you haven't connected your store yet! Please visit the", 'lemonsqueezy')} <a href={ /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url}>{__("Lemon Squeezy Settings", 'lemonsqueezy')}</a> {__("and add your API key.", 'lemonsqueezy')}
+                    </small>
                   </p>
                 ]
                 :
                 <p>
-                {__( "We're fetching your data, hold on for a second!.", 'lemonsqueezy' ) }
+                  <small>
+                    {__("We're fetching your data, hold on for a second!", 'lemonsqueezy')}
+                  </small>
                 </p>
               }
             </PanelBody>
