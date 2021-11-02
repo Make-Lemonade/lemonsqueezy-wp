@@ -1,0 +1,8 @@
+{
+    "config": {
+        "LSQ_API_URL": "https://api.lemonsqueezy.test",
+        "LSQ_APP_URL": "https://app.lemonsqueezy.test",
+        "LSQ_OAUTH_CLIENT_ID": ""
+    },
+    "plugins": [ "." ]
+}
