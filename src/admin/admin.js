@@ -112,7 +112,7 @@ class AdminSettings extends Component {
 					<div className="lsq-main__column lsq-main__column--left">
 						<div className="lsq-content lsq-content--intro">
 							<h1>{__('Connect your store', 'lemonsqueezy')}</h1>
-							<p>{__('The Lemon Squeezy plugin connects your Lemon Squeezy store to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy')}</p>
+							<p>{__('The Lemon Squeezy plugin connects your Lemon Squeezy stores to your WordPress site to bring your products right into the block editor.', 'lemonsqueezy')}</p>
 						</div>
 						<div className="lsq-content lsq-content--step">
 							<h2>{__('1. Create an API key', 'lemonsqueezy')}</h2>
