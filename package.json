@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "checkFormat": "prettier --check \"**/*.{js,json,css,scss}\"",
-        "format": "prettier --write \"**/*.{js,json,css,scss}\"",
+        "checkFormat": "prettier --check \"./src/**/*.{js,json,css,scss}\"",
+        "format": "prettier --write \"./src/**/*.{js,json,css,scss}\"",
         "lint": "eslint src",
         "start": "webpack --mode=development --watch",
         "build": "npm run lint && webpack --mode=production && gulp bundle",

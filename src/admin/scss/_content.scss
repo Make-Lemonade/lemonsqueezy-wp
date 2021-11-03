@@ -1,50 +1,50 @@
 // Block.
 .lsq-content {
-	margin-bottom: 30px;
+    margin-bottom: 30px;
 
-	&:last-child {
-		margin-bottom: 0;
-	}
+    &:last-child {
+        margin-bottom: 0;
+    }
 
-	p {
-		font-size: 16px;
-	}
+    p {
+        font-size: 16px;
+    }
 
-	h1 {
-		font-size: 34px;
-		font-weight: 400;
-		line-height: 1.2;
-		margin-top: 0;
+    h1 {
+        font-size: 34px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin-top: 0;
 
-		@include breakpoint($bp-sm) {
-			font-size: 40px;
-		}
+        @include breakpoint($bp-sm) {
+            font-size: 40px;
+        }
 
-		@include breakpoint($bp-md) {
-			font-size: 46px;
-		}
-	}
+        @include breakpoint($bp-md) {
+            font-size: 46px;
+        }
+    }
 
-	h2 {
-		font-size: 18px;
-		font-weight: 400;
-		line-height: 1.2;
+    h2 {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.2;
 
-		@include breakpoint($bp-sm) {
-			font-size: 20px;
-		}
+        @include breakpoint($bp-sm) {
+            font-size: 20px;
+        }
 
-		@include breakpoint($bp-md) {
-			font-size: 22px;
-		}
-	}
+        @include breakpoint($bp-md) {
+            font-size: 22px;
+        }
+    }
 }
 
 // Modifiers.
 .lsq-content--intro {
-	margin-bottom: 50px;
+    margin-bottom: 50px;
 
-	p {
-		font-size: 18px;
-	}
+    p {
+        font-size: 18px;
+    }
 }

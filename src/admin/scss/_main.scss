@@ -1,33 +1,33 @@
 // Block.
 .lsq-main {
-	display: flex;
-	align-items: flex-start;
-	flex-direction: column-reverse;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column-reverse;
 
-	@include breakpoint($bp-md) {
-		flex-direction: row;
-	}
+    @include breakpoint($bp-md) {
+        flex-direction: row;
+    }
 }
 
 // Elements.
 .lsq-main__column {
-	width: 100%;
-	padding: 60px 50px;
-	box-sizing: border-box;
+    width: 100%;
+    padding: 60px 50px;
+    box-sizing: border-box;
 
-	@include breakpoint($bp-md) {
-		width: 50%;
-	}
+    @include breakpoint($bp-md) {
+        width: 50%;
+    }
 
-	&--right {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #fff;
+    &--right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
 
-		@include breakpoint($bp-md) {
-			background: transparent;
-			height: calc( 100vh - 114px );
-		}
-	}
+        @include breakpoint($bp-md) {
+            background: transparent;
+            height: calc(100vh - 114px);
+        }
+    }
 }

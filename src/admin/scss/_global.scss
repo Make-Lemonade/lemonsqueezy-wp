@@ -1,51 +1,51 @@
 body {
-	background: $c-background;
+    background: $c-background;
 }
 
 #wpbody-content {
-	padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 #lsq-plugin {
-	margin: 0 0 0 -10px;
-	font-size: 14px;
-	min-height: calc( 100vh - 32px );
-	position: relative;
+    margin: 0 0 0 -10px;
+    font-size: 14px;
+    min-height: calc(100vh - 32px);
+    position: relative;
 
-	@include breakpoint($bp-sm) {
-		margin: 0 0 0 -20px;
-	}
+    @include breakpoint($bp-sm) {
+        margin: 0 0 0 -20px;
+    }
 
-	.wp-responsive-open & {
-		margin: 0 0 0 -30px;
-	}
+    .wp-responsive-open & {
+        margin: 0 0 0 -30px;
+    }
 
-	&:after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		width: 50%;
-		background: #fff;
-		z-index: -1;
-		display: none;
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 50%;
+        background: #fff;
+        z-index: -1;
+        display: none;
 
-		@include breakpoint($bp-md) {
-			display: block;
-		}
-	}
+        @include breakpoint($bp-md) {
+            display: block;
+        }
+    }
 
-	a {
-		color: $c-brand-1;
-		text-decoration: none;
+    a {
+        color: $c-brand-1;
+        text-decoration: none;
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 #wpfooter {
-	display: none;
+    display: none;
 }
