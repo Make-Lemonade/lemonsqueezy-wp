@@ -77,12 +77,14 @@ class LSQ_Rest_Controller {
 		// Check LS API connection.
 		$api_key       = get_option( 'lsq_api_key' );
 		$is_valid      = false;
+		$user          = null;
 		$error_message = '';
 
 		if ( ! isset( $api_key ) || empty( $api_key ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
+					'success' => $is_valid,
+					'user' => $user,
 					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
 				),
 				401
@@ -90,7 +92,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$response = wp_remote_get(
-			LSQ_API_URL . '/v1/stores/',
+			LSQ_API_URL . '/v1/users/me',
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -104,6 +106,9 @@ class LSQ_Rest_Controller {
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$is_valid = true;
+
+				$body = json_decode( $response['body'] );
+				$user = $body->data;
 			} else {
 				$error_message = wp_remote_retrieve_response_message( $response );
 			}
@@ -111,16 +116,13 @@ class LSQ_Rest_Controller {
 			$error_message = $response->get_error_message();
 		}
 
-		// Now return the result to our endpoint.
-		if ( $is_valid ) {
-			return new \WP_REST_Response( array( 'success' => true ), 200 );
-		}
 		return new \WP_REST_Response(
 			array(
-				'success' => false,
+				'success' => $is_valid,
+				'user' => $user,
 				'error'   => $error_message,
 			),
-			400
+			$is_valid ? 200 : 400
 		);
 	}
 
