@@ -103,14 +103,6 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		if ( ! session_id() ) {
-			session_start(
-				array(
-					'read_and_close' => true,
-				)
-			);
-		}
-
 		register_setting(
 			'lsq_admin_settings',
 			'lsq_api_key',
@@ -127,9 +119,15 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function load_page_hook() {
+		if ( ! session_id() ) {
+			session_start();
+		}
+
 		$redirect_uri = admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' );
 		$lsq_oauth = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID, $redirect_uri );
 		$lsq_oauth->handle_authorize();
 		$lsq_oauth->handle_callback();
+
+		session_write_close();
 	}
 }
