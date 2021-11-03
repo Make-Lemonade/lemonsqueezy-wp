@@ -239,9 +239,13 @@ class AdminSettings extends Component {
                                             <Button
                                                 isPrimary
                                                 isLarge
-                                                isBusy={this.state.isAPILoading}
+                                                isBusy={
+                                                    this.state.isAPILoading ||
+                                                    !this.state.isSettingsLoaded
+                                                }
                                                 disabled={
-                                                    this.state.isAPILoading
+                                                    this.state.isAPILoading ||
+                                                    !this.state.isSettingsLoaded
                                                 }
                                                 onClick={() =>
                                                     this.oauthAuthorize()
