@@ -5,8 +5,16 @@ const lsqUrl = "https://www.lemonsqueezy.com/";
 
 const { __ } = wp.i18n;
 
-const { BaseControl, Button, PanelBody, PanelRow, Card, CardMedia, CardBody } =
-    wp.components;
+const {
+    BaseControl,
+    Button,
+    PanelBody,
+    PanelRow,
+    Card,
+    CardMedia,
+    CardBody,
+    Notice
+} = wp.components;
 
 const { render, Component, Fragment } = wp.element;
 
@@ -19,7 +27,8 @@ class AdminSettings extends Component {
             isAPILoading: false,
             isAPISaving: false,
             lsqApiKey: "",
-            lsqUser: null
+            lsqUser: null,
+            oauth: window.lsq_oauth || {}
         };
     }
 
@@ -189,6 +198,15 @@ class AdminSettings extends Component {
                                     id="lsq-options-lsq-api"
                                     className="lsq-panel__control"
                                 >
+                                    {this.state.oauth.error && (
+                                        <Notice
+                                            status="error"
+                                            className="lsq-notice"
+                                        >
+                                            An error occurred:&nbsp;
+                                            {this.state.oauth.error}
+                                        </Notice>
+                                    )}
                                     {this.state.lsqUser && (
                                         <Card size="small" className="lsq-card">
                                             <CardMedia>
