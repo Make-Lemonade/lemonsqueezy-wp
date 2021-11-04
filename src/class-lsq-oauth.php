@@ -71,7 +71,24 @@ class LSQ_OAuth {
 	 * @return void
 	 */
 	public function handle_callback() {
-		if ( empty( $_GET['oauth_callback'] ) || empty( $_SESSION['lsq_oauth_code'] ) || empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
+		if ( empty( $_GET['oauth_callback'] ) ) {
+			return;
+		}
+
+		if ( ! empty( $_GET['error'] ) ) {
+			wp_add_inline_script(
+				'lemonsqueezy-admin-script',
+				'window.lsq_oauth = ' . json_encode(
+					array(
+						'error' => filter_var( $_GET['error'], FILTER_SANITIZE_STRING ),
+					)
+				),
+				'before'
+			);
+			return;
+		}
+
+		if ( empty( $_SESSION['lsq_oauth_code'] ) || empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
 			return;
 		}
 
@@ -79,7 +96,16 @@ class LSQ_OAuth {
 		$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_STRING ) : null;
 
 		if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
-			throw new \Exception( __( 'Invalid oauth state/code', 'lemon-squeezy' ) );
+			wp_add_inline_script(
+				'lemonsqueezy-admin-script',
+				'window.lsq_oauth = ' . json_encode(
+					array(
+						'error' => __( 'Invalid oauth state/code', 'lemon-squeezy' ),
+					)
+				),
+				'before'
+			);
+			return;
 		}
 
 		$response = wp_remote_post(
@@ -96,7 +122,16 @@ class LSQ_OAuth {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			throw new \Exception( $response->get_error_message() );
+			wp_add_inline_script(
+				'lemonsqueezy-admin-script',
+				'window.lsq_oauth = ' . json_encode(
+					array(
+						'error' => $response->get_error_message(),
+					)
+				),
+				'before'
+			);
+			return;
 		}
 
 		$data = json_decode( $response['body'] );
