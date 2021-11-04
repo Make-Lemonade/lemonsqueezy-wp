@@ -65,6 +65,19 @@ class LSQ_Rest_Controller {
 				},
 			)
 		);
+
+		register_rest_route(
+			$namespace,
+			'/update/',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_update' ),
+				'args'                => array(),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
+				},
+			)
+		);
 	}
 
 	/**
@@ -190,6 +203,68 @@ class LSQ_Rest_Controller {
 			}
 		} else {
 			$error_message = $response->get_error_message();
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'success' => false,
+				'error'   => $error_message,
+			),
+			400
+		);
+	}
+
+	/**
+	 * Validate and return a software update from the Lemon Squeezy API.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Request
+	 */
+	public function get_update( $request ) {
+		$api_key       = get_option( 'lsq_api_key' );
+		if ( empty( $api_key ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
+
+		$license_key = filter_var( $request->get_param( 'license_key' ), FILTER_SANITIZE_STRING );
+		if ( empty( $license_key ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Missing license_key', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
+
+		$lsq_updater = new LSQ_Updater();
+
+		$license = $lsq_updater->get_license( $license_key );
+		if ( empty( $license->valid ) || empty( $license->license_key->id ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Invalid license_key', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
+
+		$license_key_obj = $lsq_updater->get_license_key( $license->license_key->id );
+		if ( empty( $license_key_obj ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Error fetching license_key', 'lemon-squeezy' ),
+				),
+				401
+			);
 		}
 
 		return new \WP_REST_Response(

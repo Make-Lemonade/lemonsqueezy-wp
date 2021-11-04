@@ -47,6 +47,7 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 
 		// Initialize classes.
 		include_once LSQ_PATH . 'src/class-lsq-oauth.php';
+		include_once LSQ_PATH . 'src/class-lsq-updater.php';
 		include_once LSQ_PATH . 'src/class-lsq-admin.php';
 		include_once LSQ_PATH . 'src/class-lsq-rest-controller.php';
 		include_once LSQ_PATH . 'src/class-lsq-register-block.php';
