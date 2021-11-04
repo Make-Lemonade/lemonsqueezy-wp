@@ -144,33 +144,14 @@ class AdminSettings extends Component {
                         </div>
                         <div className="lsq-content lsq-content--step">
                             <h2>
-                                {__("1. Create an API key", "lemonsqueezy")}
-                            </h2>
-                            <p>
                                 {__(
-                                    "To get started, you need to",
-                                    "lemonsqueezy"
-                                )}{" "}
-                                <a
-                                    href="https://app.lemonsqueezy.com/account"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    {__("create an API key", "lemonsqueezy")}
-                                </a>{" "}
-                                {__(
-                                    "via your Lemon Squeezy dashboard. In your dashboard, click your avatar in the upper right hand corner, click Account, and then scroll to the bottom of the Account Settings panel to create a new API key.",
+                                    "1. Connect to Lemon Squeezy",
                                     "lemonsqueezy"
                                 )}
-                            </p>
-                        </div>
-                        <div className="lsq-content lsq-content--step">
-                            <h2>
-                                {__("2. Add your key here", "lemonsqueezy")}
                             </h2>
                             <p>
                                 {__(
-                                    "Once you have your API key, paste it in the Lemon Squeezy API Key field on the right and save it. Once saved, your store will be connected to your WordPress site!",
+                                    'To get started, use the "Connect to Lemon Squeezy" button on the right. When prompted, click "Authorize" to connect your Lemon Squeezy account with this WordPress site.',
                                     "lemonsqueezy"
                                 )}
                             </p>
@@ -178,7 +159,7 @@ class AdminSettings extends Component {
                         <div className="lsq-content lsq-content--step">
                             <h2>
                                 {__(
-                                    "3. Add the Lemon Squeezy block and start selling!",
+                                    "2. Add the Lemon Squeezy block and start selling!",
                                     "lemonsqueezy"
                                 )}
                             </h2>
