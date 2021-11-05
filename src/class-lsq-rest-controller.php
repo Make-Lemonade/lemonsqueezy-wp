@@ -257,22 +257,74 @@ class LSQ_Rest_Controller {
 		}
 
 		$license_key_obj = $lsq_updater->get_license_key( $license->license_key->id );
-		if ( empty( $license_key_obj ) ) {
+		if ( empty( $license_key_obj ) || empty( $license_key_obj->data->relationships->{'order-item'}->data ) ) {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
 					'error'   => __( 'Error fetching license_key', 'lemon-squeezy' ),
 				),
-				401
+				400
 			);
 		}
 
+		$order_item = $lsq_updater->relation_from_license_key( $license_key_obj, 'order-item' );
+		if ( ! $order_item ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Invalid order item', 'lemon-squeezy' ),
+				),
+				400
+			);
+		}
+
+		$files = $lsq_updater->get_files( $order_item->attributes->variant_id );
+		if ( empty( $files->data ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Missing files', 'lemon-squeezy' ),
+				),
+				400
+			);
+		}
+
+		$sorted_files = $lsq_updater->sort_files_by_version( $files->data );
+		$latest_file = array_pop( $sorted_files );
+		if ( empty( $latest_file->attributes->version ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Missing file version', 'lemon-squeezy' ),
+				),
+				400
+			);
+		}
+
+		$store = $lsq_updater->relation_from_license_key( $license_key_obj, 'store' );
+		$product = $lsq_updater->relation_from_license_key( $license_key_obj, 'product' );
+
 		return new \WP_REST_Response(
 			array(
-				'success' => false,
+				'success' => true,
 				'error'   => $error_message,
+				'update' => array(
+					'version'        => $latest_file->attributes->version,
+					'tested'         => null,
+					'requires'       => null,
+					'author'         => $store ? $store->attributes->name : null,
+					'author_profile' => $store ? $store->attributes->url : null,
+					'download_link'  => $latest_file->attributes->download_url,
+					'trunk'          => $latest_file->attributes->download_url,
+					'requires_php'   => null,
+					'last_updated'   => null,
+					'sections' => array(
+						'description' => $product ? $product->attributes->description : null,
+						'changelog'   => $latest_file->attributes->version,
+					),
+				),
 			),
-			400
+			200
 		);
 	}
 }
