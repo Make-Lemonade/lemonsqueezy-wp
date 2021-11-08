@@ -8,10 +8,12 @@ const { __ } = wp.i18n;
 const {
     BaseControl,
     Button,
-    // ExternalLink,
     PanelBody,
-    PanelRow
-    // Notice,
+    PanelRow,
+    Card,
+    CardMedia,
+    CardBody,
+    Notice
 } = wp.components;
 
 const { render, Component, Fragment } = wp.element;
@@ -21,10 +23,12 @@ class AdminSettings extends Component {
         super(...arguments);
 
         this.state = {
-            isAPILoaded: false,
+            isSettingsLoaded: false,
+            isAPILoading: false,
             isAPISaving: false,
-            lsq_api_key: "",
-            isApiConnectable: false
+            lsqApiKey: "",
+            lsqUser: null,
+            oauth: window.lsq_oauth || {}
         };
     }
 
@@ -32,18 +36,39 @@ class AdminSettings extends Component {
         wp.api.loadPromise.then(() => {
             this.settings = new wp.api.models.Settings();
 
-            if (false === this.state.isAPILoaded) {
+            if (false === this.state.isSettingsLoaded) {
                 this.settings.fetch().then(response => {
                     this.setState({
-                        lsq_api_key: response.lsq_api_key,
-                        isApiConnectable: Boolean(response.lsq_api_key),
-                        isAPILoaded: true
+                        lsqApiKey: response.lsq_api_key,
+                        isSettingsLoaded: true
                     });
 
                     this.checkApi();
                 });
             }
         });
+    }
+
+    checkApi() {
+        this.setState({
+            isAPILoading: true
+        });
+
+        return fetch("/wp-json/lsq/v1/validate")
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        isAPILoading: false,
+                        lsqUser: response.user
+                    });
+                } else {
+                    this.setState({
+                        isAPILoading: false,
+                        lsqUser: null
+                    });
+                }
+            });
     }
 
     changeOptions(option, value) {
@@ -54,41 +79,34 @@ class AdminSettings extends Component {
             [option]: value
         });
 
-        model.save().then(response => {
+        return model.save().then(response => {
             this.setState({
                 [option]: response[option],
                 isAPISaving: false
             });
-
-            this.checkApi();
         });
     }
 
-    checkApi() {
-        return fetch("/wp-json/lsq/v1/validate")
-            .then(response => response.json())
-            .then(response => {
-                if (true == response.success) {
-                    this.setState({
-                        isApiConnectable: true
-                    });
-                } else {
-                    this.setState({
-                        isApiConnectable: false
-                    });
-                }
-            });
+    oauthAuthorize() {
+        window.location.href =
+            "/wp-admin/admin.php?page=lemonsqueezy&oauth_authorize=1";
     }
 
-    clearKey() {
-        this.setState({
-            lsq_api_key: "",
-            isApiConnectable: false
+    oauthDisconnect() {
+        this.changeOptions("lsq_api_key", "").then(() => {
+            this.setState({
+                lsqUser: null
+            });
         });
     }
 
     render() {
-        const isApiConnectable = this.state.isApiConnectable;
+        const panelLabel = this.state.lsqUser
+            ? __("Connected to Lemon Squeezy", "lemonsqueezy")
+            : __("Connect to Lemon Squeezy", "lemonsqueezy");
+        let buttonLabel = this.state.isAPILoading
+            ? __("Checking...", "lemonsqueezy")
+            : __("Connect to Lemon Squeezy", "lemonsqueezy");
 
         return (
             <Fragment>
@@ -126,33 +144,14 @@ class AdminSettings extends Component {
                         </div>
                         <div className="lsq-content lsq-content--step">
                             <h2>
-                                {__("1. Create an API key", "lemonsqueezy")}
-                            </h2>
-                            <p>
                                 {__(
-                                    "To get started, you need to",
-                                    "lemonsqueezy"
-                                )}{" "}
-                                <a
-                                    href="https://app.lemonsqueezy.com/account"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    {__("create an API key", "lemonsqueezy")}
-                                </a>{" "}
-                                {__(
-                                    "via your Lemon Squeezy dashboard. In your dashboard, click your avatar in the upper right hand corner, click Account, and then scroll to the bottom of the Account Settings panel to create a new API key.",
+                                    "1. Connect to Lemon Squeezy",
                                     "lemonsqueezy"
                                 )}
-                            </p>
-                        </div>
-                        <div className="lsq-content lsq-content--step">
-                            <h2>
-                                {__("2. Add your key here", "lemonsqueezy")}
                             </h2>
                             <p>
                                 {__(
-                                    "Once you have your API key, paste it in the Lemon Squeezy API Key field on the right and save it. Once saved, your store will be connected to your WordPress site!",
+                                    'To get started, use the "Connect to Lemon Squeezy" button on the right. When prompted, click "Authorize" to connect your Lemon Squeezy account with this WordPress site.',
                                     "lemonsqueezy"
                                 )}
                             </p>
@@ -160,7 +159,7 @@ class AdminSettings extends Component {
                         <div className="lsq-content lsq-content--step">
                             <h2>
                                 {__(
-                                    "3. Add the Lemon Squeezy block and start selling!",
+                                    "2. Add the Lemon Squeezy block and start selling!",
                                     "lemonsqueezy"
                                 )}
                             </h2>
@@ -176,104 +175,87 @@ class AdminSettings extends Component {
                         <PanelBody className="lsq-panel">
                             <PanelRow className="lsq-panel__row">
                                 <BaseControl
-                                    label={__(
-                                        "Add your Lemon Squeezy API key",
-                                        "lemonsqueezy"
-                                    )}
+                                    label={panelLabel}
                                     id="lsq-options-lsq-api"
                                     className="lsq-panel__control"
                                 >
-                                    <div className="lsq-field-wrapper">
-                                        <input
-                                            type={
-                                                isApiConnectable
-                                                    ? "password"
-                                                    : "text"
-                                            }
-                                            id="lsq-options-lsq-api"
-                                            value={this.state.lsq_api_key}
-                                            placeholder={__(
-                                                "Enter an API key",
-                                                "lemonsqueezy"
-                                            )}
-                                            disabled={
-                                                isApiConnectable ? "true" : ""
-                                            }
-                                            onChange={e =>
-                                                this.setState({
-                                                    lsq_api_key: e.target.value
-                                                })
-                                            }
-                                            className="lsq-field lsq-field--text"
-                                        />
-                                        {this.state.lsq_api_key
-                                            ? [
-                                                  isApiConnectable ? (
-                                                      <Fragment>
-                                                          <span className="lsq-field-wrapper__icon dashicons dashicons-yes"></span>
-                                                          <p className="success">
-                                                              {__(
-                                                                  "Your license key was validated successfully.",
-                                                                  "lemonsqueezy"
-                                                              )}
-                                                          </p>
-                                                          <p>
-                                                              <span
-                                                                  className="reset"
-                                                                  onClick={() =>
-                                                                      this.clearKey()
-                                                                  }
-                                                              >
-                                                                  {__(
-                                                                      "Reset license key",
-                                                                      "lemonsqueezy"
-                                                                  )}
-                                                              </span>
-                                                          </p>
-                                                      </Fragment>
-                                                  ) : (
-                                                      <Fragment>
-                                                          <span className="lsq-field-wrapper__icon dashicons dashicons-no"></span>
-                                                          <p className="error">
-                                                              {__(
-                                                                  "There was an error validating your license key.",
-                                                                  "lemonsqueezy"
-                                                              )}
-                                                          </p>
-                                                      </Fragment>
-                                                  )
-                                              ]
-                                            : ""}
-                                    </div>
-                                    <div className="lsq-panel__buttons">
-                                        <Button
-                                            isPrimary
-                                            isLarge
-                                            disabled={this.state.isAPISaving}
-                                            onClick={() =>
-                                                this.changeOptions(
-                                                    "lsq_api_key",
-                                                    this.state.lsq_api_key
-                                                )
-                                            }
-                                            className="lsq-button lsq-button--primary"
+                                    {this.state.oauth.error && (
+                                        <Notice
+                                            status="error"
+                                            className="lsq-notice"
                                         >
-                                            {__("Save API Key", "lemonsqueezy")}
-                                        </Button>
+                                            An error occurred:&nbsp;
+                                            {this.state.oauth.error}
+                                        </Notice>
+                                    )}
+                                    {this.state.lsqUser && (
+                                        <Card size="small" className="lsq-card">
+                                            <CardMedia>
+                                                <img
+                                                    src={
+                                                        this.state.lsqUser
+                                                            .attributes
+                                                            .avatar_url
+                                                    }
+                                                    className="lsq-card__avatar"
+                                                />
+                                            </CardMedia>
+                                            <CardBody className="lsq-card__body">
+                                                <p>Connected as:</p>
+                                                <h3>
+                                                    {
+                                                        this.state.lsqUser
+                                                            .attributes.name
+                                                    }
+                                                </h3>
+                                                <div>
+                                                    {
+                                                        this.state.lsqUser
+                                                            .attributes.email
+                                                    }
+                                                </div>
+                                            </CardBody>
+                                        </Card>
+                                    )}
+                                    <div className="lsq-panel__buttons">
+                                        {this.state.lsqUser && (
+                                            <Button
+                                                isPrimary
+                                                isLarge
+                                                isBusy={this.state.isAPISaving}
+                                                disabled={
+                                                    this.state.isAPISaving
+                                                }
+                                                onClick={() =>
+                                                    this.oauthDisconnect()
+                                                }
+                                                className="lsq-button lsq-button--primary"
+                                            >
+                                                Disconnect from Lemon Squeezy
+                                            </Button>
+                                        )}
+                                        {!this.state.lsqUser && (
+                                            <Button
+                                                isPrimary
+                                                isLarge
+                                                isBusy={
+                                                    this.state.isAPILoading ||
+                                                    !this.state.isSettingsLoaded
+                                                }
+                                                disabled={
+                                                    this.state.isAPILoading ||
+                                                    !this.state.isSettingsLoaded
+                                                }
+                                                onClick={() =>
+                                                    this.oauthAuthorize()
+                                                }
+                                                className="lsq-button lsq-button--primary"
+                                            >
+                                                {buttonLabel}
+                                            </Button>
+                                        )}
                                     </div>
                                     <div className="lsq-panel__footer">
-                                        <p>
-                                            <a
-                                                href="https://www.lemonsqueezy.com/docs/api"
-                                                target="_blank"
-                                                rel="noreferrer"
-                                            >
-                                                {__(
-                                                    "View API documentation",
-                                                    "lemonsqueezy"
-                                                )}
-                                            </a>
-                                        </p>
                                         <p>
                                             &copy; {new Date().getFullYear()}{" "}
                                             Lemon Squeezy, LLC{" "}

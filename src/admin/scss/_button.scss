@@ -1,5 +1,6 @@
 // Block.
 .lsq-button {
+    position: relative;
     background: $c-brand-1 !important;
     color: #fff !important;
     height: 40px;
@@ -15,6 +16,25 @@
     &:hover {
         box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.13);
         text-decoration: none !important;
+    }
+
+    &:disabled {
+        opacity: 0.5 !important;
+    }
+
+    &.is-busy::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        right: 16px;
+        bottom: 0;
+        margin: auto;
+        border: 2px solid transparent;
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        animation: button-loading-spinner 1s ease infinite;
     }
 }
 
@@ -55,5 +75,15 @@
     &:hover {
         background: #fff;
         color: $c-brand-1;
+    }
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
     }
 }

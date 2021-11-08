@@ -24,6 +24,12 @@ define( 'LSQ_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 if ( ! defined( 'LSQ_API_URL' ) ) {
 	define( 'LSQ_API_URL', 'https://api.lemonsqueezy.com' );
 }
+if ( ! defined( 'LSQ_APP_URL' ) ) {
+	define( 'LSQ_APP_URL', 'https://app.lemonsqueezy.com' );
+}
+if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
+	define( 'LSQ_OAUTH_CLIENT_ID', 'TODO' );
+}
 
 // Bootmanager for Lemon Squeety plugin.
 if ( ! function_exists( 'lsq_run_plugin' ) ) {
@@ -40,6 +46,7 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 		load_plugin_textdomain( 'lemonsqueezy', false, $textdomain_dir );
 
 		// Initialize classes.
+		include_once LSQ_PATH . 'src/class-lsq-oauth.php';
 		include_once LSQ_PATH . 'src/class-lsq-admin.php';
 		include_once LSQ_PATH . 'src/class-lsq-rest-controller.php';
 		include_once LSQ_PATH . 'src/class-lsq-register-block.php';
