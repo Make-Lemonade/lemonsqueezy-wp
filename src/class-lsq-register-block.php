@@ -33,7 +33,7 @@ class LSQ_Register_Block {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'render_block', array( $this, 'filter_button_block_markup' ), 10, 2 );
-		add_filter( 'block_categories', array( $this, 'add_block_categories' ), 10, 2 );
+		add_filter( 'block_categories_all', array( $this, 'add_block_categories' ), 10, 2 );
 	}
 
 	/**
