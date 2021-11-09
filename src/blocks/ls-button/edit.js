@@ -17,7 +17,6 @@ class Edit extends Component {
                 }
             });
 
-
         this.checkApi();
     }
 
@@ -70,8 +69,6 @@ class Edit extends Component {
         const { attributes } = this.props;
         const { content, store, product, overlay } = attributes;
 
-        console.log(this.state);
-
         return (
             <div className="lsq-block">
                 <h4>
@@ -80,8 +77,7 @@ class Edit extends Component {
                 </h4>
                 {this.state ? (
                     [
-                        this.state.isApiConnectable ? (
-                            
+                        this.state.isApiConnectable ? (  
                             <Fragment>
                                 <p>
                                     <SelectControl
