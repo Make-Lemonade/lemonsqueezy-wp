@@ -6,13 +6,13 @@ function bundle() {
         .src([
             "**/*",
             "!node_modules/**",
-            "!src/**",
             "!bundled/**",
             "!gulpfile.js",
             "!package.json",
             "!package-lock.json",
             "!webpack.config.js",
-            "!.gitignore"
+            "!phpcs.xml",
+            "!yarn.lock"
         ])
         .pipe(zip("lemonsqueezy.zip"))
         .pipe(gulp.dest("bundled"));
