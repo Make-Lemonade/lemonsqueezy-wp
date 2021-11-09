@@ -33,7 +33,7 @@ class LSQ_Register_Block {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'render_block', array( $this, 'filter_button_block_markup' ), 10, 2 );
-		add_filter( 'block_categories', array( $this, 'add_block_categories' ), 10, 2 );
+		add_filter( 'block_categories_all', array( $this, 'add_block_categories' ), 10, 2 );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class LSQ_Register_Block {
 			$purchase_link = $args['product'];
 
 			// If overlay is activated we have to include the script and add parameter to URL.
-			if ( $args['overlay'] ) {
+			if ( ! empty( $args['overlay'] ) ) {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 
 				$purchase_link = $purchase_link . '?embed=1';

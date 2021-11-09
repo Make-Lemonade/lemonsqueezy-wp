@@ -191,14 +191,56 @@ class AdminSettings extends Component {
                                     {this.state.lsqUser && (
                                         <Card size="small" className="lsq-card">
                                             <CardMedia>
-                                                <img
-                                                    src={
-                                                        this.state.lsqUser
-                                                            .attributes
-                                                            .avatar_url
-                                                    }
-                                                    className="lsq-card__avatar"
-                                                />
+                                                <div className="lsq-avatar">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="80px"
+                                                        height="80px"
+                                                        viewBox="0 0 80 80"
+                                                        version="1.1"
+                                                    >
+                                                        <circle
+                                                            fill={
+                                                                this.state
+                                                                    .lsqUser
+                                                                    .attributes
+                                                                    .color
+                                                            }
+                                                            width="80"
+                                                            height="80"
+                                                            cx="40"
+                                                            cy="40"
+                                                            r="40"
+                                                        />
+                                                        <text
+                                                            x="50%"
+                                                            y="50%"
+                                                            alignmentBaseline="middle"
+                                                            textAnchor="middle"
+                                                            fontSize="32"
+                                                            fontWeight="400"
+                                                            dy=".1em"
+                                                            dominantBaseline="middle"
+                                                            fill="#ffffff"
+                                                        >
+                                                            {this.state.lsqUser.attributes.name
+                                                                .charAt(0)
+                                                                .toUpperCase()}
+                                                        </text>
+                                                    </svg>
+                                                    {this.state.lsqUser
+                                                        .attributes
+                                                        .avatar_url && (
+                                                        <img
+                                                            src={
+                                                                this.state
+                                                                    .lsqUser
+                                                                    .attributes
+                                                                    .avatar_url
+                                                            }
+                                                        />
+                                                    )}
+                                                </div>
                                             </CardMedia>
                                             <CardBody className="lsq-card__body">
                                                 <p>Connected as:</p>
