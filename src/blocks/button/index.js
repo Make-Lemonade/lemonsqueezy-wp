@@ -50,15 +50,15 @@ function extendAttributes(settings) {
 const extendControls = createHigherOrderComponent(BlockEdit => {
     return class Edit extends Component {
         componentDidMount() {
-            fetch("/wp-json/lsq/v1/products")
-                .then(response => response.json())
-                .then(response => {
-                    if (true == response.success) {
-                        this.setState({
-                            products: response.products
-                        });
-                    }
-                });
+            fetch("/wp-json/lsq/v1/stores")
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        stores: response.stores
+                    });
+                }
+            });
 
             this.checkApi();
         }
@@ -78,8 +78,26 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                     }
                 });
         }
+
+        getProducts( store_id ) {
+            return fetch("/wp-json/lsq/v1/products?store_id=" + store_id )
+                .then(response => response.json())
+                .then(response => {
+                    if (true == response.success) {
+                        this.setState({
+                            products: response.products
+                        });
+                    }
+                });
+        }
+
         onChangeProduct = product => {
             this.props.setAttributes({ product: product });
+        };
+
+        onChangeStore = store => {
+            this.getProducts(store);
+            this.props.setAttributes({ store });
         };
 
         onChangeOverlay = overlay => {
@@ -88,7 +106,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
 
         render() {
             const { attributes } = this.props;
-            const { product, overlay } = attributes;
+            const { store, product, overlay } = attributes;
 
             return (
                 <Fragment>
@@ -102,6 +120,21 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 [
                                     this.state.isApiConnectable ? (
                                         <Fragment>
+                                             <p>
+                                                <SelectControl
+                                                    label={__(
+                                                        "Select Store",
+                                                        "lemonsqueezy"
+                                                    )}
+                                                    value={store}
+                                                    options={
+                                                        this.state.stores
+                                                    }
+                                                    onChange={
+                                                        this.onChangeStore
+                                                    }
+                                                />
+                                            </p>
                                             <p>
                                                 <SelectControl
                                                     label={__(

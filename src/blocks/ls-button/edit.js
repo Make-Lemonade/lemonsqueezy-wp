@@ -7,15 +7,16 @@ import { __ } from "@wordpress/i18n";
 
 class Edit extends Component {
     componentDidMount() {
-        fetch("/wp-json/lsq/v1/products")
+        fetch("/wp-json/lsq/v1/stores")
             .then(response => response.json())
             .then(response => {
                 if (true == response.success) {
                     this.setState({
-                        products: response.products
+                        stores: response.stores
                     });
                 }
             });
+
 
         this.checkApi();
     }
@@ -36,12 +37,29 @@ class Edit extends Component {
             });
     }
 
+    getProducts( store_id ) {
+        return fetch("/wp-json/lsq/v1/products?store_id=" + store_id )
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        products: response.products
+                    });
+                }
+            });
+    }
+
     onChangeContent = content => {
         this.props.setAttributes({ content });
     };
 
-    onChangeproduct = product => {
+    onChangeProduct = product => {
         this.props.setAttributes({ product });
+    };
+
+    onChangeStore = store => {
+        this.getProducts(store);
+        this.props.setAttributes({ store });
     };
 
     onChangeOverlay = overlay => {
@@ -50,7 +68,9 @@ class Edit extends Component {
 
     render() {
         const { attributes } = this.props;
-        const { content, product, overlay } = attributes;
+        const { content, store, product, overlay } = attributes;
+
+        console.log(this.state);
 
         return (
             <div className="lsq-block">
@@ -61,12 +81,20 @@ class Edit extends Component {
                 {this.state ? (
                     [
                         this.state.isApiConnectable ? (
+                            
                             <Fragment>
+                                <p>
+                                    <SelectControl
+                                        value={store}
+                                        options={this.state.stores}
+                                        onChange={this.onChangeStore}
+                                    />
+                                </p>
                                 <p>
                                     <SelectControl
                                         value={product}
                                         options={this.state.products}
-                                        onChange={this.onChangeproduct}
+                                        onChange={this.onChangeProduct}
                                     />
                                 </p>
                                 <p>
