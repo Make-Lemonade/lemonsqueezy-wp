@@ -28,7 +28,7 @@ if ( ! defined( 'LSQ_APP_URL' ) ) {
 	define( 'LSQ_APP_URL', 'https://app.lemonsqueezy.com' );
 }
 if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
-	define( 'LSQ_OAUTH_CLIENT_ID', 'TODO' );
+	define( 'LSQ_OAUTH_CLIENT_ID', '94d59e1b-7459-4371-a131-7ad050c8ca0d' );
 }
 
 // Bootmanager for Lemon Squeety plugin.
