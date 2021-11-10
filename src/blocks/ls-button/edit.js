@@ -91,6 +91,7 @@ class Edit extends Component {
         });
         this.getProducts(store);
         this.props.setAttributes({ store });
+        this.onChangeProduct();
     };
 
     onChangeOverlay = overlay => {
@@ -169,13 +170,13 @@ class Edit extends Component {
                                         help={
                                             overlay
                                                 ? __(
-                                                      "Your checkout will be opened in a modal window.",
-                                                      "lemonsqueezy"
-                                                  )
+                                                    "Your checkout will be opened in a modal window.",
+                                                    "lemonsqueezy"
+                                                )
                                                 : __(
-                                                      "Your customer will be redirected to your checkout page.",
-                                                      "lemonsqueezy"
-                                                  )
+                                                    "Your customer will be redirected to your checkout page.",
+                                                    "lemonsqueezy"
+                                                )
                                         }
                                         checked={overlay}
                                         onChange={this.onChangeOverlay}
