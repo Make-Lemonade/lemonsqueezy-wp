@@ -1,8 +1,6 @@
 {
     "name": "lemonsqueezy",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "private": true,
     "scripts": {
         "checkFormat": "prettier --check \"./src/**/*.{js,json,css,scss}\"",
         "format": "prettier --write \"./src/**/*.{js,json,css,scss}\"",
