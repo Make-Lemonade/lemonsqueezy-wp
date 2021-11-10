@@ -11,6 +11,7 @@ class Edit extends Component {
         this.state = {
             stores: [],
             products: [],
+            isCheckingApi: true,
             isApiConnectable: false,
             isLoadingProducts: false
         };
@@ -47,6 +48,11 @@ class Edit extends Component {
                         isApiConnectable: false
                     });
                 }
+            })
+            .finally(() => {
+                this.setState({
+                    isCheckingApi: false
+                });
             });
     }
 
@@ -101,7 +107,7 @@ class Edit extends Component {
                     <img src={lsqIcon} />
                     {__("Lemon Squeezy Buy Button", "lemonsqueezy")}
                 </h4>
-                {this.state ? (
+                {this.state && !this.state.isCheckingApi ? (
                     [
                         this.state.isApiConnectable ? (
                             <Fragment>
