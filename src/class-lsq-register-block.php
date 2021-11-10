@@ -111,15 +111,18 @@ class LSQ_Register_Block {
 			}
 
 			$purchase_link = $args['product'];
+			$classes = 'wp-block-button__link';
 
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 
 				$purchase_link = $purchase_link . '?embed=1';
+				$classes .= ' lemonsqueezy-button';
 			}
 
-			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="wp-block-button__link lemonsqueezy-button" href="' . $purchase_link . '">', $block_content );
+			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="' . $classes . '" href="' . $purchase_link . '">', $block_content );
+		}
 		}
 
 		return $block_content;

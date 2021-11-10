@@ -60,13 +60,21 @@ registerBlockType("lemonsqueezy/ls-button", {
 
         const embed_link = product + "?embed=1";
 
-        return (
+        return overlay ? (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
                     <a
                         className="wp-block-button__link lemonsqueezy-button"
-                        href={overlay ? embed_link : product}
+                        href={embed_link}
                     >
+                        {content}
+                    </a>
+                </div>
+            </div>
+        ) : (
+            <div className="wp-block-buttons">
+                <div className="wp-block-button">
+                    <a className="wp-block-button__link" href={product}>
                         {content}
                     </a>
                 </div>
