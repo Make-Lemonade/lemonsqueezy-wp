@@ -48,17 +48,29 @@ function extendAttributes(settings) {
 }
 
 const extendControls = createHigherOrderComponent(BlockEdit => {
+
     return class Edit extends Component {
+
         componentDidMount() {
-            fetch("/wp-json/lsq/v1/stores")
-            .then(response => response.json())
-            .then(response => {
-                if (true == response.success) {
-                    this.setState({
-                        stores: response.stores
-                    });
-                }
+
+            // Set initial state if there is non available from higher order component.
+            this.setState({
+                products: []
             });
+
+            fetch("/wp-json/lsq/v1/stores")
+                .then(response => response.json())
+                .then(response => {
+                    if (true == response.success) {
+                        this.setState({
+                            stores: response.stores
+                        });
+
+                        if (response.stores.length) {
+                            this.getProducts(response.stores[0].value);
+                        }
+                    }
+                });
 
             this.checkApi();
         }
@@ -79,8 +91,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                 });
         }
 
-        getProducts( store_id ) {
-            return fetch("/wp-json/lsq/v1/products?store_id=" + store_id )
+        getProducts(store_id) {
+            this.setState({
+                isLoadingProducts: true
+            });
+
+            return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
                 .then(response => response.json())
                 .then(response => {
                     if (true == response.success) {
@@ -88,6 +104,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                             products: response.products
                         });
                     }
+                })
+                .finally(() => {
+                    this.setState({
+                        isLoadingProducts: false
+                    });
                 });
         }
 
@@ -96,8 +117,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         };
 
         onChangeStore = store => {
+            this.setState({
+                products: []
+            });
             this.getProducts(store);
             this.props.setAttributes({ store });
+            this.onChangeProduct();
         };
 
         onChangeOverlay = overlay => {
@@ -107,6 +132,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         render() {
             const { attributes } = this.props;
             const { store, product, overlay } = attributes;
+
+            // If it's not a core button, do not include settings panel.
+            if (this.props.name !== "core/button") {
+                return <BlockEdit {...this.props} />;
+            }
 
             return (
                 <Fragment>
@@ -120,7 +150,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 [
                                     this.state.isApiConnectable ? (
                                         <Fragment>
-                                             <p>
+                                            <p>
                                                 <SelectControl
                                                     label={__(
                                                         "Select Store",
@@ -136,19 +166,34 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 />
                                             </p>
                                             <p>
-                                                <SelectControl
-                                                    label={__(
-                                                        "Select Product",
-                                                        "lemonsqueezy"
-                                                    )}
-                                                    value={product}
-                                                    options={
-                                                        this.state.products
-                                                    }
-                                                    onChange={
-                                                        this.onChangeProduct
-                                                    }
-                                                />
+                                                {this.state.isLoadingProducts ? (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "14px",
+                                                            color: "rgb(117, 117, 117)"
+                                                        }}
+                                                    >
+                                                        {__("Loading...", "lemonsqueezy")}
+                                                    </span>
+                                                ) : this.state.products.length ? (
+                                                    <SelectControl
+                                                        value={product}
+                                                        options={this.state.products}
+                                                        onChange={this.onChangeProduct}
+                                                    />
+                                                ) : (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "14px",
+                                                            color: "rgb(117, 117, 117)"
+                                                        }}
+                                                    >
+                                                        {__(
+                                                            "No products found",
+                                                            "lemonsqueezy"
+                                                        )}
+                                                    </span>
+                                                )}
                                             </p>
                                             <p>
                                                 <ToggleControl
@@ -160,13 +205,13 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                     help={
                                                         overlay
                                                             ? __(
-                                                                  "Your checkout will be opened in a modal window.",
-                                                                  "lemonsqueezy"
-                                                              )
+                                                                "Your checkout will be opened in a modal window.",
+                                                                "lemonsqueezy"
+                                                            )
                                                             : __(
-                                                                  "Your customer will be redirected to your checkout page.",
-                                                                  "lemonsqueezy"
-                                                              )
+                                                                "Your customer will be redirected to your checkout page.",
+                                                                "lemonsqueezy"
+                                                            )
                                                     }
                                                     onChange={
                                                         this.onChangeOverlay
