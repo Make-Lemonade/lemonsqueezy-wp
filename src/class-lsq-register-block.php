@@ -106,7 +106,7 @@ class LSQ_Register_Block {
 		if ( isset( $block['blockName'] ) && 'core/button' === $block['blockName'] ) {
 			$args = wp_parse_args( $block['attrs'] );
 
-			if ( ! isset( $args['product'] ) || empty( $args['product'] ) ) {
+			if ( empty( $args['product'] ) ) {
 				return $block_content;
 			}
 
