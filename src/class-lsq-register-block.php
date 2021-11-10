@@ -123,6 +123,12 @@ class LSQ_Register_Block {
 
 			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="' . $classes . '" href="' . $purchase_link . '">', $block_content );
 		}
+		if ( isset( $block['blockName'] ) && 'lemonsqueezy/ls-button' === $block['blockName'] ) {
+			$args = wp_parse_args( $block['attrs'] );
+
+			if ( ! empty( $args['overlay'] ) ) {
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+			}
 		}
 
 		return $block_content;
