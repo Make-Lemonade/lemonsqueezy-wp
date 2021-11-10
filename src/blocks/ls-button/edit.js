@@ -6,6 +6,16 @@ import { SelectControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
 class Edit extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            stores: [],
+            products: [],
+            isApiConnectable: false,
+            isLoadingProducts: false
+        };
+    }
+
     componentDidMount() {
         fetch("/wp-json/lsq/v1/stores")
             .then(response => response.json())
@@ -40,8 +50,12 @@ class Edit extends Component {
             });
     }
 
-    getProducts( store_id ) {
-        return fetch("/wp-json/lsq/v1/products?store_id=" + store_id )
+    getProducts(store_id) {
+        this.setState({
+            isLoadingProducts: true
+        });
+
+        return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
             .then(response => response.json())
             .then(response => {
                 if (true == response.success) {
@@ -49,6 +63,11 @@ class Edit extends Component {
                         products: response.products
                     });
                 }
+            })
+            .finally(() => {
+                this.setState({
+                    isLoadingProducts: false
+                });
             });
     }
 
@@ -61,6 +80,9 @@ class Edit extends Component {
     };
 
     onChangeStore = store => {
+        this.setState({
+            products: []
+        });
         this.getProducts(store);
         this.props.setAttributes({ store });
     };
@@ -81,7 +103,7 @@ class Edit extends Component {
                 </h4>
                 {this.state ? (
                     [
-                        this.state.isApiConnectable ? (  
+                        this.state.isApiConnectable ? (
                             <Fragment>
                                 <p>
                                     <SelectControl
@@ -91,11 +113,34 @@ class Edit extends Component {
                                     />
                                 </p>
                                 <p>
-                                    <SelectControl
-                                        value={product}
-                                        options={this.state.products}
-                                        onChange={this.onChangeProduct}
-                                    />
+                                    {this.state.isLoadingProducts ? (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                            {__("Loading...", "lemonsqueezy")}
+                                        </span>
+                                    ) : this.state.products.length ? (
+                                        <SelectControl
+                                            value={product}
+                                            options={this.state.products}
+                                            onChange={this.onChangeProduct}
+                                        />
+                                    ) : (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                            {__(
+                                                "No products found",
+                                                "lemonsqueezy"
+                                            )}
+                                        </span>
+                                    )}
                                 </p>
                                 <p>
                                     <RichText
