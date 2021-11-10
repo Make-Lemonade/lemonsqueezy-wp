@@ -277,8 +277,6 @@ class LSQ_Rest_Controller {
 					}
 				}
 
-				error_log( print_r( $products, TRUE ) );
-
 				return new \WP_REST_Response(
 					array(
 						'success'  => true,
