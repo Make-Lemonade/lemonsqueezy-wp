@@ -1,4 +1,4 @@
-=== Lemon Squeezy  ===
+=== Easy Peasy Digital Downloads — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
 Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
@@ -21,7 +21,7 @@ If you want to sell digital products on WordPress today, it’s going to take a 
 
 Our all-in-one, no-code platform is everything you need to start making money with your digital products. It’s blazing fast, super secure, and beautifully-designed with **you** in mind.
 
-[https://www.youtube.com/watch?v=wcFSb5EMiI0](https://www.youtube.com/watch?v=wcFSb5EMiI0)
+https://www.youtube.com/watch?v=wcFSb5EMiI0
 
 ### Relax, we got you covered
 
@@ -81,7 +81,7 @@ This plugin can be installed directly from your site.
 
 Absolutely! The Lemon Squeezy plugin integrates seamlessly with the WordPress block editor to bring your Lemon Squeezy products to any post or page.
 
-= Do you need coding skills to Lemon Squeezy? = 
+= Do you need coding skills to Lemon Squeezy? =
 
 Absolutely not. You can create and sell your digital products easy-peasy style. Within minutes you can add your products and start making money.
 
