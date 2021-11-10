@@ -247,7 +247,7 @@ class LSQ_Rest_Controller {
 		$store_id = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_STRING );
 
 		$response = wp_remote_get(
-			LSQ_API_URL . '/v1/products?store_id=' . $store_id,
+			LSQ_API_URL . "/v1/stores/{$store_id}/products",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
