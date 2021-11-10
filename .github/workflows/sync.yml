@@ -8,7 +8,12 @@ jobs:
     name: Push to trunk
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build
+      run: |
+        yarn
+        yarn build
     - name: WordPress.org plugin asset/readme update
       uses: 10up/action-wordpress-plugin-asset-update@stable
       env:
