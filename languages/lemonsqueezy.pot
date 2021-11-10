@@ -117,7 +117,7 @@ msgstr ""
 
 #: dist/editor.js:263 src/blocks/button/index.js:162
 #: src/blocks/ls-button/edit.js:124
-msgid "and add your API key."
+msgid "and connect to Lemon Squeezy."
 msgstr ""
 
 #: dist/editor.js:277 src/blocks/button/index.js:173

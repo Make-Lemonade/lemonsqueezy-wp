@@ -222,7 +222,7 @@ class Edit extends Component {
                                         )}
                                     </a>{" "}
                                     {__(
-                                        "and add your API key.",
+                                        "and connect to Lemon Squeezy.",
                                         "lemonsqueezy"
                                     )}
                                 </small>
