@@ -50,11 +50,13 @@ We created Lemon Squeezy specifically so you don’t have to think about *any* o
 
 When you’re ready to sell on your WordPress site, you simply install the Lemon Squeezy WordPress plugin and add your products to any post, page, or content area to start generating sales. Easy-peasy!
 
-### Soon: Sell your WordPress themes and plugins with Lemon Squeezy
+### Auto Updates for your WordPress Themes and Plugins with Lemon Squeezy
 
-When distributing your premium WordPress products, it’s critical that you can release updates to your products so customers get the latest features and bug fixes. Currently, this is very difficult to do, and few services are available to help you do it.
+Having the ability to release updates to your WordPress digital products is essential. This gives your customers the ability to get the latest features and bug fixes. When distributing your premium WordPress products, this is critical. Currently, this is very difficult to do, and few services are available to help you do it.
 
-**Not for long.** The Lemon Squeezy team is working hard to bring this advanced feature to our platform and we’re going to make the whole process a breeze. Soon, you’ll be able to sell your WordPress products through Lemon Squeezy, ship updates to paying customers, and grow a thriving WordPress business! Stay tuned!
+**With Lemon Squeezy**, these auto-updates are taken care of for you. The Lemon Squeezy team has worked hard to bring this advanced feature to our platform and it makes the entire process a breeze. With Lemon Squeezy, you’ll be able to sell your WordPress products, ship updates to paying customers and grow a thriving WordPress business.
+
+[Check out our WordPress Plugin documentation](https://docs.lemonsqueezy.com/article/71-lemon-squeezy-wordpress-plugin) for more detailed information.
 
 ### Ready to get started?
 
@@ -78,6 +80,14 @@ This plugin can be installed directly from your site.
 = Can the Lemon Squeezy plugin be used with any theme? =
 
 Absolutely! The Lemon Squeezy plugin integrates seamlessly with the WordPress block editor to bring your Lemon Squeezy products to any post or page.
+
+= Do you need coding skills to Lemon Squeezy? = 
+
+Absolutely not. You can create and sell your digital products easy-peasy style. Within minutes you can add your products and start making money.
+
+= What kind of products can I sell use Lemon Squeezy? =
+
+Any digital product you can dream of. Digital downloads, licensed software, ebooks, themes, plugins, photos, video files, audio files, courses, memberships, and more.
 
 == Screenshots ==
 
