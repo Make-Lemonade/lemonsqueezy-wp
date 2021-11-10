@@ -58,6 +58,7 @@ class Edit extends Component {
 
     getProducts(store_id) {
         this.setState({
+            products: [],
             isLoadingProducts: true
         });
 
@@ -68,6 +69,21 @@ class Edit extends Component {
                     this.setState({
                         products: response.products
                     });
+
+                    const selectedProductIndex = response.products.findIndex(
+                        product =>
+                            product.value == this.props.attributes.product
+                    );
+
+                    if (
+                        response.products.length &&
+                        selectedProductIndex !== -1
+                    ) {
+                        this.props.setAttributes({
+                            product:
+                                response.products[selectedProductIndex].value
+                        });
+                    }
                 }
             })
             .finally(() => {
@@ -86,11 +102,8 @@ class Edit extends Component {
     };
 
     onChangeStore = store => {
-        this.setState({
-            products: []
-        });
-        this.getProducts(store);
         this.props.setAttributes({ store });
+        this.getProducts(store);
     };
 
     onChangeOverlay = overlay => {
