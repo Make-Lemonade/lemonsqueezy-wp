@@ -37,6 +37,10 @@ function extendAttributes(settings) {
                 type: "boolean",
                 default: false
             },
+            store: {
+                type: "string",
+                default: ""
+            },
             product: {
                 type: "string",
                 default: ""
