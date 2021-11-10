@@ -27,7 +27,16 @@ class Edit extends Component {
                     });
 
                     if (response.stores.length) {
-                        this.getProducts(response.stores[0].value);
+                        let selectedStoreIndex = response.stores.findIndex(
+                            store => store.value == this.props.attributes.store
+                        );
+                        if (selectedStoreIndex === -1) {
+                            selectedStoreIndex = 0;
+                        }
+
+                        this.getProducts(
+                            response.stores[selectedStoreIndex].value
+                        );
                     }
                 }
             });
@@ -70,15 +79,15 @@ class Edit extends Component {
                         products: response.products
                     });
 
-                    const selectedProductIndex = response.products.findIndex(
-                        product =>
-                            product.value == this.props.attributes.product
-                    );
+                    if (response.products.length) {
+                        let selectedProductIndex = response.products.findIndex(
+                            product =>
+                                product.value == this.props.attributes.product
+                        );
+                        if (selectedProductIndex === -1) {
+                            selectedProductIndex = 0;
+                        }
 
-                    if (
-                        response.products.length &&
-                        selectedProductIndex !== -1
-                    ) {
                         this.props.setAttributes({
                             product:
                                 response.products[selectedProductIndex].value

@@ -52,11 +52,8 @@ function extendAttributes(settings) {
 }
 
 const extendControls = createHigherOrderComponent(BlockEdit => {
-
     return class Edit extends Component {
-
         componentDidMount() {
-
             // Set initial state if there is non available from higher order component.
             this.setState({
                 products: []
@@ -71,7 +68,17 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         });
 
                         if (response.stores.length) {
-                            this.getProducts(response.stores[0].value);
+                            let selectedStoreIndex = response.stores.findIndex(
+                                store =>
+                                    store.value == this.props.attributes.store
+                            );
+                            if (selectedStoreIndex === -1) {
+                                selectedStoreIndex = 0;
+                            }
+
+                            this.getProducts(
+                                response.stores[selectedStoreIndex].value
+                            );
                         }
                     }
                 });
@@ -97,6 +104,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
 
         getProducts(store_id) {
             this.setState({
+                products: [],
                 isLoadingProducts: true
             });
 
@@ -107,6 +115,24 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         this.setState({
                             products: response.products
                         });
+
+                        if (response.products.length) {
+                            let selectedProductIndex =
+                                response.products.findIndex(
+                                    product =>
+                                        product.value ==
+                                        this.props.attributes.product
+                                );
+                            if (selectedProductIndex === -1) {
+                                selectedProductIndex = 0;
+                            }
+
+                            this.props.setAttributes({
+                                product:
+                                    response.products[selectedProductIndex]
+                                        .value
+                            });
+                        }
                     }
                 })
                 .finally(() => {
@@ -121,12 +147,8 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         };
 
         onChangeStore = store => {
-            this.setState({
-                products: []
-            });
-            this.getProducts(store);
             this.props.setAttributes({ store });
-            this.onChangeProduct();
+            this.getProducts(store);
         };
 
         onChangeOverlay = overlay => {
@@ -161,29 +183,36 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                         "lemonsqueezy"
                                                     )}
                                                     value={store}
-                                                    options={
-                                                        this.state.stores
-                                                    }
+                                                    options={this.state.stores}
                                                     onChange={
                                                         this.onChangeStore
                                                     }
                                                 />
                                             </p>
                                             <p>
-                                                {this.state.isLoadingProducts ? (
+                                                {this.state
+                                                    .isLoadingProducts ? (
                                                     <span
                                                         style={{
                                                             fontSize: "14px",
                                                             color: "rgb(117, 117, 117)"
                                                         }}
                                                     >
-                                                        {__("Loading...", "lemonsqueezy")}
+                                                        {__(
+                                                            "Loading...",
+                                                            "lemonsqueezy"
+                                                        )}
                                                     </span>
-                                                ) : this.state.products.length ? (
+                                                ) : this.state.products
+                                                      .length ? (
                                                     <SelectControl
                                                         value={product}
-                                                        options={this.state.products}
-                                                        onChange={this.onChangeProduct}
+                                                        options={
+                                                            this.state.products
+                                                        }
+                                                        onChange={
+                                                            this.onChangeProduct
+                                                        }
                                                     />
                                                 ) : (
                                                     <span
@@ -209,13 +238,13 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                     help={
                                                         overlay
                                                             ? __(
-                                                                "Your checkout will be opened in a modal window.",
-                                                                "lemonsqueezy"
-                                                            )
+                                                                  "Your checkout will be opened in a modal window.",
+                                                                  "lemonsqueezy"
+                                                              )
                                                             : __(
-                                                                "Your customer will be redirected to your checkout page.",
-                                                                "lemonsqueezy"
-                                                            )
+                                                                  "Your customer will be redirected to your checkout page.",
+                                                                  "lemonsqueezy"
+                                                              )
                                                     }
                                                     onChange={
                                                         this.onChangeOverlay
