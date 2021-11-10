@@ -66,6 +66,38 @@ Let’s get you set up on Lemon Squeezy so you can start selling your products!
 2. Set up your store details and create your first products. We’ll walk you through the whole process during onboarding.
 3. Add the Lemon Squeezy WordPress plugin to any of your WordPress websites and start adding products and making sales!
 
+### Testimonials
+
+> I made my first $99/yr sale within the first hour of setup! Finally, an all-in-one solution for makers with multiple products, with the ability to sell with both subscription and one-off pricing. Incredible.
+> Rob Hope / onepagelove.com
+
+> Lemon Squeezy is exactly what I have been looking for. The license key management and recurring payments have streamlined my business, and I am looking forward to seeing the platform grow.
+> UiPress / uipress.co
+
+> Lemon Squeezy is the best option for selling digital products. I experienced the way things work, and wow, are you kidding me! Lemon squeezy is gonna change the industry!
+> Eren T / @ertuken
+
+> Imagine having a team of designers, developers, email marketers, and tax accountants behind you. That’s how Lemon Squeezy feels, letting you focus on creating your digital products.
+> Shahadat Rahman / @HiShahadat
+
+> Lemon Squeezy has surpassed my expectations, and I’ve made the decision to move all my chips in on this platform for the long haul. The product is beautifully designed and a joy to use.
+> Michael Riddering / figma.academy
+
+> I’ve never come across a platform that has made it SO easy-peasy to start selling. Lemon Squeezy is full of beautiful surprises, and it’s a genuine joy to use!
+> Rachel Shillcock / @MissRachilli
+
+> It’s refreshing to see Lemon Squeezy focusing solely on digital products. Giving you all the necessary tools you’ll need to start selling your products and subscriptions quickly and easily.
+> Ian Barnard / @ian_barnard
+
+> It’s so good to have a system focused on digital products, and it took me no time at all to allow customers to buy fonts straight from my website. There’s so much potential. I can’t wait to see what’s next!
+> TypeHeist / typeheist.co
+
+> Lemon Squeezy had the perfect combination of features for selling my first software product. It’s been so easy to set up, and customer support has been amazing.
+> Ross Wintle / turbo-admin.com
+
+> Lemon Squeezy made setting up a store and selling digital products super easy and fun. No more clunky plugins to manage or taxes to worry about. Lemon Squeezy does everything I need and more.
+> Mike McAlister / liftoffcourse.com
+
 == Installation ==
 
 This plugin can be installed directly from your site.
