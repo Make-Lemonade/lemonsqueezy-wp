@@ -14,6 +14,10 @@ class Edit extends Component {
                     this.setState({
                         stores: response.stores
                     });
+
+                    if (response.stores.length) {
+                        this.getProducts(response.stores[0].value);
+                    }
                 }
             });
 
