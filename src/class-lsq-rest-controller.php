@@ -55,6 +55,19 @@ class LSQ_Rest_Controller {
 
 		register_rest_route(
 			$namespace,
+			'/stores/',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_stores' ),
+				'args'                => array(),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
+				},
+			)
+		);
+
+		register_rest_route(
+			$namespace,
 			'/products/',
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
@@ -145,6 +158,77 @@ class LSQ_Rest_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|WP_REST_Request
 	 */
+	public function get_stores( $request ) {
+		// Check LS API connection.
+		$api_key       = get_option( 'lsq_api_key' );
+		$error_message = '';
+
+		if ( ! isset( $api_key ) || empty( $api_key ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+				),
+				401
+			);
+		}
+
+		// Get stores.
+		$response = wp_remote_get(
+			LSQ_API_URL . '/v1/stores/',
+			array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $api_key,
+					'Accept'        => 'application/vnd.api+json',
+					'Content-Type'  => 'application/vnd.api+json',
+					'Cache-Control' => 'no-cache',
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				$store_data = json_decode( $response['body'] );
+
+				// Build product list.
+				if ( isset( $store_data ) && ! empty( $store_data ) ) {
+					foreach ( $store_data->data as $store ) {
+						$stores[] = array(
+							'label' => $store->attributes->name,
+							'value' => $store->id,
+						);
+					}
+				}
+
+				return new \WP_REST_Response(
+					array(
+						'success' => true,
+						'stores'  => $stores,
+					),
+					200
+				);
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+			}
+		} else {
+			$error_message = $response->get_error_message();
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'success' => false,
+				'error'   => $error_message,
+			),
+			400
+		);
+	}
+
+	/**
+	 * Get products from the Lemon Squeezy API.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Request
+	 */
 	public function get_products( $request ) {
 		// Check LS API connection.
 		$api_key       = get_option( 'lsq_api_key' );
@@ -160,8 +244,10 @@ class LSQ_Rest_Controller {
 			);
 		}
 
+		$store_id = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_STRING );
+
 		$response = wp_remote_get(
-			LSQ_API_URL . '/v1/products/',
+			LSQ_API_URL . "/v1/stores/{$store_id}/products",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -221,7 +307,8 @@ class LSQ_Rest_Controller {
 	 * @return WP_Error|WP_REST_Request
 	 */
 	public function get_update( $request ) {
-		$api_key       = get_option( 'lsq_api_key' );
+		$api_key = get_option( 'lsq_api_key' );
+
 		if ( empty( $api_key ) ) {
 			return new \WP_REST_Response(
 				array(

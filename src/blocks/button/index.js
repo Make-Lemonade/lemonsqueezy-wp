@@ -37,6 +37,10 @@ function extendAttributes(settings) {
                 type: "boolean",
                 default: false
             },
+            store: {
+                type: "string",
+                default: ""
+            },
             product: {
                 type: "string",
                 default: ""
@@ -50,13 +54,32 @@ function extendAttributes(settings) {
 const extendControls = createHigherOrderComponent(BlockEdit => {
     return class Edit extends Component {
         componentDidMount() {
-            fetch("/wp-json/lsq/v1/products")
+            // Set initial state if there is non available from higher order component.
+            this.setState({
+                products: []
+            });
+
+            fetch("/wp-json/lsq/v1/stores")
                 .then(response => response.json())
                 .then(response => {
                     if (true == response.success) {
                         this.setState({
-                            products: response.products
+                            stores: response.stores
                         });
+
+                        if (response.stores.length) {
+                            let selectedStoreIndex = response.stores.findIndex(
+                                store =>
+                                    store.value == this.props.attributes.store
+                            );
+                            if (selectedStoreIndex === -1) {
+                                selectedStoreIndex = 0;
+                            }
+
+                            this.getProducts(
+                                response.stores[selectedStoreIndex].value
+                            );
+                        }
                     }
                 });
 
@@ -78,8 +101,54 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                     }
                 });
         }
+
+        getProducts(store_id) {
+            this.setState({
+                products: [],
+                isLoadingProducts: true
+            });
+
+            return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
+                .then(response => response.json())
+                .then(response => {
+                    if (true == response.success) {
+                        this.setState({
+                            products: response.products
+                        });
+
+                        if (response.products.length) {
+                            let selectedProductIndex =
+                                response.products.findIndex(
+                                    product =>
+                                        product.value ==
+                                        this.props.attributes.product
+                                );
+                            if (selectedProductIndex === -1) {
+                                selectedProductIndex = 0;
+                            }
+
+                            this.props.setAttributes({
+                                product:
+                                    response.products[selectedProductIndex]
+                                        .value
+                            });
+                        }
+                    }
+                })
+                .finally(() => {
+                    this.setState({
+                        isLoadingProducts: false
+                    });
+                });
+        }
+
         onChangeProduct = product => {
             this.props.setAttributes({ product: product });
+        };
+
+        onChangeStore = store => {
+            this.props.setAttributes({ store });
+            this.getProducts(store);
         };
 
         onChangeOverlay = overlay => {
@@ -88,7 +157,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
 
         render() {
             const { attributes } = this.props;
-            const { product, overlay } = attributes;
+            const { store, product, overlay } = attributes;
+
+            // If it's not a core button, do not include settings panel.
+            if (this.props.name !== "core/button") {
+                return <BlockEdit {...this.props} />;
+            }
 
             return (
                 <Fragment>
@@ -105,17 +179,54 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                             <p>
                                                 <SelectControl
                                                     label={__(
-                                                        "Select Product",
+                                                        "Select Store",
                                                         "lemonsqueezy"
                                                     )}
-                                                    value={product}
-                                                    options={
-                                                        this.state.products
-                                                    }
+                                                    value={store}
+                                                    options={this.state.stores}
                                                     onChange={
-                                                        this.onChangeProduct
+                                                        this.onChangeStore
                                                     }
                                                 />
+                                            </p>
+                                            <p>
+                                                {this.state
+                                                    .isLoadingProducts ? (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "14px",
+                                                            color: "rgb(117, 117, 117)"
+                                                        }}
+                                                    >
+                                                        {__(
+                                                            "Loading...",
+                                                            "lemonsqueezy"
+                                                        )}
+                                                    </span>
+                                                ) : this.state.products
+                                                      .length ? (
+                                                    <SelectControl
+                                                        value={product}
+                                                        options={
+                                                            this.state.products
+                                                        }
+                                                        onChange={
+                                                            this.onChangeProduct
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "14px",
+                                                            color: "rgb(117, 117, 117)"
+                                                        }}
+                                                    >
+                                                        {__(
+                                                            "No products found",
+                                                            "lemonsqueezy"
+                                                        )}
+                                                    </span>
+                                                )}
                                             </p>
                                             <p>
                                                 <ToggleControl

@@ -10,6 +10,9 @@ const attributes = {
     overlay: {
         type: "boolean"
     },
+    store: {
+        type: "string"
+    },
     product: {
         type: "string"
     }

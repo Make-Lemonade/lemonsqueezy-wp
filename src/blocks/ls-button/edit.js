@@ -6,14 +6,38 @@ import { SelectControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
 class Edit extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            stores: [],
+            products: [],
+            isCheckingApi: true,
+            isApiConnectable: false,
+            isLoadingProducts: false
+        };
+    }
+
     componentDidMount() {
-        fetch("/wp-json/lsq/v1/products")
+        fetch("/wp-json/lsq/v1/stores")
             .then(response => response.json())
             .then(response => {
                 if (true == response.success) {
                     this.setState({
-                        products: response.products
+                        stores: response.stores
                     });
+
+                    if (response.stores.length) {
+                        let selectedStoreIndex = response.stores.findIndex(
+                            store => store.value == this.props.attributes.store
+                        );
+                        if (selectedStoreIndex === -1) {
+                            selectedStoreIndex = 0;
+                        }
+
+                        this.getProducts(
+                            response.stores[selectedStoreIndex].value
+                        );
+                    }
                 }
             });
 
@@ -33,6 +57,48 @@ class Edit extends Component {
                         isApiConnectable: false
                     });
                 }
+            })
+            .finally(() => {
+                this.setState({
+                    isCheckingApi: false
+                });
+            });
+    }
+
+    getProducts(store_id) {
+        this.setState({
+            products: [],
+            isLoadingProducts: true
+        });
+
+        return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        products: response.products
+                    });
+
+                    if (response.products.length) {
+                        let selectedProductIndex = response.products.findIndex(
+                            product =>
+                                product.value == this.props.attributes.product
+                        );
+                        if (selectedProductIndex === -1) {
+                            selectedProductIndex = 0;
+                        }
+
+                        this.props.setAttributes({
+                            product:
+                                response.products[selectedProductIndex].value
+                        });
+                    }
+                }
+            })
+            .finally(() => {
+                this.setState({
+                    isLoadingProducts: false
+                });
             });
     }
 
@@ -40,8 +106,13 @@ class Edit extends Component {
         this.props.setAttributes({ content });
     };
 
-    onChangeproduct = product => {
+    onChangeProduct = product => {
         this.props.setAttributes({ product });
+    };
+
+    onChangeStore = store => {
+        this.props.setAttributes({ store });
+        this.getProducts(store);
     };
 
     onChangeOverlay = overlay => {
@@ -50,7 +121,7 @@ class Edit extends Component {
 
     render() {
         const { attributes } = this.props;
-        const { content, product, overlay } = attributes;
+        const { content, store, product, overlay } = attributes;
 
         return (
             <div className="lsq-block">
@@ -58,16 +129,46 @@ class Edit extends Component {
                     <img src={lsqIcon} />
                     {__("Lemon Squeezy Buy Button", "lemonsqueezy")}
                 </h4>
-                {this.state ? (
+                {this.state && !this.state.isCheckingApi ? (
                     [
                         this.state.isApiConnectable ? (
                             <Fragment>
                                 <p>
                                     <SelectControl
-                                        value={product}
-                                        options={this.state.products}
-                                        onChange={this.onChangeproduct}
+                                        value={store}
+                                        options={this.state.stores}
+                                        onChange={this.onChangeStore}
                                     />
+                                </p>
+                                <p>
+                                    {this.state.isLoadingProducts ? (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                            {__("Loading...", "lemonsqueezy")}
+                                        </span>
+                                    ) : this.state.products.length ? (
+                                        <SelectControl
+                                            value={product}
+                                            options={this.state.products}
+                                            onChange={this.onChangeProduct}
+                                        />
+                                    ) : (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                            {__(
+                                                "No products found",
+                                                "lemonsqueezy"
+                                            )}
+                                        </span>
+                                    )}
                                 </p>
                                 <p>
                                     <RichText
