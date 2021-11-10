@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Lemon Squeezy\n"
-"POT-Creation-Date: 2021-08-25 21:02+0200\n"
+"POT-Creation-Date: 2021-11-10 14:08+0100\n"
 "PO-Revision-Date: 2021-08-25 21:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,72 +22,167 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/blocks/buy-button/edit.js:50
-msgid "Setting"
+#: dist/admin.js:277 src/admin/admin.js:105
+msgid "Connected to Lemon Squeezy"
 msgstr ""
 
-#: src/blocks/buy-button/edit.js:53
-msgid "Shadow Opacity"
+#: dist/admin.js:277 dist/admin.js:278 src/admin/admin.js:106
+#: src/admin/admin.js:109
+msgid "Connect to Lemon Squeezy"
 msgstr ""
 
-#: src/blocks/buy-button/edit.js:63
-msgid "Panel"
+#: dist/admin.js:278 src/admin/admin.js:108
+msgid "Checking..."
 msgstr ""
 
-#: src/blocks/buy-button/edit.js:68
-msgid "Background Colour"
+#: dist/admin.js:311 src/admin/admin.js:116
+msgid "LemonSqueezy.com"
 msgstr ""
 
-#: src/blocks/buy-button/edit.js:73
-msgid "Text Colour"
+#: dist/admin.js:319 src/admin/admin.js:120
+msgid "Want to make money with digital products?"
 msgstr ""
 
-#: src/blocks/buy-button/edit.js:87
-msgid "Shadow"
+#: dist/admin.js:330 src/admin/admin.js:129
+msgid "Start selling today"
 msgstr ""
 
-#: src/blocks/buy-button/index.js:43
-msgid "Buy Button"
+#: dist/admin.js:361 src/admin/admin.js:137
+msgid "Connect your store"
 msgstr ""
 
-#: src/blocks/buy-button/index.js:44
-msgid "The Lemon Squeezy Buy Button"
+#: dist/admin.js:368 src/admin/admin.js:140
+msgid ""
+"The Lemon Squeezy plugin connects your Lemon Squeezy stores to your "
+"WordPress site to bring your products right into the block editor."
 msgstr ""
 
-#: src/blocks/buy-button/index.js:57
-msgid "ecommerce"
+#: dist/admin.js:383 src/admin/admin.js:148
+msgid "1. Connect to Lemon Squeezy"
 msgstr ""
 
-#: src/blocks/buy-button/index.js:57
-msgid "digital products"
+#: dist/admin.js:390 src/admin/admin.js:154
+msgid ""
+"To get started, use the \"Connect to Lemon Squeezy\" button on the right. "
+"When prompted, click \"Authorize\" to connect your Lemon Squeezy account "
+"with this WordPress site."
 msgstr ""
 
-#: src/blocks/buy-button/index.js:62
-msgid "Rounded"
+#: dist/admin.js:405 src/admin/admin.js:162
+msgid "2. Add the Lemon Squeezy block and start selling!"
 msgstr ""
 
-#: src/blocks/buy-button/index.js:67
-msgid "Outline"
-msgstr ""
-
-#: src/blocks/buy-button/index.js:71
-msgid "Squared"
+#: dist/admin.js:412 src/admin/admin.js:168
+msgid ""
+"To add products to your posts or pages, simply add the Lemon Squeezy block "
+"and select which product you’d like to insert. Use the block settings to "
+"select a checkout link or a checkout overlay."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: src/class-lsq-register-block.php:51
+#: dist/editor.js:186 src/blocks/button/index.js:98
+#: src/class-lsq-register-block.php:52
 msgid "Lemon Squeezy"
 msgstr ""
 
+#: dist/editor.js:209 src/blocks/button/index.js:108
+msgid "Select Product"
+msgstr ""
+
+#: dist/editor.js:227 src/blocks/button/index.js:123
+#: src/blocks/ls-button/edit.js:87
+msgid "Use checkout overlay?"
+msgstr ""
+
+#: dist/editor.js:229 src/blocks/button/index.js:130
+#: src/blocks/ls-button/edit.js:93
+msgid "Your checkout will be opened in a modal window."
+msgstr ""
+
+#: dist/editor.js:229 src/blocks/button/index.js:134
+#: src/blocks/ls-button/edit.js:97
+msgid "Your customer will be redirected to your checkout page."
+msgstr ""
+
+#: dist/editor.js:251 src/blocks/button/index.js:148
+#: src/blocks/ls-button/edit.js:110
+msgid ""
+"Uh oh! Looks like you haven't connected your store yet! Please visit the"
+msgstr ""
+
+#: dist/editor.js:263 src/blocks/button/index.js:157
+#: src/blocks/ls-button/edit.js:119
+msgid "Lemon Squeezy Settings"
+msgstr ""
+
+#: dist/editor.js:263 src/blocks/button/index.js:162
+#: src/blocks/ls-button/edit.js:124
+msgid "and add your API key."
+msgstr ""
+
+#: dist/editor.js:277 src/blocks/button/index.js:173
+#: src/blocks/ls-button/edit.js:135
+msgid "We're fetching your data, hold on for a second!"
+msgstr ""
+
+#: src/blocks/ls-button/edit.js:59
+msgid "Lemon Squeezy Buy Button"
+msgstr ""
+
+#: src/blocks/ls-button/edit.js:75
+msgid "Button text*"
+msgstr ""
+
+#: src/blocks/ls-button/index.js:20
+msgid "The Lemon Squeezy Product Block"
+msgstr ""
+
+#: src/blocks/ls-button/index.js:49
+msgid "ecommerce"
+msgstr ""
+
+#: src/blocks/ls-button/index.js:50
+msgid "digital products"
+msgstr ""
+
+#: src/class-lsq-oauth.php:103
+msgid "Invalid oauth state/code"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:101
+#: src/class-lsq-rest-controller.php:157
+#: src/class-lsq-rest-controller.php:229
+msgid "Unauthorized request"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:240
+msgid "Missing license_key"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:253
+msgid "Invalid license_key"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:264
+msgid "Error fetching license_key"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:275
+msgid "Invalid order item"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:286
+msgid "Missing files"
+msgstr ""
+
+#: src/class-lsq-rest-controller.php:298
+msgid "Missing file version"
+msgstr ""
+
 #. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
 msgid "https://www.lemonsqueezy.com"
 msgstr ""
 
 #. Description of the plugin/theme
 msgid "Sell digital products the easy-peasy way directly from WordPress."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "lemonsqueezy"
 msgstr ""

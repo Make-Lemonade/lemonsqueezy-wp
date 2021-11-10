@@ -117,11 +117,11 @@ class LSQ_Register_Block {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 
 				$purchase_link = $purchase_link . '?embed=1';
-				$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="wp-block-button__link lemonsqueezy-button" href="' . $purchase_link . '">', $block_content );
-			} else {
-				$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="wp-block-button__link" href="' . $purchase_link . '">', $block_content );
 			}
+
+			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="wp-block-button__link lemonsqueezy-button" href="' . $purchase_link . '">', $block_content );
 		}
+
 		return $block_content;
 	}
 }
