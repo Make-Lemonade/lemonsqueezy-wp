@@ -244,10 +244,11 @@ class LSQ_Rest_Controller {
 			);
 		}
 
-		$store_id = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_STRING );
+		$store_id  = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_STRING );
+		$page_size = rawurlencode( 'page[size]' );
 
 		$response = wp_remote_get(
-			LSQ_API_URL . "/v1/stores/{$store_id}/products",
+			LSQ_API_URL . "/v1/stores/{$store_id}/products?" . $page_size . "=100",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -263,18 +264,11 @@ class LSQ_Rest_Controller {
 				$product_data = json_decode( $response['body'] );
 				$products     = array();
 
-				// TODO: handle pagination.
-
-				// Todo handle variations.
-
-				// Build product list.
-				if ( isset( $product_data ) && ! empty( $product_data ) ) {
-					foreach ( $product_data->data as $product ) {
-						$products[] = array(
-							'label' => $product->attributes->name,
-							'value' => $product->attributes->buy_now_url,
-						);
-					}
+				foreach ( $product_data->data as $product ) {
+					$products[] = array(
+						'label' => $product->attributes->name,
+						'value' => $product->attributes->buy_now_url,
+					);
 				}
 
 				return new \WP_REST_Response(
