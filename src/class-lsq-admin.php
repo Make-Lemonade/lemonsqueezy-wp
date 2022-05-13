@@ -62,6 +62,10 @@ class LSQ_Admin {
 
 		wp_enqueue_script( 'lemonsqueezy-admin-script' );
 		wp_enqueue_style( 'lemonsqueezy-admin-style' );
+
+		wp_localize_script( 'lemonsqueezy-admin-script', 'Lemonsqueezy', array(
+			'oauth_url' => admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ),
+		) );
 	}
 
 	/**

@@ -88,8 +88,7 @@ class AdminSettings extends Component {
     }
 
     oauthAuthorize() {
-        window.location.href =
-            "/wp-admin/admin.php?page=lemonsqueezy&oauth_authorize=1";
+        window.location.href = window.Lemonsqueezy.oauth_url;
     }
 
     oauthDisconnect() {
