@@ -3,8 +3,8 @@ Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
-Tested up to: 5.8.3
-Stable tag: 1.0.2
+Tested up to: 5.9.3
+Stable tag: 1.0.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -129,6 +129,10 @@ Any digital product you can dream of. Digital downloads, licensed software, eboo
 4. Using the Lemon Squeezy button block
 
 == Changelog ==
+
+= 1.0.3 =
+
+- Bug fix with "Connect to Lemon Squeezy" button
 
 = 1.0.2 =
 
