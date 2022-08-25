@@ -166,8 +166,9 @@ class LSQ_Rest_Controller {
 		if ( ! isset( $api_key ) || empty( $api_key ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error_code' => 'unauthorized',
 				),
 				401
 			);
@@ -216,8 +217,9 @@ class LSQ_Rest_Controller {
 
 		return new \WP_REST_Response(
 			array(
-				'success' => false,
-				'error'   => $error_message,
+				'success'    => false,
+				'error'      => $error_message,
+				'error_code' => 'api_error',
 			),
 			400
 		);
@@ -237,8 +239,9 @@ class LSQ_Rest_Controller {
 		if ( ! isset( $api_key ) || empty( $api_key ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error_code' => 'unauthorized',
 				),
 				401
 			);
@@ -287,8 +290,9 @@ class LSQ_Rest_Controller {
 
 		return new \WP_REST_Response(
 			array(
-				'success' => false,
-				'error'   => $error_message,
+				'success'    => false,
+				'error'      => $error_message,
+				'error_code' => 'api_error',
 			),
 			400
 		);
@@ -306,8 +310,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $api_key ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error_code' => 'unauthorized',
 				),
 				401
 			);
@@ -317,8 +322,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $license_key ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Missing license_key', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Missing license_key', 'lemon-squeezy' ),
+					'error_code' => 'missing_license_key',
 				),
 				401
 			);
@@ -330,8 +336,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $license->valid ) || empty( $license->license_key->id ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Invalid license_key', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Invalid license_key', 'lemon-squeezy' ),
+					'error_code' => 'invalid_license_key',
 				),
 				401
 			);
@@ -341,8 +348,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $license_key_obj ) || empty( $license_key_obj->data->relationships->{'order-item'}->data ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Error fetching license_key', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Error fetching license_key', 'lemon-squeezy' ),
+					'error_code' => 'error_fetching_license_key',
 				),
 				400
 			);
@@ -352,8 +360,9 @@ class LSQ_Rest_Controller {
 		if ( ! $order_item ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Invalid order item', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Invalid order item', 'lemon-squeezy' ),
+					'error_code' => 'invalid_order_item',
 				),
 				400
 			);
@@ -363,8 +372,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $files->data ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Missing files', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Missing files', 'lemon-squeezy' ),
+					'error_code' => 'missing_files',
 				),
 				400
 			);
@@ -375,8 +385,9 @@ class LSQ_Rest_Controller {
 		if ( empty( $latest_file->attributes->version ) ) {
 			return new \WP_REST_Response(
 				array(
-					'success' => false,
-					'error'   => __( 'Missing file version', 'lemon-squeezy' ),
+					'success'    => false,
+					'error'      => __( 'Missing file version', 'lemon-squeezy' ),
+					'error_code' => 'missing_file_version',
 				),
 				400
 			);
