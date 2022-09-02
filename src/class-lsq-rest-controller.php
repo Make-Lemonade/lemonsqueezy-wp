@@ -53,6 +53,32 @@ class LSQ_Rest_Controller {
 			)
 		);
 
+        register_rest_route(
+			$namespace,
+			'/activate/',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'activate_key' ),
+				'args'                => array(
+                    'license_key' => [
+                        'description' => 'License key.',
+                        'type'        => 'string',
+                        'required'    => true,
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                    'instance_name' => [
+                        'description' => 'Instance name for the activation.',
+                        'type'        => 'string',
+                        'required'    => true,
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                ),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
+				},
+			)
+		);
+
 		register_rest_route(
 			$namespace,
 			'/stores/',
@@ -151,6 +177,63 @@ class LSQ_Rest_Controller {
 			$is_valid ? 200 : 400
 		);
 	}
+
+    /**
+     * Activate license key through Lemon Squeezy API.
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return \WP_REST_Response|\WP_Error
+     */
+    public function activate_key( $request ) {
+        $license_key   = $request->get_param( 'license_key' );
+        $instance_name = $request->get_param( 'instance_name' );
+        $is_valid      = false;
+        $error_message = '';
+        $api_key       = get_option( 'lsq_api_key' );
+
+        if ( empty( $api_key ) ) {
+            return new \WP_REST_Response(
+                array(
+                    'success' => false,
+                    'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+                ),
+                401
+            );
+        }
+
+        $response = wp_remote_post(
+            LSQ_API_URL . "/v1/licenses/activate?license_key=${license_key}&instance_name={$instance_name}",
+            array(
+                'headers' => array(
+                    'Authorization' => 'Bearer ' . $api_key,
+                    'Accept'        => 'application/vnd.api+json',
+                    'Content-Type'  => 'application/vnd.api+json',
+                    'Cache-Control' => 'no-cache',
+                ),
+            )
+        );
+
+        $body = json_decode( $response['body'], true);
+
+        if ( ! is_wp_error( $response ) ) {
+            if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+                $is_valid = true;
+            } else {
+                $error_message = isset($body['error']) ? $body['error'] : wp_remote_retrieve_response_message( $response );
+            }
+        } else {
+            $error_message = $response->get_error_message();
+        }
+
+        return new \WP_REST_Response(
+            array(
+                'success' => $is_valid,
+                'error'   => $error_message,
+                'data'    => $body,
+            ),
+            $is_valid ? 200 : 400
+        );
+    }
 
 	/**
 	 * Get products from the Lemon Squeezy API.
