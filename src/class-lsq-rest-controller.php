@@ -79,6 +79,32 @@ class LSQ_Rest_Controller {
 			)
 		);
 
+        register_rest_route(
+			$namespace,
+			'/deactivate/',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'deactivate_key' ),
+				'args'                => array(
+                    'license_key' => [
+                        'description' => 'License key.',
+                        'type'        => 'string',
+                        'required'    => true,
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                    'instance_id' => [
+                        'description' => 'Instance ID of the existing activation.',
+                        'type'        => 'string',
+                        'required'    => true,
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                ),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return true;
+				},
+			)
+		);
+
 		register_rest_route(
 			$namespace,
 			'/stores/',
@@ -230,6 +256,62 @@ class LSQ_Rest_Controller {
                 'success' => $is_valid,
                 'error'   => $error_message,
                 'data'    => $body,
+            ),
+            $is_valid ? 200 : 400
+        );
+    }
+
+    /**
+     * Deactivate license key through Lemon Squeezy API.
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return \WP_REST_Response|\WP_Error
+     */
+    public function deactivate_key( $request ) {
+        $license_key   = $request->get_param( 'license_key' );
+        $instance_name = $request->get_param( 'instance_id' );
+        $api_key       = get_option( 'lsq_api_key' );
+
+        if ( empty( $api_key ) ) {
+            return new \WP_REST_Response(
+                array(
+                    'success' => false,
+                    'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+                ),
+                401
+            );
+        }
+
+        $response = wp_remote_post(
+            LSQ_API_URL . "/v1/licenses/deactivate?license_key=${license_key}&instance_id={$instance_name}",
+            array(
+                'headers' => array(
+                    'Authorization' => 'Bearer ' . $api_key,
+                    'Accept'        => 'application/vnd.api+json',
+                    'Content-Type'  => 'application/vnd.api+json',
+                    'Cache-Control' => 'no-cache',
+                ),
+            )
+        );
+
+        $is_valid      = false;
+        $error_message = null;
+
+        if ( ! is_wp_error( $response ) ) {
+            $body = json_decode( $response['body'], true);
+            if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+                $is_valid = $body['deactivated'];
+            } else {
+                $error_message = isset($body['error']) ? $body['error'] : wp_remote_retrieve_response_message( $response );
+            }
+        } else {
+            $error_message = $response->get_error_message();
+        }
+
+        return new \WP_REST_Response(
+            array(
+                'success' => $is_valid,
+                'error'   => $error_message,
             ),
             $is_valid ? 200 : 400
         );
