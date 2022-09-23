@@ -85,7 +85,7 @@ class LSQ_Updater {
 		$api_key = get_option( 'lsq_api_key' );
 
 		$response = wp_remote_get(
-			LSQ_API_URL . "/v1/variants/{$variant_id}/files/",
+			LSQ_API_URL . "/v1/variants/{$variant_id}/files/?sort=-id&page[size]=100",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
