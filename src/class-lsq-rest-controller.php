@@ -563,7 +563,8 @@ class LSQ_Rest_Controller {
 		return new \WP_REST_Response(
 			array(
 				'success' => true,
-				'error'   => $error_message,
+				'error'   => '',
+				'error_code' => '',
 				'update' => array(
 					'version'        => $latest_file->attributes->version,
 					'tested'         => null,

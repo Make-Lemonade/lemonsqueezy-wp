@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Lemon Squeezy
  * Plugin URI:        https://www.lemonsqueezy.com
  * Description:       Sell digital products the easy-peasy way directly from WordPress.
- * Version:           1.2.1
+ * Version:           1.2.2
  * Requires at least: 5.3
  * Requires PHP:      7.0
  * Author:            Lemon Squeezy
