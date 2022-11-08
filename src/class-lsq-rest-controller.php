@@ -564,6 +564,7 @@ class LSQ_Rest_Controller {
 			array(
 				'success' => true,
 				'error'   => '',
+				'error_code' => '',
 				'update' => array(
 					'version'        => $latest_file->attributes->version,
 					'tested'         => null,
