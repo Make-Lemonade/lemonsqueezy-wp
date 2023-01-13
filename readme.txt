@@ -27,7 +27,7 @@ https://www.youtube.com/watch?v=wcFSb5EMiI0
 
 **We’re also the merchant of record**, which means we take responsibility and liability for payment methods, complicated tax laws, fraud prevention, subscription billing, invoicing, secure file delivery, and virtually every other complicated aspect of running an online store. We make it easy-peasy so you don’t have to think about any of it.
 
-The icing on the cake? Lemon Squeezy supports 95 different [currencies](https://docs.lemonsqueezy.com/article/59-currencies) and offers [payouts](https://docs.lemonsqueezy.com/article/55-getting-paid) for over 280+ countries.
+The icing on the cake? Lemon Squeezy supports 95 different [currencies](https://docs.lemonsqueezy.com/help/payments/currencies) and offers [payouts](https://docs.lemonsqueezy.com/help/getting-started/getting-paid) for over 280+ countries.
 
 > When launching Iconic, Lemon Squeezy literally took care of everything. No need to think about taxes, VAT, license keys, etc. The setup really was easy-peasy. – James McDonald / iconic.app
 >
@@ -56,7 +56,7 @@ Having the ability to release updates to your WordPress digital products is esse
 
 **With Lemon Squeezy**, these auto-updates are taken care of for you. The Lemon Squeezy team has worked hard to bring this advanced feature to our platform and it makes the entire process a breeze. With Lemon Squeezy, you’ll be able to sell your WordPress products, ship updates to paying customers and grow a thriving WordPress business.
 
-[Check out our WordPress Plugin documentation](https://docs.lemonsqueezy.com/article/71-lemon-squeezy-wordpress-plugin) for more detailed information.
+[Check out our WordPress Plugin documentation](https://docs.lemonsqueezy.com/help/wordpress) for more detailed information.
 
 ### Ready to get started?
 
