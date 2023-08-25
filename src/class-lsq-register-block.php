@@ -121,7 +121,7 @@ class LSQ_Register_Block {
 				$classes .= ' lemonsqueezy-button';
 			}
 
-			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="' . $classes . '" href="' . $purchase_link . '">', $block_content );
+			$block_content = str_replace( '<a class="wp-block-button__link wp-element-button">', '<a class="' . $classes . '" href="' . $purchase_link . '">', $block_content );
 		}
 		if ( isset( $block['blockName'] ) && 'lemonsqueezy/ls-button' === $block['blockName'] ) {
 			$args = wp_parse_args( $block['attrs'] );
