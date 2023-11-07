@@ -1,5 +1,6 @@
 import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
+import { getColorClassName } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
 
@@ -15,6 +16,12 @@ const attributes = {
     },
     product: {
         type: "string"
+    },
+    textColor: {
+        type: 'string'
+    },
+    backgroundColor: {
+        type: 'string'
     }
 };
 
@@ -53,28 +60,58 @@ registerBlockType("lemonsqueezy/ls-button", {
         __("digital products", "lemonsqueezy")
     ],
     attributes,
-    deprecated: [],
+    deprecated: [{
+        attributes,
+        save: ({ attributes }) => {
+            const { content, overlay, product  } = attributes;
+            let link = product;
+            let className = [
+                'wp-block-button__link',
+            ];
+
+            if ( overlay ) {
+                className.push('lemonsqueezy-button');
+                link = product + "?embed=1";
+            }
+
+            const embed_link = product + "?embed=1";
+
+            return (
+                <div className="wp-block-buttons">
+                    <div className="wp-block-button">
+                        <a className={className.join( ' ')} href={link}>
+                            {content}
+                        </a>
+                    </div>
+                </div>
+            )
+        }
+    }],
     edit: Edit,
     save: ({ attributes }) => {
-        const { content, overlay, product } = attributes;
+        const { content, overlay, product, textColor, backgroundColor } = attributes;
+        let link = product;
+        let className = [
+            'wp-block-button__link',
+        ];
 
-        const embed_link = product + "?embed=1";
+        if ( overlay ) {
+            className.push('lemonsqueezy-button');
+            link = product + "?embed=1";
+        }
 
-        return overlay ? (
+        if (textColor != undefined) {
+            className.push( getColorClassName('color', textColor) );
+        }
+
+        if (backgroundColor != undefined) {
+            className.push( getColorClassName('background-color', backgroundColor) );
+        }
+
+        return (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
-                    <a
-                        className="wp-block-button__link lemonsqueezy-button"
-                        href={embed_link}
-                    >
-                        {content}
-                    </a>
-                </div>
-            </div>
-        ) : (
-            <div className="wp-block-buttons">
-                <div className="wp-block-button">
-                    <a className="wp-block-button__link" href={product}>
+                    <a className={className.join( ' ')} href={link}>
                         {content}
                     </a>
                 </div>

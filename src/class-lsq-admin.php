@@ -98,8 +98,8 @@ class LSQ_Admin {
 			60
 		);
 
-		wp_register_script( 'lemonsqueezy-admin-script', LSQ_URL . '/dist/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element' ), '1.0', true );
-		wp_register_style( 'lemonsqueezy-admin-style', LSQ_URL . '/dist/admin.css', array( 'wp-edit-blocks' ), '1.0' );
+		wp_register_script( 'lemonsqueezy-admin-script', LSQ_URL . '/build/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element' ), '1.0', true );
+		wp_register_style( 'lemonsqueezy-admin-style', LSQ_URL . '/build/admin.css', array( 'wp-edit-blocks' ), '1.0' );
 
 		add_action( 'load-' . $hook_suffix, array( $this, 'load_page_hook' ) );
 	}

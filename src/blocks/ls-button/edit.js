@@ -1,9 +1,10 @@
 import lsqIcon from "../../../images/ls-icon.svg";
 
 import { Component, Fragment } from "@wordpress/element";
-import { RichText } from "@wordpress/block-editor";
+import { RichText, withColors, PanelColorSettings, InspectorControls, getColorClassName } from "@wordpress/block-editor";
 import { SelectControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
+import { Button } from"@wordpress/block-library";
 
 class Edit extends Component {
     constructor(props) {
@@ -120,8 +121,18 @@ class Edit extends Component {
     };
 
     render() {
-        const { attributes } = this.props;
+        const { attributes, textColor, setTextColor, backgroundColor, setBackgroundColor } = this.props;
         const { content, store, product, overlay } = attributes;
+        let divClass;
+        let divStyles = {};
+
+        if (textColor != undefined) {
+            if (textColor.class != undefined) {
+                divClass = textColor.class;
+            } else {
+                divStyles.color = textColor.color;
+            }
+        }
 
         return (
             <div className="lsq-block">
@@ -133,6 +144,23 @@ class Edit extends Component {
                     [
                         this.state.isApiConnectable ? (
                             <Fragment>
+                                <InspectorControls>
+                                    <PanelColorSettings
+                                        title={__('Color settings')}
+                                        colorSettings={[
+                                            {
+                                                value: textColor ? textColor.color : '',
+                                                onChange: setTextColor,
+                                                label: __('Text color')
+                                            },
+                                            {
+                                                value: backgroundColor ? backgroundColor.color : '',
+                                                onChange: setBackgroundColor,
+                                                label: __('Background color')
+                                            }
+                                        ]}
+                                    />
+                                </InspectorControls>
                                 <p>
                                     <SelectControl
                                         value={store}
@@ -244,4 +272,4 @@ class Edit extends Component {
     }
 }
 
-export default Edit;
+export default withColors('backgroundColor', {textColor: 'color'})(Edit);
