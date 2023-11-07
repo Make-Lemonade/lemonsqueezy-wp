@@ -103,6 +103,7 @@ class LSQ_Register_Block {
 	 * @return string
 	 */
 	public function filter_button_block_markup( $block_content = '', $block = array() ) {
+
 		if ( isset( $block['blockName'] ) && 'core/button' === $block['blockName'] ) {
 			$args = wp_parse_args( $block['attrs'] );
 
@@ -121,16 +122,45 @@ class LSQ_Register_Block {
 				$classes .= ' lemonsqueezy-button';
 			}
 
-			$block_content = str_replace( '<a class="wp-block-button__link">', '<a class="' . $classes . '" href="' . $purchase_link . '">', $block_content );
+			$pattern = '/href=["\']([^"\']+)["\']/';
+
+			// Perform the regular expression match
+			if (preg_match($pattern, $block_content, $matches)) {
+				// The extracted href value will be in $matches[1]
+				$hrefValue = $matches[1];
+				$block_content = str_replace( 'href="' . $hrefValue . '"', 'href="' . $purchase_link . '"', $block_content );
+			} else {
+				// No href in sight.
+				$block_content = str_replace( '<a class="wp-block-button__link', '<a href="' . $purchase_link . '" class="wp-block-button__link', $block_content );
+			}
+
+			if ( ! empty( $args['overlay'] ) ) {
+				$block_content = str_replace( 'class="wp-block-button__link', 'class="wp-block-button__link lemonsqueezy-button ', $block_content );
+			}
 		}
+
 		if ( isset( $block['blockName'] ) && 'lemonsqueezy/ls-button' === $block['blockName'] ) {
 			$args = wp_parse_args( $block['attrs'] );
 
 			if ( ! empty( $args['overlay'] ) ) {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 			}
+
+			$pattern = '/href=["\']([^"\']+)["\']/';
+
+			// Perform the regular expression match
+			if (preg_match($pattern, $block_content, $matches)) {
+				// The extracted href value will be in $matches[1]
+				$hrefValue = $matches[1];
+				// Add data to href.
+			} else {
+				// No href found, weird. Let's build the link and add it.
+			}
+
 		}
 
 		return $block_content;
 	}
+
+
 }
