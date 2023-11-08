@@ -41,6 +41,10 @@ function extendAttributes(settings) {
                 type: "boolean",
                 default: false
             },
+            prefillUserData: {
+                type: "boolean",
+                default: false
+            },
             store: {
                 type: "string",
                 default: ""
@@ -48,6 +52,10 @@ function extendAttributes(settings) {
             product: {
                 type: "string",
                 default: ""
+            },
+            prefillFromURL: {
+                type: "boolean",
+                default: false
             }
         });
     }
@@ -172,6 +180,10 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.props.setAttributes({ overlay: overlay });
         };
 
+        onChangeUserData = prefillUserData => {
+            this.props.setAttributes({ prefillUserData });
+        };
+
         changeUseLS = use_ls => {
             this.props.setAttributes({ use_ls: use_ls });
 
@@ -181,9 +193,13 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             }
         }
 
+        onChangeURLData = prefillFromURL => {
+            this.props.setAttributes({ prefillFromURL });
+        };
+
         render() {
             const { attributes } = this.props;
-            const { store, product, overlay, use_ls } = attributes;
+            const { store, product, overlay, use_ls, prefillUserData, prefillFromURL } = attributes;
 
             // If it's not a core button, do not include settings panel.
             if (this.props.name !== "core/button") {
@@ -267,6 +283,52 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         }
                                         onChange={
                                             this.onChangeOverlay
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill User Data",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillUserData}
+                                        help={
+                                            prefillUserData
+                                                ? __(
+                                                    "If logged-in, pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeUserData
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill from URL",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillFromURL}
+                                        help={
+                                            prefillFromURL
+                                                ? __(
+                                                    "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill URL data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeURLData
                                         }
                                     />
                                 </p>

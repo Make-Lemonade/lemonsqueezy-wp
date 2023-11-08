@@ -120,19 +120,17 @@ class Edit extends Component {
         this.props.setAttributes({ overlay: overlay });
     };
 
+    onChangeUserData = prefillUserData => {
+        this.props.setAttributes({ prefillUserData });
+    };
+
+    onChangeURLData = prefillFromURL => {
+        this.props.setAttributes({ prefillFromURL });
+    };
+
     render() {
         const { attributes, textColor, setTextColor, backgroundColor, setBackgroundColor } = this.props;
-        const { content, store, product, overlay } = attributes;
-        let divClass;
-        let divStyles = {};
-
-        if (textColor != undefined) {
-            if (textColor.class != undefined) {
-                divClass = textColor.class;
-            } else {
-                divStyles.color = textColor.color;
-            }
-        }
+        const { content, store, product, overlay, prefillUserData, prefillFromURL } = attributes;
 
         return (
             <div className="lsq-block">
@@ -229,6 +227,52 @@ class Edit extends Component {
                                         }
                                         checked={overlay}
                                         onChange={this.onChangeOverlay}
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill User Data",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillUserData}
+                                        help={
+                                            prefillUserData
+                                                ? __(
+                                                    "If logged-in, pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeUserData
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill from URL",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillFromURL}
+                                        help={
+                                            prefillFromURL
+                                                ? __(
+                                                    "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill URL data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeURLData
+                                        }
                                     />
                                 </p>
                             </Fragment>

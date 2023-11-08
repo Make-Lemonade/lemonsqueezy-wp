@@ -111,27 +111,20 @@ class LSQ_Register_Block {
 				return $block_content;
 			}
 
-			$purchase_link = $args['product'];
-			$classes = 'wp-block-button__link';
-
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
-
-				$purchase_link = $purchase_link . '?embed=1';
-				$classes .= ' lemonsqueezy-button';
 			}
 
-			$pattern = '/href=["\']([^"\']+)["\']/';
+			$purchase_link = $this->get_purchase_link( $args );
 
-			// Perform the regular expression match
-			if (preg_match($pattern, $block_content, $matches)) {
-				// The extracted href value will be in $matches[1]
-				$hrefValue = $matches[1];
-				$block_content = str_replace( 'href="' . $hrefValue . '"', 'href="' . $purchase_link . '"', $block_content );
+			$existing_href = $this->get_link_from_button( $block_content );
+
+			if ( $existing_href ) {
+				$block_content = str_replace( 'href="' . $existing_href . '"', 'href="' . $purchase_link . '"', $block_content );
 			} else {
 				// No href in sight.
-				$block_content = str_replace( '<a class="wp-block-button__link', '<a href="' . $purchase_link . '" class="wp-block-button__link', $block_content );
+				$block_content = str_replace( 'class="wp-block-button__link', ' href="' . $purchase_link . '" class="wp-block-button__link', $block_content );
 			}
 
 			if ( ! empty( $args['overlay'] ) ) {
@@ -146,21 +139,72 @@ class LSQ_Register_Block {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 			}
 
-			$pattern = '/href=["\']([^"\']+)["\']/';
+			$existing_href = $this->get_link_from_button( $block_content );
+			$purchase_link = $this->get_purchase_link( $args );
 
-			// Perform the regular expression match
-			if (preg_match($pattern, $block_content, $matches)) {
-				// The extracted href value will be in $matches[1]
-				$hrefValue = $matches[1];
-				// Add data to href.
+			if ( $existing_href ) {
+				$block_content = str_replace( 'href="' . $existing_href . '"', 'href="' . $purchase_link . '"', $block_content );
 			} else {
-				// No href found, weird. Let's build the link and add it.
+				// No href in sight.
+				$block_content = str_replace( 'class="wp-block-button__link', ' href="' . $purchase_link . '" class="wp-block-button__link', $block_content );
 			}
-
 		}
 
 		return $block_content;
 	}
 
+	protected function get_purchase_link( $args ) {
+		if ( empty( $args['product'] ) ) {
+			return false;
+		}
+
+		$link = $args['product'];
+
+		if ( ! empty( $args['overlay'] ) && $args['overlay'] ) {
+			$link = add_query_arg( 'embed', '1', $link );
+		}
+
+		if ( ! empty( $args['prefillUserData'] ) && $args['prefillUserData'] && is_user_logged_in() ) {
+			$user = wp_get_current_user();
+
+			$user_full_name = trim( $user->first_name . ' ' . $user->last_name );
+
+			$link = add_query_arg( 'checkout[email]', $user->user_email, $link );
+
+			if ( $user_full_name ) {
+				$link = add_query_arg( 'checkout[name]', $user_full_name, $link );
+			}
+
+		}
+
+		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
+		     && isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
+
+			foreach ( $_GET['checkout'] as $checkout_name => $checkout_value ) {
+				if ( ! is_array( $checkout_value ) ) {
+					$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . ']', sanitize_text_field( wp_unslash( $checkout_value ) ), $link );
+				} else {
+					foreach ( $checkout_value as $sub_checkout_name => $sub_checkout_value ) {
+						$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . '][' . sanitize_text_field( $sub_checkout_name ) . ']', sanitize_text_field( wp_unslash( $sub_checkout_value ) ), $link );
+					}
+				}
+			}
+
+		}
+
+
+		return $link;
+	}
+
+	protected function get_link_from_button( $block_content ) {
+		$pattern = '/href=["\']([^"\']+)["\']/';
+
+		if ( preg_match( $pattern, $block_content, $matches ) ) {
+			// The extracted href value will be in $matches[1]
+			return $matches[1];
+		}
+
+		return false;
+	}
 
 }

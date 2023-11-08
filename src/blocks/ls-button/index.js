@@ -22,6 +22,14 @@ const attributes = {
     },
     backgroundColor: {
         type: 'string'
+    },
+    prefillUserData: {
+        type: "boolean",
+        default: false
+    },
+    prefillFromURL: {
+        type: "boolean",
+        default: false
     }
 };
 
