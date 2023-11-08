@@ -116,7 +116,7 @@ class LSQ_Register_Block {
 				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
 			}
 
-			$purchase_link = $this->get_purchase_link( $args );
+			$purchase_link = $this->get_purchase_link( $args, $block );
 
 			$existing_href = $this->get_link_from_button( $block_content );
 
@@ -140,7 +140,7 @@ class LSQ_Register_Block {
 			}
 
 			$existing_href = $this->get_link_from_button( $block_content );
-			$purchase_link = $this->get_purchase_link( $args );
+			$purchase_link = $this->get_purchase_link( $args, $block );
 
 			if ( $existing_href ) {
 				$block_content = str_replace( 'href="' . $existing_href . '"', 'href="' . $purchase_link . '"', $block_content );
@@ -153,7 +153,7 @@ class LSQ_Register_Block {
 		return $block_content;
 	}
 
-	protected function get_purchase_link( $args ) {
+	protected function get_purchase_link( $args, $block ) {
 		if ( empty( $args['product'] ) ) {
 			return false;
 		}
@@ -163,6 +163,8 @@ class LSQ_Register_Block {
 		if ( ! empty( $args['overlay'] ) && $args['overlay'] ) {
 			$link = add_query_arg( 'embed', '1', $link );
 		}
+
+		$args = apply_filters( 'lemonsqueezy_purchase_link_args', $args, $block );
 
 		if ( ! empty( $args['prefillUserData'] ) && $args['prefillUserData'] && is_user_logged_in() ) {
 			$user = wp_get_current_user();
@@ -194,11 +196,9 @@ class LSQ_Register_Block {
 					}
 				}
 			}
-
 		}
 
-
-		return $link;
+		return apply_filters( 'lemonsqueezy_purchase_link', $link, $args, $block );
 	}
 
 	protected function get_link_from_button( $block_content ) {
