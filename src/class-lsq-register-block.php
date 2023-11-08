@@ -174,7 +174,12 @@ class LSQ_Register_Block {
 			if ( $user_full_name ) {
 				$link = add_query_arg( 'checkout[name]', $user_full_name, $link );
 			}
+		}
 
+		if ( ! empty( $args['customData'] ) && $args['customData'] ) {
+			foreach ( $args['customData'] as $custom_data ) {
+				$link = add_query_arg( 'checkout[custom][' . sanitize_text_field( $custom_data['key'] ) . ']', sanitize_text_field( $custom_data['value'] ), $link );
+			}
 		}
 
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
