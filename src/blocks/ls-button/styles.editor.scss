@@ -27,4 +27,29 @@
     select {
         padding: 0 5px !important;
     }
+
+    .lemonsqueezy-custom-data-header {
+        display: flex;
+        justify-content: space-between;
+
+        a {
+            padding: 0;
+        }
+    }
+
+    .lemonsqueezy-custom-data-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 100px;
+        grid-gap: 10px;
+
+        button {
+            align-self: end;
+            height: 30px;
+        }
+
+        .components-base-control__field,
+        button {
+            margin-bottom: 8px;
+        }
+    }
 }

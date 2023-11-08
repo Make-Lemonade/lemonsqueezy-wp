@@ -30,6 +30,10 @@ const attributes = {
     prefillFromURL: {
         type: "boolean",
         default: false
+    },
+    customData: {
+        type: "array",
+        default: []
     }
 };
 
