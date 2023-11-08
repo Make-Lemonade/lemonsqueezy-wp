@@ -26,7 +26,11 @@ class AdminSettings extends Component {
             isSettingsLoaded: false,
             isAPILoading: false,
             isAPISaving: false,
+            isTestAPISaving: false,
             lsqApiKey: "",
+            lsqApiKeyTest: "",
+            showingTestInput: false,
+            enteredApiKeyTest: "",
             lsqUser: null,
             oauth: window.lsq_oauth || {}
         };
@@ -40,6 +44,7 @@ class AdminSettings extends Component {
                 this.settings.fetch().then(response => {
                     this.setState({
                         lsqApiKey: response.lsq_api_key,
+                        lsqApiKeyTest: response.lsq_api_key_test,
                         isSettingsLoaded: true
                     });
 
@@ -47,6 +52,68 @@ class AdminSettings extends Component {
                 });
             }
         });
+    }
+
+    removeTestKey() {
+        this.setState({isTestAPISaving: true});
+
+        return fetch("/wp-json/lsq/v1/delete_test_key", {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: new Headers({
+                'Content-Type': 'application/json;charset=UTF-8',
+                'X-WP-Nonce' : Lemonsqueezy.nonce
+            })
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        lsqApiKeyTest: '',
+                        isTestAPISaving: false
+                    });
+                } else {
+                    this.setState({
+                        isTestAPISaving: false,
+                    });
+
+                    if ( response.error ) {
+                        alert( response.error );
+                    }
+                }
+            });
+    }
+
+    saveTestApiKey() {
+        this.setState({isTestAPISaving: true});
+
+        return fetch("/wp-json/lsq/v1/save_test_key", {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: new Headers({
+                'Content-Type': 'application/json;charset=UTF-8',
+                'X-WP-Nonce' : Lemonsqueezy.nonce
+            }),
+            body: JSON.stringify({ test_key: this.state.enteredApiKeyTest }),
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        lsqApiKeyTest: this.state.enteredApiKeyTest,
+                        isTestAPISaving: false
+                    });
+                } else {
+                    this.setState({
+                        isTestAPISaving: false,
+                        lsqApiKeyTest: '',
+                    });
+
+                    if ( response.error ) {
+                        alert( response.error );
+                    }
+                }
+            });
     }
 
     checkApi() {
@@ -97,6 +164,10 @@ class AdminSettings extends Component {
                 lsqUser: null
             });
         });
+    }
+
+    saveTestKey() {
+        this.saveTestApiKey();
     }
 
     render() {
@@ -259,7 +330,7 @@ class AdminSettings extends Component {
                                         </Card>
                                     )}
                                     <div className="lsq-panel__buttons">
-                                        {this.state.lsqUser && (
+                                        {this.state.lsqUser && <>
                                             <Button
                                                 isPrimary
                                                 isLarge
@@ -274,7 +345,40 @@ class AdminSettings extends Component {
                                             >
                                                 Disconnect from Lemon Squeezy
                                             </Button>
-                                        )}
+                                            {! this.state.lsqApiKeyTest && <>
+
+                                                {! this.state.showingTestInput && <Button onClick={() => this.setState({showingTestInput: true})} isSmall>Need to Test? Enter your Test Key</Button>}
+                                                {this.state.showingTestInput && <>
+                                                    <input onChange={(el) => {
+                                                        this.setState({enteredApiKeyTest: el.target.value});
+                                                    }} type={"text"} placeholder={"Enter your Test API Key"} />
+                                                    <Button
+                                                        isBusy={this.state.isTestAPISaving}
+                                                        isSecondary
+                                                        isLarge
+                                                        onClick={
+                                                            () => this.saveTestKey()
+                                                        }>Save Test API Key</Button>
+                                                    <Button isLarge onClick={() => this.setState({showingTestInput: false})}>Cancel</Button>
+                                                    <div><br/>
+                                                        <Button isLink target={"_blank"} href={"https://docs.lemonsqueezy.com/help/getting-started/test-mode"}>Read about the test mode.</Button>
+                                                    </div>
+                                                </>
+                                                }
+                                            </>
+                                            }
+                                            {this.state.lsqApiKeyTest && <>
+                                                <p>You're on Test Mode.</p>
+                                                <Button
+                                                    isBusy={this.state.isTestAPISaving}
+                                                    isSecondary
+                                                    isLarge
+                                                    onClick={
+                                                        () => this.removeTestKey()
+                                                    }>Remove Test Mode</Button>
+                                            </>}
+
+                                        </>}
                                         {!this.state.lsqUser && (
                                             <Button
                                                 isPrimary
@@ -294,6 +398,7 @@ class AdminSettings extends Component {
                                             >
                                                 {buttonLabel}
                                             </Button>
+
                                         )}
                                     </div>
                                     <div className="lsq-panel__footer">

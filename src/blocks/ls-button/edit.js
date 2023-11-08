@@ -4,7 +4,6 @@ import { Component, Fragment } from "@wordpress/element";
 import { RichText, withColors, PanelColorSettings, InspectorControls, getColorClassName } from "@wordpress/block-editor";
 import { SelectControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { Button } from"@wordpress/block-library";
 
 class Edit extends Component {
     constructor(props) {
