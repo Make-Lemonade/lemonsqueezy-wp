@@ -13,7 +13,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "wp-scripts build src/script.js src/editor.js src/admin/admin.js",
+    "build": "wp-scripts build src/script.js src/editor.js src/admin/admin.js && wp-scripts plugin-zip",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format": "wp-scripts format",
