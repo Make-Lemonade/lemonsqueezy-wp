@@ -20,7 +20,7 @@
     "lint:js": "wp-scripts lint-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
+    "plugin-zip": "wp-scripts plugin-zip && move-file lemonsqueezy.zip bundled/lemonsqueezy.zip",
     "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js"
   },
   "author": "lemonsqueezy",
@@ -34,8 +34,9 @@
     "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp.git"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.5.4",
     "@wordpress/scripts": "^26.16.0",
-    "@babel/eslint-parser": "^7.5.4"
+    "move-file-cli": "^3.0.0"
   },
   "dependencies": {
     "standard": "^17.1.0"
