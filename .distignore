@@ -5,5 +5,7 @@
 /bundled
 /node_modules
 
+*.zip
+
 .distignore
 .gitignore
