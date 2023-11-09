@@ -13,19 +13,15 @@
   ],
   "private": true,
   "scripts": {
-    "build": "wp-scripts build src/script.js src/editor.js src/admin/admin.js && wp-scripts plugin-zip",
+    "build": "wp-scripts lint-js && wp-scripts build src/script.js src/editor.js src/admin/admin.js && wp-scripts plugin-zip",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
     "lint:js": "wp-scripts lint-js",
-    "lint:md:docs": "wp-scripts lint-md-docs",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
     "plugin-zip": "wp-scripts plugin-zip",
-    "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js",
-    "test:e2e": "wp-scripts test-e2e",
-    "test:unit": "wp-scripts test-unit-js"
+    "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js"
   },
   "author": "lemonsqueezy",
   "license": "GPL-2.0+",
@@ -38,6 +34,10 @@
     "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp.git"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^26.16.0"
+    "@wordpress/scripts": "^26.16.0",
+    "@babel/eslint-parser": "^7.5.4"
+  },
+  "dependencies": {
+    "standard": "^17.1.0"
   }
 }

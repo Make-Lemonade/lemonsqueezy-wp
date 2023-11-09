@@ -1,7 +1,7 @@
 import lsqIcon from "../../../images/ls-icon.svg";
 
 import { Component, Fragment } from "@wordpress/element";
-import { RichText, withColors, PanelColorSettings, InspectorControls, getColorClassName } from "@wordpress/block-editor";
+import { RichText, withColors, PanelColorSettings, InspectorControls } from "@wordpress/block-editor";
 import { SelectControl, ToggleControl, TextControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 

@@ -368,7 +368,7 @@ class AdminSettings extends Component {
                                             </>
                                             }
                                             {this.state.lsqApiKeyTest && <>
-                                                <p>You're on Test Mode.</p>
+                                                <p>You&apos;re on Test Mode.</p>
                                                 <Button
                                                     isBusy={this.state.isTestAPISaving}
                                                     isSecondary

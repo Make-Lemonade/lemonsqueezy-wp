@@ -86,8 +86,6 @@ registerBlockType("lemonsqueezy/ls-button", {
                 link = product + "?embed=1";
             }
 
-            const embed_link = product + "?embed=1";
-
             return (
                 <div className="wp-block-buttons">
                     <div className="wp-block-button">
