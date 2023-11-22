@@ -3,7 +3,7 @@ Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
-Tested up to: 6.4.0
+Tested up to: 6.4.1
 Stable tag: 1.3.0
 Requires PHP: 7.0
 License: GPLv2 or later
