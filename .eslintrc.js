@@ -4,19 +4,30 @@ module.exports = {
         es6: true,
         node: true
     },
+    settings: {
+        "react": {
+            "version": "detect"
+        }
+    },
+    parser: "@babel/eslint-parser",
     extends: ["eslint:recommended", "prettier", "plugin:react/recommended"],
     globals: {
         Atomics: "readonly",
         SharedArrayBuffer: "readonly",
-        wp: "readonly"
+        wp: "readonly",
+        Lemonsqueezy: "readonly"
     },
-    parser: "babel-eslint",
+
     parserOptions: {
         ecmaFeatures: {
             jsx: true
         },
         ecmaVersion: 2018,
-        sourceType: "module"
+        requireConfigFile: false,
+        sourceType: "module",
+        babelOptions: {
+            "presets": ["@babel/preset-react"]
+        },
     },
     plugins: ["react"],
     rules: {

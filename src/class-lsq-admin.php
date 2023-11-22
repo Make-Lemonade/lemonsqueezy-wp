@@ -33,7 +33,25 @@ class LSQ_Admin {
 		add_action( 'admin_menu', array( $this, 'add_option_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_assets' ) );
 		add_action( 'init', array( $this, 'register_settings' ) );
+        add_filter( 'option_lsq_api_key', array( $this, 'maybe_return_test_key' ) );
 	}
+
+	/**
+     * Maybe return Test API key.
+     *
+	 * @param string $api_key API Key.
+	 *
+	 * @return mixed
+	 */
+    public function maybe_return_test_key( $api_key ) {
+        $test_key = get_option( 'lsq_api_key_test' );
+
+        if ( ! $test_key ) {
+            return $api_key;
+        }
+
+        return $test_key;
+    }
 
 	/**
 	 * Is this a LSQ admin page?
@@ -65,6 +83,7 @@ class LSQ_Admin {
 
 		wp_localize_script( 'lemonsqueezy-admin-script', 'Lemonsqueezy', array(
 			'oauth_url' => admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ),
+            'nonce'     => wp_create_nonce('wp_rest')
 		) );
 	}
 
@@ -98,8 +117,8 @@ class LSQ_Admin {
 			60
 		);
 
-		wp_register_script( 'lemonsqueezy-admin-script', LSQ_URL . '/dist/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element' ), '1.0', true );
-		wp_register_style( 'lemonsqueezy-admin-style', LSQ_URL . '/dist/admin.css', array( 'wp-edit-blocks' ), '1.0' );
+		wp_register_script( 'lemonsqueezy-admin-script', LSQ_URL . '/build/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element' ), '1.0', true );
+		wp_register_style( 'lemonsqueezy-admin-style', LSQ_URL . '/build/admin.css', array( 'wp-edit-blocks' ), '1.0' );
 
 		add_action( 'load-' . $hook_suffix, array( $this, 'load_page_hook' ) );
 	}
@@ -113,6 +132,15 @@ class LSQ_Admin {
 		register_setting(
 			'lsq_admin_settings',
 			'lsq_api_key',
+			array(
+				'type'         => 'string',
+				'show_in_rest' => true,
+			)
+		);
+
+		register_setting(
+			'lsq_admin_settings',
+			'lsq_api_key_test',
 			array(
 				'type'         => 'string',
 				'show_in_rest' => true,

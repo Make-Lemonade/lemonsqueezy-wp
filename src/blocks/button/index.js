@@ -37,6 +37,14 @@ function extendAttributes(settings) {
                 type: "boolean",
                 default: false
             },
+            use_ls: {
+                type: "boolean",
+                default: false
+            },
+            prefillUserData: {
+                type: "boolean",
+                default: false
+            },
             store: {
                 type: "string",
                 default: ""
@@ -44,6 +52,10 @@ function extendAttributes(settings) {
             product: {
                 type: "string",
                 default: ""
+            },
+            prefillFromURL: {
+                type: "boolean",
+                default: false
             }
         });
     }
@@ -54,12 +66,23 @@ function extendAttributes(settings) {
 const extendControls = createHigherOrderComponent(BlockEdit => {
     return class Edit extends Component {
         componentDidMount() {
+            const { use_ls } = this.props.attributes;
+
             // Set initial state if there is non available from higher order component.
             this.setState({
-                products: []
+                products: [],
+                stores: [],
+                checkingApi: false
             });
 
-            fetch("/wp-json/lsq/v1/stores")
+            if ( use_ls ) {
+                this.getStores();
+                this.checkApi();
+            }
+        }
+
+        getStores() {
+            return fetch("/wp-json/lsq/v1/stores")
                 .then(response => response.json())
                 .then(response => {
                     if (true == response.success) {
@@ -82,23 +105,25 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         }
                     }
                 });
-
-            this.checkApi();
         }
 
         checkApi() {
+            this.setState({
+                checkingApi: true
+            });
             return fetch("/wp-json/lsq/v1/validate")
                 .then(response => response.json())
                 .then(response => {
+                    let isApiConnectable = false;
+
                     if (true == response.success) {
-                        this.setState({
-                            isApiConnectable: true
-                        });
-                    } else {
-                        this.setState({
-                            isApiConnectable: false
-                        });
+                        isApiConnectable = true;
                     }
+
+                    this.setState({
+                        isApiConnectable,
+                        checkingApi: false
+                    });
                 });
         }
 
@@ -155,13 +180,199 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.props.setAttributes({ overlay: overlay });
         };
 
+        onChangeUserData = prefillUserData => {
+            this.props.setAttributes({ prefillUserData });
+        };
+
+        changeUseLS = use_ls => {
+            this.props.setAttributes({ use_ls: use_ls });
+
+            if ( use_ls && !this.state.stores.length ) {
+                this.getStores();
+                this.checkApi();
+            }
+        }
+
+        onChangeURLData = prefillFromURL => {
+            this.props.setAttributes({ prefillFromURL });
+        };
+
         render() {
             const { attributes } = this.props;
-            const { store, product, overlay } = attributes;
+            const { store, product, overlay, use_ls, prefillUserData, prefillFromURL } = attributes;
 
             // If it's not a core button, do not include settings panel.
             if (this.props.name !== "core/button") {
                 return <BlockEdit {...this.props} />;
+            }
+
+            const settings = () => {
+                return this.state ? (
+                    [
+                        this.state.isApiConnectable ? (
+                            <Fragment>
+                                <p>
+                                    <SelectControl
+                                        label={__(
+                                            "Select Store",
+                                            "lemonsqueezy"
+                                        )}
+                                        value={store}
+                                        options={this.state.stores}
+                                        onChange={
+                                            this.onChangeStore
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    {this.state
+                                        .isLoadingProducts ? (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                                        {__(
+                                                            "Loading...",
+                                                            "lemonsqueezy"
+                                                        )}
+                                                    </span>
+                                    ) : this.state.products
+                                        .length ? (
+                                        <SelectControl
+                                            value={product}
+                                            options={
+                                                this.state.products
+                                            }
+                                            onChange={
+                                                this.onChangeProduct
+                                            }
+                                        />
+                                    ) : (
+                                        <span
+                                            style={{
+                                                fontSize: "14px",
+                                                color: "rgb(117, 117, 117)"
+                                            }}
+                                        >
+                                                        {__(
+                                                            "No products found",
+                                                            "lemonsqueezy"
+                                                        )}
+                                                    </span>
+                                    )}
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Use checkout overlay?",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={overlay}
+                                        help={
+                                            overlay
+                                                ? __(
+                                                    "Your checkout will be opened in a modal window.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "Your customer will be redirected to your checkout page.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeOverlay
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill User Data",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillUserData}
+                                        help={
+                                            prefillUserData
+                                                ? __(
+                                                    "If logged-in, pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill user's data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeUserData
+                                        }
+                                    />
+                                </p>
+                                <p>
+                                    <ToggleControl
+                                        label={__(
+                                            "Pre-fill from URL",
+                                            "lemonsqueezy"
+                                        )}
+                                        checked={prefillFromURL}
+                                        help={
+                                            prefillFromURL
+                                                ? __(
+                                                    "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "It won't pre-fill URL data on checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.onChangeURLData
+                                        }
+                                    />
+                                </p>
+                            </Fragment>
+                        ) : (
+                            <p>
+                                {this.state.checkingApi && <small>{__(
+                                    "Checking connection status",
+                                    "lemonsqueezy"
+                                )}</small>}
+
+                                {!this.state.checkingApi && <small>
+                                    {__(
+                                        "Uh oh! Looks like you haven't connected your store yet! Please visit the",
+                                        "lemonsqueezy"
+                                    )}{" "}
+                                    <a
+                                        href={
+                                            /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url
+                                        }
+                                    >
+                                        {__(
+                                            "Lemon Squeezy Settings",
+                                            "lemonsqueezy"
+                                        )}
+                                    </a>{" "}
+                                    {__(
+                                        "and connect to Lemon Squeezy.",
+                                        "lemonsqueezy"
+                                    )}
+                                </small>}
+                            </p>
+                        )
+                    ]
+                ) : (
+                    <p>
+                        <small>
+                            {__(
+                                "We're fetching your data, hold on for a second!",
+                                "lemonsqueezy"
+                            )}
+                        </small>
+                    </p>
+                )
             }
 
             return (
@@ -172,121 +383,32 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                             title={__("Lemon Squeezy", "lemonsqueezy")}
                             initialOpen={false}
                         >
-                            {this.state ? (
-                                [
-                                    this.state.isApiConnectable ? (
-                                        <Fragment>
-                                            <p>
-                                                <SelectControl
-                                                    label={__(
-                                                        "Select Store",
-                                                        "lemonsqueezy"
-                                                    )}
-                                                    value={store}
-                                                    options={this.state.stores}
-                                                    onChange={
-                                                        this.onChangeStore
-                                                    }
-                                                />
-                                            </p>
-                                            <p>
-                                                {this.state
-                                                    .isLoadingProducts ? (
-                                                    <span
-                                                        style={{
-                                                            fontSize: "14px",
-                                                            color: "rgb(117, 117, 117)"
-                                                        }}
-                                                    >
-                                                        {__(
-                                                            "Loading...",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
-                                                ) : this.state.products
-                                                      .length ? (
-                                                    <SelectControl
-                                                        value={product}
-                                                        options={
-                                                            this.state.products
-                                                        }
-                                                        onChange={
-                                                            this.onChangeProduct
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <span
-                                                        style={{
-                                                            fontSize: "14px",
-                                                            color: "rgb(117, 117, 117)"
-                                                        }}
-                                                    >
-                                                        {__(
-                                                            "No products found",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
-                                                )}
-                                            </p>
-                                            <p>
-                                                <ToggleControl
-                                                    label={__(
-                                                        "Use checkout overlay?",
-                                                        "lemonsqueezy"
-                                                    )}
-                                                    checked={overlay}
-                                                    help={
-                                                        overlay
-                                                            ? __(
-                                                                  "Your checkout will be opened in a modal window.",
-                                                                  "lemonsqueezy"
-                                                              )
-                                                            : __(
-                                                                  "Your customer will be redirected to your checkout page.",
-                                                                  "lemonsqueezy"
-                                                              )
-                                                    }
-                                                    onChange={
-                                                        this.onChangeOverlay
-                                                    }
-                                                />
-                                            </p>
-                                        </Fragment>
-                                    ) : (
-                                        <p>
-                                            <small>
-                                                {__(
-                                                    "Uh oh! Looks like you haven't connected your store yet! Please visit the",
-                                                    "lemonsqueezy"
-                                                )}{" "}
-                                                <a
-                                                    href={
-                                                        /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url
-                                                    }
-                                                >
-                                                    {__(
-                                                        "Lemon Squeezy Settings",
-                                                        "lemonsqueezy"
-                                                    )}
-                                                </a>{" "}
-                                                {__(
-                                                    "and connect to Lemon Squeezy.",
-                                                    "lemonsqueezy"
-                                                )}
-                                            </small>
-                                        </p>
-                                    )
-                                ]
-                            ) : (
+                            <Fragment>
                                 <p>
-                                    <small>
-                                        {__(
-                                            "We're fetching your data, hold on for a second!",
+                                    <ToggleControl
+                                        label={__(
+                                            "Apply Lemon Squeezy Checkout",
                                             "lemonsqueezy"
                                         )}
-                                    </small>
+                                        checked={use_ls}
+                                        help={
+                                            use_ls
+                                                ? __(
+                                                    "Your button will be used for Lemon Squeezy Checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                                : __(
+                                                    "Your button will not be used for Lemon Squeezy Checkout.",
+                                                    "lemonsqueezy"
+                                                )
+                                        }
+                                        onChange={
+                                            this.changeUseLS
+                                        }
+                                    />
                                 </p>
-                            )}
+                            </Fragment>
+                            {use_ls && settings()}
                         </PanelBody>
                     </InspectorControls>
                 </Fragment>

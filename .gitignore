@@ -1,6 +1,8 @@
 /node_modules
 /bundled
 /dist
+/build
 /vendor/
 .DS_STORE
 .wp-env.json
+*.zip

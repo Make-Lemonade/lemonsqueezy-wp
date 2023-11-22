@@ -55,6 +55,39 @@ class LSQ_Rest_Controller {
 
 		register_rest_route(
 			$namespace,
+			'/delete_test_key/',
+			array(
+				'methods'             => \WP_REST_Server::DELETABLE,
+				'callback'            => array( $this, 'delete_test' ),
+				'args'                => array(),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return current_user_can('manage_options');
+				},
+			)
+		);
+
+		register_rest_route(
+			$namespace,
+			'/save_test_key/',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'save_test' ),
+				'args'                => array(
+					'test_key' => [
+						'description' => 'Test API key.',
+						'type'        => 'string',
+						'required'    => true,
+						'sanitize_callback' => 'sanitize_text_field',
+					],
+				),
+				'permission_callback' => function( \WP_REST_Request $request ) {
+					return current_user_can('manage_options');
+				},
+			)
+		);
+
+		register_rest_route(
+			$namespace,
 			'/activate/',
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
@@ -142,6 +175,71 @@ class LSQ_Rest_Controller {
 					return true;
 				},
 			)
+		);
+	}
+
+	/**
+	 * Delete Test API key.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Request
+	 */
+	public function delete_test( $request ) {
+
+		$deleted = delete_option( 'lsq_api_key_test' );
+
+		return new \WP_REST_Response(
+			array(
+				'success' => $deleted,
+			),
+			$deleted ? 200 : 400
+		);
+	}
+
+	/**
+	 * Save Test API key with Lemon Squeezy API.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Request
+	 */
+	public function save_test( $request ) {
+		$test_key = $request->get_param('test_key');
+
+		$response = wp_remote_get(
+			LSQ_API_URL . '/v1/users/me',
+			array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $test_key,
+					'Accept'        => 'application/vnd.api+json',
+					'Content-Type'  => 'application/vnd.api+json',
+					'Cache-Control' => 'no-cache',
+				),
+			)
+		);
+
+		$is_valid = false;
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				$is_valid = true;
+
+				$body = json_decode( $response['body'] );
+				$user = $body->data;
+				update_option( 'lsq_api_key_test', $test_key );
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+			}
+		} else {
+			$error_message = $response->get_error_message();
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'success' => $is_valid,
+				'user' => $user,
+				'error'   => $error_message,
+			),
+			$is_valid ? 200 : 400
 		);
 	}
 
@@ -432,6 +530,10 @@ class LSQ_Rest_Controller {
 				$products     = array();
 
 				foreach ( $product_data->data as $product ) {
+					if ( $product->attributes->status !== 'published' ) {
+						continue;
+					}
+
 					$products[] = array(
 						'label' => $product->attributes->name,
 						'value' => $product->attributes->buy_now_url,
