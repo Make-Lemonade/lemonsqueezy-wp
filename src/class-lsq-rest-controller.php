@@ -530,6 +530,10 @@ class LSQ_Rest_Controller {
 				$products     = array();
 
 				foreach ( $product_data->data as $product ) {
+					if ( $product->attributes->status !== 'published' ) {
+						continue;
+					}
+
 					$products[] = array(
 						'label' => $product->attributes->name,
 						'value' => $product->attributes->buy_now_url,
