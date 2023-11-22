@@ -204,12 +204,12 @@ class Edit extends Component {
                                         title={__('Color settings')}
                                         colorSettings={[
                                             {
-                                                value: textColor ? textColor.color : '',
+                                                value: textColor.color,
                                                 onChange: setTextColor,
                                                 label: __('Text color')
                                             },
                                             {
-                                                value: backgroundColor ? backgroundColor.color : '',
+                                                value: backgroundColor.color,
                                                 onChange: setBackgroundColor,
                                                 label: __('Background color')
                                             }

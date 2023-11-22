@@ -333,7 +333,6 @@ class AdminSettings extends Component {
                                         {this.state.lsqUser && <>
                                             <Button
                                                 isPrimary
-                                                isLarge
                                                 isBusy={this.state.isAPISaving}
                                                 disabled={
                                                     this.state.isAPISaving
@@ -349,17 +348,16 @@ class AdminSettings extends Component {
 
                                                 {! this.state.showingTestInput && <Button onClick={() => this.setState({showingTestInput: true})} isSmall>Need to Test? Enter your Test Key</Button>}
                                                 {this.state.showingTestInput && <>
-                                                    <input onChange={(el) => {
+                                                    <input className={"lsq-input"} onChange={(el) => {
                                                         this.setState({enteredApiKeyTest: el.target.value});
                                                     }} type={"text"} placeholder={"Enter your Test API Key"} />
                                                     <Button
                                                         isBusy={this.state.isTestAPISaving}
                                                         isSecondary
-                                                        isLarge
                                                         onClick={
                                                             () => this.saveTestKey()
                                                         }>Save Test API Key</Button>
-                                                    <Button isLarge onClick={() => this.setState({showingTestInput: false})}>Cancel</Button>
+                                                    <Button onClick={() => this.setState({showingTestInput: false})}>Cancel</Button>
                                                     <div><br/>
                                                         <Button isLink target={"_blank"} href={"https://docs.lemonsqueezy.com/help/getting-started/test-mode"}>Read about the test mode.</Button>
                                                     </div>
@@ -372,7 +370,7 @@ class AdminSettings extends Component {
                                                 <Button
                                                     isBusy={this.state.isTestAPISaving}
                                                     isSecondary
-                                                    isLarge
+
                                                     onClick={
                                                         () => this.removeTestKey()
                                                     }>Remove Test Mode</Button>
@@ -382,7 +380,7 @@ class AdminSettings extends Component {
                                         {!this.state.lsqUser && (
                                             <Button
                                                 isPrimary
-                                                isLarge
+
                                                 isBusy={
                                                     this.state.isAPILoading ||
                                                     !this.state.isSettingsLoaded

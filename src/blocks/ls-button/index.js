@@ -20,7 +20,13 @@ const attributes = {
     textColor: {
         type: 'string'
     },
+    customTextColor: {
+        type: 'string'
+    },
     backgroundColor: {
+        type: 'string'
+    },
+    customBackgroundColor: {
         type: 'string'
     },
     prefillUserData: {
@@ -99,8 +105,9 @@ registerBlockType("lemonsqueezy/ls-button", {
     }],
     edit: Edit,
     save: ({ attributes }) => {
-        const { content, overlay, product, textColor, backgroundColor } = attributes;
+        const { content, overlay, product, textColor, customTextColor, backgroundColor, customBackgroundColor } = attributes;
         let link = product;
+        let divStyles = {};
         let className = [
             'wp-block-button__link',
         ];
@@ -118,10 +125,18 @@ registerBlockType("lemonsqueezy/ls-button", {
             className.push( getColorClassName('background-color', backgroundColor) );
         }
 
+        if (customTextColor != undefined) {
+            divStyles.color = customTextColor;
+        }
+
+        if (customBackgroundColor != undefined) {
+            divStyles.backgroundColor = customBackgroundColor;
+        }
+
         return (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
-                    <a className={className.join( ' ')} href={link}>
+                    <a style={divStyles} className={className.join( ' ')} href={link}>
                         {content}
                     </a>
                 </div>
