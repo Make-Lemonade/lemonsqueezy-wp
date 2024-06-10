@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMake-Lemonade%2Flemonsqueezy-wp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMake-Lemonade%2Flemonsqueezy-wp?ref=badge_shield)
+
 === Easy Peasy Digital Downloads — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
 Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
@@ -170,3 +172,7 @@ Any digital product you can dream of. Digital downloads, licensed software, eboo
 = 1.0 =
 
 - Initial release.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMake-Lemonade%2Flemonsqueezy-wp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMake-Lemonade%2Flemonsqueezy-wp?ref=badge_large)
