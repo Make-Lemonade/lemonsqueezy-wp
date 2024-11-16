@@ -39,6 +39,6 @@
     "move-file-cli": "^3.0.0"
   },
   "dependencies": {
-    "standard": "^17.1.0"
+    "standard": "^17.1.2"
   }
 }
