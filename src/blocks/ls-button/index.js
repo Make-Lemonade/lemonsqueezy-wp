@@ -40,6 +40,10 @@ const attributes = {
     customData: {
         type: "array",
         default: []
+    },
+    variant: {
+        type: 'string',
+        default: ''
     }
 };
 
@@ -81,13 +85,13 @@ registerBlockType("lemonsqueezy/ls-button", {
     deprecated: [{
         attributes,
         save: ({ attributes }) => {
-            const { content, overlay, product  } = attributes;
+            const { content, overlay, product } = attributes;
             let link = product;
             let className = [
                 'wp-block-button__link',
             ];
 
-            if ( overlay ) {
+            if (overlay) {
                 className.push('lemonsqueezy-button');
                 link = product + "?embed=1";
             }
@@ -95,7 +99,7 @@ registerBlockType("lemonsqueezy/ls-button", {
             return (
                 <div className="wp-block-buttons">
                     <div className="wp-block-button">
-                        <a className={className.join( ' ')} href={link}>
+                        <a className={className.join(' ')} href={link}>
                             {content}
                         </a>
                     </div>
@@ -112,17 +116,17 @@ registerBlockType("lemonsqueezy/ls-button", {
             'wp-block-button__link',
         ];
 
-        if ( overlay ) {
+        if (overlay) {
             className.push('lemonsqueezy-button');
             link = product + "?embed=1";
         }
 
         if (textColor != undefined) {
-            className.push( getColorClassName('color', textColor) );
+            className.push(getColorClassName('color', textColor));
         }
 
         if (backgroundColor != undefined) {
-            className.push( getColorClassName('background-color', backgroundColor) );
+            className.push(getColorClassName('background-color', backgroundColor));
         }
 
         if (customTextColor != undefined) {
@@ -136,7 +140,7 @@ registerBlockType("lemonsqueezy/ls-button", {
         return (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
-                    <a style={divStyles} className={className.join( ' ')} href={link}>
+                    <a style={divStyles} className={className.join(' ')} href={link}>
                         {content}
                     </a>
                 </div>

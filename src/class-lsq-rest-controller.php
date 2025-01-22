@@ -176,6 +176,26 @@ class LSQ_Rest_Controller {
 				},
 			)
 		);
+
+		register_rest_route(
+			$namespace,
+			'/variants/',
+			array(
+				array(
+					'methods' => \WP_REST_Server::READABLE,
+					'callback' => array($this, 'get_variants'),
+					'permission_callback' => function() {
+						return current_user_can('edit_posts');
+					},
+					'args' => array(
+						'product_id' => array(
+							'required' => true,
+							'type' => 'string',
+						),
+					),
+				)
+			)
+		);
 	}
 
 	/**
@@ -537,6 +557,7 @@ class LSQ_Rest_Controller {
 					$products[] = array(
 						'label' => $product->attributes->name,
 						'value' => $product->attributes->buy_now_url,
+						'product_id' => $product->id
 					);
 				}
 
@@ -684,6 +705,68 @@ class LSQ_Rest_Controller {
 				),
 			),
 			200
+		);
+	}
+
+	/**
+	 * Get variants for a product.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Request
+	 */
+	public function get_variants( $request ) {
+		
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return new WP_Error(
+				'rest_forbidden',
+				esc_html__( 'You do not have permissions to view variants.', 'lemonsqueezy' ),
+				array('status' => 401)
+			);
+		}
+
+		$product_id = $request->get_param('product_id');
+		
+		if ( empty( $product_id ) ) {
+			return new WP_Error( 'no_product', 'Product ID is required', array( 'status' => 400 ) );
+		}
+
+		$api_key = get_option( 'lsq_api_key' );
+		
+		// Get variants by given product ID.
+		$ls_endpoint = LSQ_API_URL . '/v1/products/' . $product_id . '/variants';
+		
+		$response = wp_remote_get( $ls_endpoint, array(
+			'headers' => array(
+				'Authorization' => 'Bearer ' . $api_key,
+				'Content-Type' => 'application/vnd.api+json',
+				'Accept' => 'application/vnd.api+json'
+			)
+		));
+
+		if (is_wp_error($response)) {
+			error_log('LS API Error: ' . $response->get_error_message());
+			return new WP_Error('api_error', 'Failed to fetch variants', array('status' => 500));
+		}
+
+		$body = json_decode(wp_remote_retrieve_body($response), true);
+		
+		if (empty($body['data'])) {
+			return array(
+				'success' => true,
+				'variants' => array()
+			);
+		}
+
+		$variants = array_map(function($variant) {
+			return array(
+				'label' => $variant['attributes']['name'],
+				'value' => $variant['attributes']['slug']
+			);
+		}, $body['data']);
+
+		return array(
+			'success' => true,
+			'variants' => $variants
 		);
 	}
 }
