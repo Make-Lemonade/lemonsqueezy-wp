@@ -113,12 +113,11 @@ class LSQ_Register_Block {
 
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
 			}
 
-			$purchase_link = $this->get_purchase_link( $args, $block );
-
 			$existing_href = $this->get_link_from_button( $block_content );
+			$purchase_link = $this->get_purchase_link( $args, $block );
 
 			if ( $existing_href ) {
 				$block_content = str_replace( 'href="' . $existing_href . '"', 'href="' . $purchase_link . '"', $block_content );
@@ -136,7 +135,7 @@ class LSQ_Register_Block {
 			$args = wp_parse_args( $block['attrs'] );
 
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
 			}
 
 			$existing_href = $this->get_link_from_button( $block_content );
@@ -154,11 +153,19 @@ class LSQ_Register_Block {
 	}
 
 	protected function get_purchase_link( $args, $block ) {
+		// If there's no product, abort.
 		if ( empty( $args['product'] ) ) {
 			return false;
 		}
 
-		$link = $args['product'];
+		// If variant set, create link with variant, or default to product link.
+		if( ! empty($args['variant']) ) {
+			$variant = $args['variant'];
+			$store_url = explode('/checkout/buy/', $args['product'] )[0];
+			$link = "$store_url/checkout/buy/$variant";
+		} else {
+			$link = $args['product'];
+		}
 
 		if ( ! empty( $args['overlay'] ) && $args['overlay'] ) {
 			$link = add_query_arg( 'embed', '1', $link );

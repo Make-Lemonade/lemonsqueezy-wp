@@ -5,15 +5,19 @@ import { RichText, withColors, PanelColorSettings, InspectorControls } from "@wo
 import { SelectControl, ToggleControl, TextControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
+const { nonce } = window.wpApiSettings;
+
 class Edit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stores: [],
             products: [],
+            variants: [],
             isCheckingApi: true,
             isApiConnectable: false,
             isLoadingProducts: false,
+            isLoadingVariants: false,
             newCustomDataKey: '',
             newCustomDataValue: ''
         };
@@ -90,10 +94,16 @@ class Edit extends Component {
                             selectedProductIndex = 0;
                         }
 
+                        const selectedProduct = response.products[selectedProductIndex].value;
                         this.props.setAttributes({
-                            product:
-                                response.products[selectedProductIndex].value
+                            product: selectedProduct
                         });
+
+                        // Use product ID to fetch variants.
+                        const selectedProductId = response.products[selectedProductIndex].product_id;
+                        if (selectedProductId) {
+                            this.getVariants(selectedProductId);
+                        }
                     }
                 }
             })
@@ -104,12 +114,77 @@ class Edit extends Component {
             });
     }
 
+    getVariants(product_id) {
+        if (!product_id || product_id.includes('http')) {
+            return;
+        }
+
+        this.setState({
+            variants: [],
+            isLoadingVariants: true
+        });
+
+        const endpoint = "/wp-json/lsq/v1/variants?product_id=" + product_id;
+
+        return fetch(endpoint, {
+            credentials: 'same-origin',
+            headers: {
+                'X-WP-Nonce': nonce
+            }
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        variants: response.variants
+                    });
+
+                    if (response.variants.length) {
+                        let selectedVariantIndex = response.variants.findIndex(
+                            variant => variant.value == this.props.attributes.variant
+                        );
+                        if (selectedVariantIndex === -1) {
+                            selectedVariantIndex = 0;
+                        }
+
+                        this.props.setAttributes({
+                            variant: response.variants[selectedVariantIndex].value
+                        });
+                    }
+                }
+            })
+            .catch(error => {
+                alert('Error fetching variants:', error);
+            })
+            .finally(() => {
+                this.setState({
+                    isLoadingVariants: false
+                });
+            });
+    }
+
     onChangeContent = content => {
         this.props.setAttributes({ content });
     };
 
     onChangeProduct = product => {
-        this.props.setAttributes({ product });
+        // Clear variants when product changes
+        this.setState({
+            variants: [],
+            isLoadingVariants: false
+        });
+
+        this.props.setAttributes({
+            product,
+            variant: '' // Clear selected variant when product changes
+        });
+
+        if (product) {
+            // Find the product_id from the products array
+            const selectedProduct = this.state.products.find(item => item.value === product);
+            const productId = selectedProduct ? selectedProduct.product_id : null;
+            this.getVariants(productId);
+        }
     };
 
     onChangeStore = store => {
@@ -129,64 +204,68 @@ class Edit extends Component {
         this.props.setAttributes({ prefillFromURL });
     };
 
-    handleRemoveCustomData = ( index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData.splice( index, 1 );
-        this.props.setAttributes( { customData } );
+    handleRemoveCustomData = (index) => {
+        const customData = [...this.props.attributes.customData];
+        customData.splice(index, 1);
+        this.props.setAttributes({ customData });
     };
 
 
-    handleCustomDataKeyChange = ( data, index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData[ index ].key = data;
-        this.props.setAttributes( { customData } );
+    handleCustomDataKeyChange = (data, index) => {
+        const customData = [...this.props.attributes.customData];
+        customData[index].key = data;
+        this.props.setAttributes({ customData });
     };
 
-    handleCustomDataValueChange = ( data, index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData[ index ].value = data;
-        this.props.setAttributes( { customData } );
+    handleCustomDataValueChange = (data, index) => {
+        const customData = [...this.props.attributes.customData];
+        customData[index].value = data;
+        this.props.setAttributes({ customData });
     };
 
     handleAddCustomData() {
-        if ( ! this.state.newCustomDataKey || ! this.state.newCustomDataValue ) {
-            alert( 'Please Insert Key & Value' );
+        if (!this.state.newCustomDataKey || !this.state.newCustomDataValue) {
+            alert('Please Insert Key & Value');
             return;
         }
-        const customData = [ ...this.props.attributes.customData ];
-        customData.push( {
+        const customData = [...this.props.attributes.customData];
+        customData.push({
             key: this.state.newCustomDataKey,
             value: this.state.newCustomDataValue
-        } );
+        });
 
         this.setState({ newCustomDataKey: '', newCustomDataValue: '' });
-        this.props.setAttributes( { customData } );
+        this.props.setAttributes({ customData });
+    };
+
+    onChangeVariant = variant => {
+        this.props.setAttributes({ variant });
     };
 
     render() {
         const { attributes, textColor, setTextColor, backgroundColor, setBackgroundColor } = this.props;
-        const { content, store, product, overlay, prefillUserData, prefillFromURL, customData } = attributes;
+        const { content, store, product, variant, overlay, prefillUserData, prefillFromURL, customData } = attributes;
 
         let customDataFields = [];
 
-        if ( customData.length ) {
-            customDataFields = customData.map( ( data, index ) => {
-                return <Fragment key={ index }>
+        if (customData.length) {
+            customDataFields = customData.map((data, index) => {
+                return <Fragment key={index}>
                     <div className={"lemonsqueezy-custom-data-row"}>
                         <TextControl
                             placeholder="Examples: user_name, user_id"
-                            value={ data.key }
-                            onChange={ ( value ) => this.handleCustomDataKeyChange( value, index ) }
+                            value={data.key}
+                            onChange={(value) => this.handleCustomDataKeyChange(value, index)}
                         />
                         <TextControl
                             placeholder="Examples: JoshSmith, 123"
-                            value={ data.value }
-                            onChange={ ( value ) => this.handleCustomDataValueChange( value, index ) }
+                            value={data.value}
+                            onChange={(value) => this.handleCustomDataValueChange(value, index)}
                         />
-                        <Button onClick={() => this.handleRemoveCustomData(index)} isSecondary isSmall>- Remove</Button>
+                        <Button onClick={() => this.handleRemoveCustomData(index)} variant="secondary" size="small">- Remove</Button>
                     </div>
                 </Fragment>;
-            } );
+            });
         }
 
         return (
@@ -254,6 +333,24 @@ class Edit extends Component {
                                     )}
                                 </p>
                                 <p>
+                                    {this.state.isLoadingVariants ? (
+                                        <span style={{ fontSize: "14px", color: "rgb(117, 117, 117)" }}>
+                                            {__("Loading variants...", "lemonsqueezy")}
+                                        </span>
+                                    ) : this.state.variants && this.state.variants.length > 0 ? (
+                                        <SelectControl
+                                            label={__("Select Variant", "lemonsqueezy")}
+                                            value={variant}
+                                            options={this.state.variants}
+                                            onChange={this.onChangeVariant}
+                                        />
+                                    ) : product ? (
+                                        <span style={{ fontSize: "14px", color: "rgb(117, 117, 117)" }}>
+                                            {__("No variants available", "lemonsqueezy")}
+                                        </span>
+                                    ) : null}
+                                </p>
+                                <p>
                                     <RichText
                                         placeholder={__(
                                             "Button text*",
@@ -274,13 +371,13 @@ class Edit extends Component {
                                         help={
                                             overlay
                                                 ? __(
-                                                      "Your checkout will be opened in a modal window.",
-                                                      "lemonsqueezy"
-                                                  )
+                                                    "Your checkout will be opened in a modal window.",
+                                                    "lemonsqueezy"
+                                                )
                                                 : __(
-                                                      "Your customer will be redirected to your checkout page.",
-                                                      "lemonsqueezy"
-                                                  )
+                                                    "Your customer will be redirected to your checkout page.",
+                                                    "lemonsqueezy"
+                                                )
                                         }
                                         checked={overlay}
                                         onChange={this.onChangeOverlay}
@@ -334,7 +431,7 @@ class Edit extends Component {
                                 </p>
                                 <p>
                                     <small className={"lemonsqueezy-custom-data-header"}>
-                                        <strong>Custom Data</strong><br/>
+                                        <strong>Custom Data</strong><br />
                                         <Button
                                             isSmall
                                             isLink
@@ -371,7 +468,7 @@ class Edit extends Component {
                                             value={this.state.newCustomDataValue}
                                             onChange={(val) => this.setState({ newCustomDataValue: val })}
                                         />
-                                        <Button onClick={() => this.handleAddCustomData()} isSecondary isSmall>+ Add Data</Button>
+                                        <Button onClick={() => this.handleAddCustomData()} variant="secondary" size="small">+ Add Data</Button>
                                     </div>
                                     {customDataFields}
 
@@ -417,4 +514,4 @@ class Edit extends Component {
     }
 }
 
-export default withColors('backgroundColor', {textColor: 'color'})(Edit);
+export default withColors('backgroundColor', { textColor: 'color' })(Edit);

@@ -12,6 +12,7 @@ const { Fragment, Component } = wp.element;
 const { InspectorControls } = wp.editor;
 const { createHigherOrderComponent } = wp.compose;
 const { ToggleControl, PanelBody, SelectControl } = wp.components;
+const { nonce } = window.wpApiSettings;
 
 // Restrict to specific block names.
 const allowedBlocks = ["core/button"];
@@ -56,6 +57,10 @@ function extendAttributes(settings) {
             prefillFromURL: {
                 type: "boolean",
                 default: false
+            },
+            variant: {
+                type: "string",
+                default: ""
             }
         });
     }
@@ -72,10 +77,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.setState({
                 products: [],
                 stores: [],
-                checkingApi: false
+                variants: [],
+                checkingApi: false,
+                isLoadingVariants: false
             });
 
-            if ( use_ls ) {
+            if (use_ls) {
                 this.getStores();
                 this.checkApi();
             }
@@ -130,7 +137,9 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         getProducts(store_id) {
             this.setState({
                 products: [],
-                isLoadingProducts: true
+                variants: [], // Clear variants when loading new products
+                isLoadingProducts: true,
+                isLoadingVariants: false
             });
 
             return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
@@ -142,21 +151,23 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         });
 
                         if (response.products.length) {
-                            let selectedProductIndex =
-                                response.products.findIndex(
-                                    product =>
-                                        product.value ==
-                                        this.props.attributes.product
-                                );
+                            let selectedProductIndex = response.products.findIndex(
+                                product => product.value == this.props.attributes.product
+                            );
                             if (selectedProductIndex === -1) {
                                 selectedProductIndex = 0;
                             }
 
+                            const selectedProduct = response.products[selectedProductIndex].value;
                             this.props.setAttributes({
-                                product:
-                                    response.products[selectedProductIndex]
-                                        .value
+                                product: selectedProduct,
                             });
+
+                            // Use product ID to fetch variants.
+                            const selectedProductId = response.products[selectedProductIndex].product_id;
+                            if (selectedProductId) {
+                                this.getVariants(selectedProductId);
+                            }
                         }
                     }
                 })
@@ -167,8 +178,75 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                 });
         }
 
+        getVariants(product_id) {
+            // Don't proceed if we don't have a valid product ID
+            if (!product_id || product_id.includes('http')) {
+                return;
+            }
+
+            this.setState({
+                variants: [],
+                isLoadingVariants: true
+            });
+
+            const endpoint = "/wp-json/lsq/v1/variants?product_id=" + product_id;
+
+            return fetch(endpoint, {
+                credentials: 'same-origin',
+                headers: {
+                    'X-WP-Nonce': nonce
+                }
+            })
+                .then(response => response.json())
+                .then(response => {
+
+                    if (true == response.success) {
+                        this.setState({
+                            variants: response.variants
+                        });
+
+                        if (response.variants.length) {
+                            let selectedVariantIndex = response.variants.findIndex(
+                                variant => variant.value == this.props.attributes.variant
+                            );
+                            if (selectedVariantIndex === -1) {
+                                selectedVariantIndex = 0;
+                            }
+
+                            this.props.setAttributes({
+                                variant: response.variants[selectedVariantIndex].value
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert('Error fetching variants:', error);
+                })
+                .finally(() => {
+                    this.setState({
+                        isLoadingVariants: false
+                    });
+                });
+        }
+
         onChangeProduct = product => {
-            this.props.setAttributes({ product: product });
+            // Clear variants when product changes
+            this.setState({
+                variants: [],
+                isLoadingVariants: false
+            });
+
+            this.props.setAttributes({
+                product,
+                variant: '' // Clear selected variant when product changes
+            });
+
+            if (product) {
+                // Find selected product by value (product URL) and get product_id from the products array.
+                const selectedProduct = this.state.products.find(item => item.value === product);
+                const productId = selectedProduct ? selectedProduct.product_id : null;
+                this.getVariants(productId);
+            }
         };
 
         onChangeStore = store => {
@@ -187,7 +265,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         changeUseLS = use_ls => {
             this.props.setAttributes({ use_ls: use_ls });
 
-            if ( use_ls && !this.state.stores.length ) {
+            if (use_ls && !this.state.stores.length) {
                 this.getStores();
                 this.checkApi();
             }
@@ -197,9 +275,13 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.props.setAttributes({ prefillFromURL });
         };
 
+        onChangeVariant = variant => {
+            this.props.setAttributes({ variant: variant });
+        };
+
         render() {
             const { attributes } = this.props;
-            const { store, product, overlay, use_ls, prefillUserData, prefillFromURL } = attributes;
+            const { store, product, variant, overlay, use_ls, prefillUserData, prefillFromURL } = attributes;
 
             // If it's not a core button, do not include settings panel.
             if (this.props.name !== "core/button") {
@@ -233,11 +315,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 color: "rgb(117, 117, 117)"
                                             }}
                                         >
-                                                        {__(
-                                                            "Loading...",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
+                                            {__(
+                                                "Loading...",
+                                                "lemonsqueezy"
+                                            )}
+                                        </span>
                                     ) : this.state.products
                                         .length ? (
                                         <SelectControl
@@ -256,12 +338,36 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 color: "rgb(117, 117, 117)"
                                             }}
                                         >
-                                                        {__(
-                                                            "No products found",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
+                                            {__(
+                                                "No products found",
+                                                "lemonsqueezy"
+                                            )}
+                                        </span>
                                     )}
+                                </p>
+                                <p>
+                                    {this.state.isLoadingVariants ? (
+                                        <span style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}>
+                                            {__("Loading variants...", "lemonsqueezy")}
+                                        </span>
+                                    ) : this.state.variants && this.state.variants.length > 0 ? (
+                                        <SelectControl
+                                            label={__("Select Variant", "lemonsqueezy")}
+                                            value={variant}
+                                            options={this.state.variants}
+                                            onChange={this.onChangeVariant}
+                                        />
+                                    ) : product ? (
+                                        <span style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}>
+                                            {__("No variants available", "lemonsqueezy")}
+                                        </span>
+                                    ) : null}
                                 </p>
                                 <p>
                                     <ToggleControl
@@ -332,6 +438,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         }
                                     />
                                 </p>
+
                             </Fragment>
                         ) : (
                             <p>
@@ -427,9 +534,9 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
  * @return {Object} extraProps Modified block element.
  */
 function saveExtendedOptions(extraProps, blockType, attributes) {
-    const { overlay, product } = attributes;
+    const { overlay, product, use_ls } = attributes;
 
-    if (allowedBlocks.includes(blockType.name)) {
+    if (allowedBlocks.includes(blockType.name) && use_ls) {
         extraProps.overlay = overlay;
         extraProps.product = product;
     }
