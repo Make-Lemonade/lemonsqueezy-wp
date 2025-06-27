@@ -58,6 +58,7 @@ class LSQ_OAuth {
 				'state' => $_SESSION['lsq_oauth_code'],
 				'code_challenge' => $code_challenge,
 				'code_challenge_method' => 'S256',
+				'prompt' => 'consent',
 			)
 		);
 
