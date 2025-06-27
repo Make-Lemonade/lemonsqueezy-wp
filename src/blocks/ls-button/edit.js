@@ -259,23 +259,35 @@ class Edit extends Component {
                             <Fragment>
                                 <InspectorControls>
                                     <PanelColorSettings
-                                        title={__("Button colors", "lemonsqueezy")}
+                                        title={__(
+                                            "Button colors",
+                                            "lemonsqueezy"
+                                        )}
                                         colorSettings={[
                                             {
                                                 value: textColor.color,
                                                 onChange: setTextColor,
-                                                label: __("Text", "lemonsqueezy")
+                                                label: __(
+                                                    "Text",
+                                                    "lemonsqueezy"
+                                                )
                                             },
                                             {
                                                 value: backgroundColor.color,
                                                 onChange: setBackgroundColor,
-                                                label: __("Background", "lemonsqueezy")
+                                                label: __(
+                                                    "Background",
+                                                    "lemonsqueezy"
+                                                )
                                             }
                                         ]}
                                     />
 
                                     <PanelColorSettings
-                                        title={__("Checkout colors", "lemonsqueezy")}
+                                        title={__(
+                                            "Checkout colors",
+                                            "lemonsqueezy"
+                                        )}
                                         colorSettings={[
                                             {
                                                 value: checkoutBackgroundColor,
@@ -284,7 +296,10 @@ class Edit extends Component {
                                                         this,
                                                         "checkoutBackgroundColor"
                                                     ),
-                                                label: __("Background", "lemonsqueezy")
+                                                label: __(
+                                                    "Background",
+                                                    "lemonsqueezy"
+                                                )
                                             },
                                             {
                                                 value: checkoutLinksColor,
@@ -293,7 +308,10 @@ class Edit extends Component {
                                                         this,
                                                         "checkoutLinksColor"
                                                     ),
-                                                label: __("Links", "lemonsqueezy")
+                                                label: __(
+                                                    "Links",
+                                                    "lemonsqueezy"
+                                                )
                                             },
                                             {
                                                 value: checkoutButtonColor,
@@ -302,7 +320,10 @@ class Edit extends Component {
                                                         this,
                                                         "checkoutButtonColor"
                                                     ),
-                                                label: __("Button", "lemonsqueezy")
+                                                label: __(
+                                                    "Button",
+                                                    "lemonsqueezy"
+                                                )
                                             },
                                             {
                                                 value: checkoutButtonTextColor,
@@ -311,7 +332,10 @@ class Edit extends Component {
                                                         this,
                                                         "checkoutButtonTextColor"
                                                     ),
-                                                label: __("Button text", "lemonsqueezy")
+                                                label: __(
+                                                    "Button text",
+                                                    "lemonsqueezy"
+                                                )
                                             },
                                             {
                                                 value: checkoutTermsPrivacyColor,
@@ -320,7 +344,10 @@ class Edit extends Component {
                                                         this,
                                                         "checkoutTermsPrivacyColor"
                                                     ),
-                                                label: __("Terms + Privacy", "lemonsqueezy")
+                                                label: __(
+                                                    "Terms + Privacy",
+                                                    "lemonsqueezy"
+                                                )
                                             }
                                         ]}
                                     />
