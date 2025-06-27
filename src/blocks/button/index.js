@@ -82,8 +82,9 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         }
 
         getStores() {
-            return fetch("/wp-json/lsq/v1/stores")
-                .then(response => response.json())
+            return wp.apiFetch({
+                path: "lsq/v1/stores"
+            })
                 .then(response => {
                     if (true == response.success) {
                         this.setState({
@@ -111,8 +112,9 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.setState({
                 checkingApi: true
             });
-            return fetch("/wp-json/lsq/v1/validate")
-                .then(response => response.json())
+            return wp.apiFetch({
+                path: "lsq/v1/validate"
+            })
                 .then(response => {
                     let isApiConnectable = false;
 
@@ -133,8 +135,9 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                 isLoadingProducts: true
             });
 
-            return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
-                .then(response => response.json())
+            return wp.apiFetch({
+                path: `lsq/v1/products?store_id=${store_id}`
+            })
                 .then(response => {
                     if (true == response.success) {
                         this.setState({

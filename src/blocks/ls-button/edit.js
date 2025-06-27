@@ -30,8 +30,9 @@ class Edit extends Component {
     }
 
     componentDidMount() {
-        fetch("/wp-json/lsq/v1/stores")
-            .then(response => response.json())
+        wp.apiFetch({
+            path: "lsq/v1/stores"
+        })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -57,8 +58,9 @@ class Edit extends Component {
     }
 
     checkApi() {
-        return fetch("/wp-json/lsq/v1/validate")
-            .then(response => response.json())
+        return wp.apiFetch({
+            path: "lsq/v1/validate"
+        })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -83,8 +85,9 @@ class Edit extends Component {
             isLoadingProducts: true
         });
 
-        return fetch("/wp-json/lsq/v1/products?store_id=" + store_id)
-            .then(response => response.json())
+        return wp.apiFetch({
+            path: `lsq/v1/products?store_id=${store_id}`
+        })
             .then(response => {
                 if (true == response.success) {
                     this.setState({

@@ -57,15 +57,10 @@ class AdminSettings extends Component {
     removeTestKey() {
         this.setState({ isTestAPISaving: true });
 
-        return fetch("/wp-json/lsq/v1/delete_test_key", {
-            method: "DELETE",
-            credentials: "same-origin",
-            headers: new Headers({
-                "Content-Type": "application/json;charset=UTF-8",
-                "X-WP-Nonce": Lemonsqueezy.nonce
-            })
+        return wp.apiFetch({
+            path: "lsq/v1/delete_test_key",
+            method: "DELETE"
         })
-            .then(response => response.json())
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -87,16 +82,11 @@ class AdminSettings extends Component {
     saveTestApiKey() {
         this.setState({ isTestAPISaving: true });
 
-        return fetch("/wp-json/lsq/v1/save_test_key", {
+        return wp.apiFetch({
+            path: "lsq/v1/save_test_key",
             method: "POST",
-            credentials: "same-origin",
-            headers: new Headers({
-                "Content-Type": "application/json;charset=UTF-8",
-                "X-WP-Nonce": Lemonsqueezy.nonce
-            }),
-            body: JSON.stringify({ test_key: this.state.enteredApiKeyTest })
+            data: { test_key: this.state.enteredApiKeyTest }
         })
-            .then(response => response.json())
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -121,21 +111,21 @@ class AdminSettings extends Component {
             isAPILoading: true
         });
 
-        return fetch("/wp-json/lsq/v1/validate")
-            .then(response => response.json())
-            .then(response => {
-                if (true == response.success) {
-                    this.setState({
-                        isAPILoading: false,
-                        lsqUser: response.user
-                    });
-                } else {
-                    this.setState({
-                        isAPILoading: false,
-                        lsqUser: null
-                    });
-                }
-            });
+        return wp.apiFetch({
+            path: "lsq/v1/validate",
+        }).then(response => {
+            if (true == response.success) {
+                this.setState({
+                    isAPILoading: false,
+                    lsqUser: response.user
+                });
+            } else {
+                this.setState({
+                    isAPILoading: false,
+                    lsqUser: null
+                });
+            }
+        });
     }
 
     changeOptions(option, value) {

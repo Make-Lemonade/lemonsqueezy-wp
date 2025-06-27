@@ -6,3 +6,4 @@
 .DS_STORE
 .wp-env.json
 *.zip
+setup.sh

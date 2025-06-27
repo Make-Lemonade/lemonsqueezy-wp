@@ -84,7 +84,7 @@ class LSQ_Register_Block {
 	 * @return void
 	 */
 	public function register_blocks() {
-		wp_register_script( 'lemonsqueezy-editor-script', LSQ_URL . '/build/editor.js', array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities', 'wp-compose', 'wp-block-editor' ), '1.0.0', true );
+		wp_register_script( 'lemonsqueezy-editor-script', LSQ_URL . '/build/editor.js', array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities', 'wp-compose', 'wp-block-editor', 'wp-api-fetch' ), '1.0.0', true );
 		wp_add_inline_script( 'lemonsqueezy-editor-script', 'var lsData = ' . wp_json_encode( array( 'settings_url' => admin_url( 'admin.php?page=lemonsqueezy' ) ) ), 'before' );
 		wp_register_script( 'lemonsqueezy-script', LSQ_URL . '/build/script.js', array(), '1.0.0', true );
 		wp_register_style( 'lemonsqueezy-style', LSQ_URL . '/build/style-script.css', array(), '1.0.0' );
