@@ -114,7 +114,7 @@ class LSQ_Admin {
 			'lemonsqueezy',
 			array( $this, 'menu_callback' ),
 			LSQ_URL . '/images/ls-icon.svg',
-			60
+			90
 		);
 
 		wp_register_script( 'lemonsqueezy-admin-script', LSQ_URL . '/build/admin.js', array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ), '1.0', true );
