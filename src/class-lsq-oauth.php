@@ -101,7 +101,7 @@ class LSQ_OAuth {
 				'lemonsqueezy-admin-script',
 				'window.lsq_oauth = ' . json_encode(
 					array(
-						'error' => __( 'Invalid oauth state/code', 'lemon-squeezy' ),
+						'error' => __( 'Invalid oauth state/code', 'lemonsqueezy' ),
 					)
 				),
 				'before'

@@ -261,7 +261,7 @@ class LSQ_Rest_Controller {
 				array(
 					'success' => $is_valid,
 					'user' => $user,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'   => __( 'Unauthorized request', 'lemonsqueezy' ),
 				),
 				401
 			);
@@ -319,7 +319,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'   => __( 'Unauthorized request', 'lemonsqueezy' ),
 				),
 				401
 			);
@@ -376,7 +376,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'   => __( 'Unauthorized request', 'lemonsqueezy' ),
 				),
 				401
 			);
@@ -429,7 +429,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'      => __( 'Unauthorized request', 'lemonsqueezy' ),
 					'error_code' => 'unauthorized',
 				),
 				401
@@ -503,7 +503,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'      => __( 'Unauthorized request', 'lemonsqueezy' ),
 					'error_code' => 'unauthorized',
 				),
 				401
@@ -578,7 +578,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Unauthorized request', 'lemon-squeezy' ),
+					'error'      => __( 'Unauthorized request', 'lemonsqueezy' ),
 					'error_code' => 'unauthorized',
 				),
 				401
@@ -590,7 +590,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Missing license_key', 'lemon-squeezy' ),
+					'error'      => __( 'Missing license_key', 'lemonsqueezy' ),
 					'error_code' => 'missing_license_key',
 				),
 				401
@@ -604,7 +604,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Invalid license_key', 'lemon-squeezy' ),
+					'error'      => __( 'Invalid license_key', 'lemonsqueezy' ),
 					'error_code' => 'invalid_license_key',
 				),
 				401
@@ -616,7 +616,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Error fetching license_key', 'lemon-squeezy' ),
+					'error'      => __( 'Error fetching license_key', 'lemonsqueezy' ),
 					'error_code' => 'error_fetching_license_key',
 				),
 				400
@@ -628,7 +628,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Invalid order item', 'lemon-squeezy' ),
+					'error'      => __( 'Invalid order item', 'lemonsqueezy' ),
 					'error_code' => 'invalid_order_item',
 				),
 				400
@@ -640,7 +640,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Missing files', 'lemon-squeezy' ),
+					'error'      => __( 'Missing files', 'lemonsqueezy' ),
 					'error_code' => 'missing_files',
 				),
 				400
@@ -653,7 +653,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success'    => false,
-					'error'      => __( 'Missing file version', 'lemon-squeezy' ),
+					'error'      => __( 'Missing file version', 'lemonsqueezy' ),
 					'error_code' => 'missing_file_version',
 				),
 				400
