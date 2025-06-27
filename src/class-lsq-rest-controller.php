@@ -452,6 +452,7 @@ class LSQ_Rest_Controller {
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$store_data = json_decode( $response['body'] );
+				$stores = array();
 
 				// Build product list.
 				if ( isset( $store_data ) && ! empty( $store_data ) ) {
