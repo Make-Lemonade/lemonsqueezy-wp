@@ -200,7 +200,12 @@ class Edit extends Component {
             showMedia,
             showDescription,
             showDiscount,
-            quantity
+            quantity,
+            checkoutBackgroundColor,
+            checkoutLinksColor,
+            checkoutButtonColor,
+            checkoutButtonTextColor,
+            checkoutTermsPrivacyColor
         } = attributes;
 
         let customDataFields = [];
@@ -254,17 +259,68 @@ class Edit extends Component {
                             <Fragment>
                                 <InspectorControls>
                                     <PanelColorSettings
-                                        title={__("Color settings")}
+                                        title={__("Button colors")}
                                         colorSettings={[
                                             {
                                                 value: textColor.color,
                                                 onChange: setTextColor,
-                                                label: __("Text color")
+                                                label: __("Text")
                                             },
                                             {
                                                 value: backgroundColor.color,
                                                 onChange: setBackgroundColor,
-                                                label: __("Background color")
+                                                label: __("Background")
+                                            }
+                                        ]}
+                                    />
+
+                                    <PanelColorSettings
+                                        title={__("Checkout colors")}
+                                        colorSettings={[
+                                            {
+                                                value: checkoutBackgroundColor,
+                                                onChange:
+                                                    this.onAttributeChange.bind(
+                                                        this,
+                                                        "checkoutBackgroundColor"
+                                                    ),
+                                                label: __("Background")
+                                            },
+                                            {
+                                                value: checkoutLinksColor,
+                                                onChange:
+                                                    this.onAttributeChange.bind(
+                                                        this,
+                                                        "checkoutLinksColor"
+                                                    ),
+                                                label: __("Links")
+                                            },
+                                            {
+                                                value: checkoutButtonColor,
+                                                onChange:
+                                                    this.onAttributeChange.bind(
+                                                        this,
+                                                        "checkoutButtonColor"
+                                                    ),
+                                                label: __("Button")
+                                            },
+                                            {
+                                                value: checkoutButtonTextColor,
+                                                onChange:
+                                                    this.onAttributeChange.bind(
+                                                        this,
+                                                        "checkoutButtonTextColor"
+                                                    ),
+                                                label: __("Button text")
+                                            },
+                                            {
+                                                value: checkoutTermsPrivacyColor,
+                                                onChange:
+                                                    this.onAttributeChange.bind(
+                                                        this,
+                                                        "checkoutTermsPrivacyColor"
+                                                    ),
+                                                label: __("Terms + Privacy")
                                             }
                                         ]}
                                     />

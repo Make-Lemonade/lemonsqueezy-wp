@@ -200,6 +200,20 @@ class LSQ_Register_Block {
 			$link = add_query_arg( 'quantity', $args['quantity'], $link );
 		}
 
+		$colors = array(
+			'checkoutBackgroundColor' => 'background_color',
+			'checkoutLinksColor' => 'links_color',
+			'checkoutButtonColor' => 'button_color',
+			'checkoutButtonTextColor' => 'button_text_color',
+			'checkoutTermsPrivacyColor' => 'terms_privacy_color',
+		);
+
+		foreach ( $colors as $color_key => $color_value ) {
+			if ( isset( $args[ $color_key ] ) && ! empty( $args[ $color_key ] ) ) {
+				$link = add_query_arg( $color_value, urlencode( $args[ $color_key ] ), $link );
+			}
+		}
+
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
 		     && isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 

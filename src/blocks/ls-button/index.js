@@ -60,6 +60,21 @@ const attributes = {
     customData: {
         type: "array",
         default: []
+    },
+    checkoutBackgroundColor: {
+        type: "string"
+    },
+    checkoutLinksColor: {
+        type: "string"
+    },
+    checkoutButtonColor: {
+        type: "string"
+    },
+    checkoutButtonTextColor: {
+        type: "string"
+    },
+    checkoutTermsPrivacyColor: {
+        type: "string"
     }
 };
 
