@@ -81,7 +81,7 @@ class LSQ_OAuth {
 				'lemonsqueezy-admin-script',
 				'window.lsq_oauth = ' . json_encode(
 					array(
-						'error' => filter_var( $_GET['error'], FILTER_SANITIZE_STRING ),
+						'error' => filter_var( $_GET['error'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
 					)
 				),
 				'before'
@@ -93,8 +93,8 @@ class LSQ_OAuth {
 			return;
 		}
 
-		$code = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_STRING ) : null;
-		$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_STRING ) : null;
+		$code = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
+		$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
 
 		if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
 			wp_add_inline_script(

@@ -509,7 +509,7 @@ class LSQ_Rest_Controller {
 			);
 		}
 
-		$store_id  = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_STRING );
+		$store_id  = filter_var( $request->get_param( 'store_id' ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$page_size = rawurlencode( 'page[size]' );
 
 		$response = wp_remote_get(
@@ -584,7 +584,7 @@ class LSQ_Rest_Controller {
 			);
 		}
 
-		$license_key = filter_var( $request->get_param( 'license_key' ), FILTER_SANITIZE_STRING );
+		$license_key = filter_var( $request->get_param( 'license_key' ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		if ( empty( $license_key ) ) {
 			return new \WP_REST_Response(
 				array(
