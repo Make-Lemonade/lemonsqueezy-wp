@@ -44,7 +44,7 @@
     "build": "wp-scripts lint-js && wp-scripts build src/script.js src/editor.js src/admin/admin.js && yarn plugin-zip",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
-    "format": "wp-scripts format",
+    "format": "wp-scripts format ./src",
     "lint:js": "wp-scripts lint-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",

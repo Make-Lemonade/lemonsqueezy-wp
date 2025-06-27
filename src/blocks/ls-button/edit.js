@@ -1,8 +1,18 @@
 import lsqIcon from "../../../images/ls-icon.svg";
 
 import { Component, Fragment } from "@wordpress/element";
-import { RichText, withColors, PanelColorSettings, InspectorControls } from "@wordpress/block-editor";
-import { SelectControl, ToggleControl, TextControl, Button } from "@wordpress/components";
+import {
+    RichText,
+    withColors,
+    PanelColorSettings,
+    InspectorControls
+} from "@wordpress/block-editor";
+import {
+    SelectControl,
+    ToggleControl,
+    TextControl,
+    Button
+} from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
 class Edit extends Component {
@@ -14,8 +24,8 @@ class Edit extends Component {
             isCheckingApi: true,
             isApiConnectable: false,
             isLoadingProducts: false,
-            newCustomDataKey: '',
-            newCustomDataValue: ''
+            newCustomDataKey: "",
+            newCustomDataValue: ""
         };
     }
 
@@ -129,64 +139,94 @@ class Edit extends Component {
         this.props.setAttributes({ prefillFromURL });
     };
 
-    handleRemoveCustomData = ( index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData.splice( index, 1 );
-        this.props.setAttributes( { customData } );
+    handleRemoveCustomData = index => {
+        const customData = [...this.props.attributes.customData];
+        customData.splice(index, 1);
+        this.props.setAttributes({ customData });
     };
 
-
-    handleCustomDataKeyChange = ( data, index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData[ index ].key = data;
-        this.props.setAttributes( { customData } );
+    handleCustomDataKeyChange = (data, index) => {
+        const customData = [...this.props.attributes.customData];
+        customData[index].key = data;
+        this.props.setAttributes({ customData });
     };
 
-    handleCustomDataValueChange = ( data, index ) => {
-        const customData = [ ...this.props.attributes.customData ];
-        customData[ index ].value = data;
-        this.props.setAttributes( { customData } );
+    handleCustomDataValueChange = (data, index) => {
+        const customData = [...this.props.attributes.customData];
+        customData[index].value = data;
+        this.props.setAttributes({ customData });
     };
 
     handleAddCustomData() {
-        if ( ! this.state.newCustomDataKey || ! this.state.newCustomDataValue ) {
-            alert( 'Please Insert Key & Value' );
+        if (!this.state.newCustomDataKey || !this.state.newCustomDataValue) {
+            alert("Please Insert Key & Value");
             return;
         }
-        const customData = [ ...this.props.attributes.customData ];
-        customData.push( {
+        const customData = [...this.props.attributes.customData];
+        customData.push({
             key: this.state.newCustomDataKey,
             value: this.state.newCustomDataValue
-        } );
+        });
 
-        this.setState({ newCustomDataKey: '', newCustomDataValue: '' });
-        this.props.setAttributes( { customData } );
-    };
+        this.setState({ newCustomDataKey: "", newCustomDataValue: "" });
+        this.props.setAttributes({ customData });
+    }
 
     render() {
-        const { attributes, textColor, setTextColor, backgroundColor, setBackgroundColor } = this.props;
-        const { content, store, product, overlay, prefillUserData, prefillFromURL, customData } = attributes;
+        const {
+            attributes,
+            textColor,
+            setTextColor,
+            backgroundColor,
+            setBackgroundColor
+        } = this.props;
+        const {
+            content,
+            store,
+            product,
+            overlay,
+            prefillUserData,
+            prefillFromURL,
+            customData
+        } = attributes;
 
         let customDataFields = [];
 
-        if ( customData.length ) {
-            customDataFields = customData.map( ( data, index ) => {
-                return <Fragment key={ index }>
-                    <div className={"lemonsqueezy-custom-data-row"}>
-                        <TextControl
-                            placeholder="Examples: user_name, user_id"
-                            value={ data.key }
-                            onChange={ ( value ) => this.handleCustomDataKeyChange( value, index ) }
-                        />
-                        <TextControl
-                            placeholder="Examples: JoshSmith, 123"
-                            value={ data.value }
-                            onChange={ ( value ) => this.handleCustomDataValueChange( value, index ) }
-                        />
-                        <Button onClick={() => this.handleRemoveCustomData(index)} isSecondary isSmall>- Remove</Button>
-                    </div>
-                </Fragment>;
-            } );
+        if (customData.length) {
+            customDataFields = customData.map((data, index) => {
+                return (
+                    <Fragment key={index}>
+                        <div className={"lemonsqueezy-custom-data-row"}>
+                            <TextControl
+                                placeholder="Examples: user_name, user_id"
+                                value={data.key}
+                                onChange={value =>
+                                    this.handleCustomDataKeyChange(value, index)
+                                }
+                            />
+                            <TextControl
+                                placeholder="Examples: JoshSmith, 123"
+                                value={data.value}
+                                onChange={value =>
+                                    this.handleCustomDataValueChange(
+                                        value,
+                                        index
+                                    )
+                                }
+                            />
+                            <Button
+                                onClick={() =>
+                                    this.handleRemoveCustomData(index)
+                                }
+                                isSecondary
+                                isSmall
+                            >
+                                - Remove
+                            </Button>
+                        </div>
+                    </Fragment>
+                );
+            });
         }
 
         return (
@@ -201,17 +241,17 @@ class Edit extends Component {
                             <Fragment>
                                 <InspectorControls>
                                     <PanelColorSettings
-                                        title={__('Color settings')}
+                                        title={__("Color settings")}
                                         colorSettings={[
                                             {
                                                 value: textColor.color,
                                                 onChange: setTextColor,
-                                                label: __('Text color')
+                                                label: __("Text color")
                                             },
                                             {
                                                 value: backgroundColor.color,
                                                 onChange: setBackgroundColor,
-                                                label: __('Background color')
+                                                label: __("Background color")
                                             }
                                         ]}
                                     />
@@ -296,17 +336,15 @@ class Edit extends Component {
                                         help={
                                             prefillUserData
                                                 ? __(
-                                                    "If logged-in, pre-fill user's data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "If logged-in, pre-fill user's data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "It won't pre-fill user's data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "It won't pre-fill user's data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.onChangeUserData
-                                        }
+                                        onChange={this.onChangeUserData}
                                     />
                                 </p>
                                 <p>
@@ -319,34 +357,43 @@ class Edit extends Component {
                                         help={
                                             prefillFromURL
                                                 ? __(
-                                                    "If there are checkout query strings in URL, it'll pre-fill the checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "It won't pre-fill URL data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "It won't pre-fill URL data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.onChangeURLData
-                                        }
+                                        onChange={this.onChangeURLData}
                                     />
                                 </p>
                                 <p>
-                                    <small className={"lemonsqueezy-custom-data-header"}>
-                                        <strong>Custom Data</strong><br/>
+                                    <small
+                                        className={
+                                            "lemonsqueezy-custom-data-header"
+                                        }
+                                    >
+                                        <strong>Custom Data</strong>
+                                        <br />
                                         <Button
                                             isSmall
                                             isLink
-                                            href={"https://docs.lemonsqueezy.com/help/checkout/passing-custom-data"}
-                                            target={"_blank"}>
+                                            href={
+                                                "https://docs.lemonsqueezy.com/help/checkout/passing-custom-data"
+                                            }
+                                            target={"_blank"}
+                                        >
                                             Read more about custom data
                                         </Button>
                                     </small>
                                 </p>
                                 <div>
-
-                                    <div className={"lemonsqueezy-custom-data-row"}>
+                                    <div
+                                        className={
+                                            "lemonsqueezy-custom-data-row"
+                                        }
+                                    >
                                         <TextControl
                                             label={__(
                                                 "Data Key",
@@ -357,7 +404,11 @@ class Edit extends Component {
                                                 "lemonsqueezy"
                                             )}
                                             value={this.state.newCustomDataKey}
-                                            onChange={(val) => this.setState({ newCustomDataKey: val })}
+                                            onChange={val =>
+                                                this.setState({
+                                                    newCustomDataKey: val
+                                                })
+                                            }
                                         />
                                         <TextControl
                                             label={__(
@@ -368,13 +419,26 @@ class Edit extends Component {
                                                 "Data Value",
                                                 "lemonsqueezy"
                                             )}
-                                            value={this.state.newCustomDataValue}
-                                            onChange={(val) => this.setState({ newCustomDataValue: val })}
+                                            value={
+                                                this.state.newCustomDataValue
+                                            }
+                                            onChange={val =>
+                                                this.setState({
+                                                    newCustomDataValue: val
+                                                })
+                                            }
                                         />
-                                        <Button onClick={() => this.handleAddCustomData()} isSecondary isSmall>+ Add Data</Button>
+                                        <Button
+                                            onClick={() =>
+                                                this.handleAddCustomData()
+                                            }
+                                            isSecondary
+                                            isSmall
+                                        >
+                                            + Add Data
+                                        </Button>
                                     </div>
                                     {customDataFields}
-
                                 </div>
                             </Fragment>
                         ) : (
@@ -417,4 +481,4 @@ class Edit extends Component {
     }
 }
 
-export default withColors('backgroundColor', {textColor: 'color'})(Edit);
+export default withColors("backgroundColor", { textColor: "color" })(Edit);

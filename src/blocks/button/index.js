@@ -75,7 +75,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                 checkingApi: false
             });
 
-            if ( use_ls ) {
+            if (use_ls) {
                 this.getStores();
                 this.checkApi();
             }
@@ -187,11 +187,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
         changeUseLS = use_ls => {
             this.props.setAttributes({ use_ls: use_ls });
 
-            if ( use_ls && !this.state.stores.length ) {
+            if (use_ls && !this.state.stores.length) {
                 this.getStores();
                 this.checkApi();
             }
-        }
+        };
 
         onChangeURLData = prefillFromURL => {
             this.props.setAttributes({ prefillFromURL });
@@ -199,7 +199,14 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
 
         render() {
             const { attributes } = this.props;
-            const { store, product, overlay, use_ls, prefillUserData, prefillFromURL } = attributes;
+            const {
+                store,
+                product,
+                overlay,
+                use_ls,
+                prefillUserData,
+                prefillFromURL
+            } = attributes;
 
             // If it's not a core button, do not include settings panel.
             if (this.props.name !== "core/button") {
@@ -219,35 +226,24 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         )}
                                         value={store}
                                         options={this.state.stores}
-                                        onChange={
-                                            this.onChangeStore
-                                        }
+                                        onChange={this.onChangeStore}
                                     />
                                 </p>
                                 <p>
-                                    {this.state
-                                        .isLoadingProducts ? (
+                                    {this.state.isLoadingProducts ? (
                                         <span
                                             style={{
                                                 fontSize: "14px",
                                                 color: "rgb(117, 117, 117)"
                                             }}
                                         >
-                                                        {__(
-                                                            "Loading...",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
-                                    ) : this.state.products
-                                        .length ? (
+                                            {__("Loading...", "lemonsqueezy")}
+                                        </span>
+                                    ) : this.state.products.length ? (
                                         <SelectControl
                                             value={product}
-                                            options={
-                                                this.state.products
-                                            }
-                                            onChange={
-                                                this.onChangeProduct
-                                            }
+                                            options={this.state.products}
+                                            onChange={this.onChangeProduct}
                                         />
                                     ) : (
                                         <span
@@ -256,11 +252,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 color: "rgb(117, 117, 117)"
                                             }}
                                         >
-                                                        {__(
-                                                            "No products found",
-                                                            "lemonsqueezy"
-                                                        )}
-                                                    </span>
+                                            {__(
+                                                "No products found",
+                                                "lemonsqueezy"
+                                            )}
+                                        </span>
                                     )}
                                 </p>
                                 <p>
@@ -273,17 +269,15 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         help={
                                             overlay
                                                 ? __(
-                                                    "Your checkout will be opened in a modal window.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "Your checkout will be opened in a modal window.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "Your customer will be redirected to your checkout page.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "Your customer will be redirected to your checkout page.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.onChangeOverlay
-                                        }
+                                        onChange={this.onChangeOverlay}
                                     />
                                 </p>
                                 <p>
@@ -296,17 +290,15 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         help={
                                             prefillUserData
                                                 ? __(
-                                                    "If logged-in, pre-fill user's data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "If logged-in, pre-fill user's data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "It won't pre-fill user's data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "It won't pre-fill user's data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.onChangeUserData
-                                        }
+                                        onChange={this.onChangeUserData}
                                     />
                                 </p>
                                 <p>
@@ -319,47 +311,51 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         help={
                                             prefillFromURL
                                                 ? __(
-                                                    "If there are checkout query strings in URL, it'll pre-fill the checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "It won't pre-fill URL data on checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "It won't pre-fill URL data on checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.onChangeURLData
-                                        }
+                                        onChange={this.onChangeURLData}
                                     />
                                 </p>
                             </Fragment>
                         ) : (
                             <p>
-                                {this.state.checkingApi && <small>{__(
-                                    "Checking connection status",
-                                    "lemonsqueezy"
-                                )}</small>}
-
-                                {!this.state.checkingApi && <small>
-                                    {__(
-                                        "Uh oh! Looks like you haven't connected your store yet! Please visit the",
-                                        "lemonsqueezy"
-                                    )}{" "}
-                                    <a
-                                        href={
-                                            /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url
-                                        }
-                                    >
+                                {this.state.checkingApi && (
+                                    <small>
                                         {__(
-                                            "Lemon Squeezy Settings",
+                                            "Checking connection status",
                                             "lemonsqueezy"
                                         )}
-                                    </a>{" "}
-                                    {__(
-                                        "and connect to Lemon Squeezy.",
-                                        "lemonsqueezy"
-                                    )}
-                                </small>}
+                                    </small>
+                                )}
+
+                                {!this.state.checkingApi && (
+                                    <small>
+                                        {__(
+                                            "Uh oh! Looks like you haven't connected your store yet! Please visit the",
+                                            "lemonsqueezy"
+                                        )}{" "}
+                                        <a
+                                            href={
+                                                /*global lsData*/ /*eslint no-undef: "error"*/ lsData.settings_url
+                                            }
+                                        >
+                                            {__(
+                                                "Lemon Squeezy Settings",
+                                                "lemonsqueezy"
+                                            )}
+                                        </a>{" "}
+                                        {__(
+                                            "and connect to Lemon Squeezy.",
+                                            "lemonsqueezy"
+                                        )}
+                                    </small>
+                                )}
                             </p>
                         )
                     ]
@@ -372,8 +368,8 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                             )}
                         </small>
                     </p>
-                )
-            }
+                );
+            };
 
             return (
                 <Fragment>
@@ -394,17 +390,15 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         help={
                                             use_ls
                                                 ? __(
-                                                    "Your button will be used for Lemon Squeezy Checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "Your button will be used for Lemon Squeezy Checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                                 : __(
-                                                    "Your button will not be used for Lemon Squeezy Checkout.",
-                                                    "lemonsqueezy"
-                                                )
+                                                      "Your button will not be used for Lemon Squeezy Checkout.",
+                                                      "lemonsqueezy"
+                                                  )
                                         }
-                                        onChange={
-                                            this.changeUseLS
-                                        }
+                                        onChange={this.changeUseLS}
                                     />
                                 </p>
                             </Fragment>
