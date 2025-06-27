@@ -9,6 +9,6 @@
     "lifecycleScripts": {
         "install": "composer install",
         "build": "node --version && yarn --version && yarn install && yarn build",
-        "permalinks": "wp rewrite structure '/%postname%/' --hard && wp rewrite flush --hard"
+        "afterStart": "wp-env run cli wp rewrite structure /%postname%/ --hard && wp-env run cli wp rewrite flush --hard"
     },
 }
