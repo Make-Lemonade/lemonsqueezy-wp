@@ -37,6 +37,26 @@ const attributes = {
         type: "boolean",
         default: false
     },
+    showLogo: {
+        type: "boolean",
+        default: true
+    },
+    showMedia: {
+        type: "boolean",
+        default: true
+    },
+    showDescription: {
+        type: "boolean",
+        default: true
+    },
+    showDiscount: {
+        type: "boolean",
+        default: true
+    },
+    quantity: {
+        type: "number",
+        default: 1
+    },
     customData: {
         type: "array",
         default: []

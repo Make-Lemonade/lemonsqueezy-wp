@@ -11,6 +11,8 @@ import {
     SelectControl,
     ToggleControl,
     TextControl,
+    __experimentalNumberControl as NumberControl,
+    BaseControl,
     Button
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
@@ -32,35 +34,33 @@ class Edit extends Component {
     componentDidMount() {
         wp.apiFetch({
             path: "lsq/v1/stores"
-        })
-            .then(response => {
-                if (true == response.success) {
-                    this.setState({
-                        stores: response.stores
-                    });
+        }).then(response => {
+            if (true == response.success) {
+                this.setState({
+                    stores: response.stores
+                });
 
-                    if (response.stores.length) {
-                        let selectedStoreIndex = response.stores.findIndex(
-                            store => store.value == this.props.attributes.store
-                        );
-                        if (selectedStoreIndex === -1) {
-                            selectedStoreIndex = 0;
-                        }
-
-                        this.getProducts(
-                            response.stores[selectedStoreIndex].value
-                        );
+                if (response.stores.length) {
+                    let selectedStoreIndex = response.stores.findIndex(
+                        store => store.value == this.props.attributes.store
+                    );
+                    if (selectedStoreIndex === -1) {
+                        selectedStoreIndex = 0;
                     }
+
+                    this.getProducts(response.stores[selectedStoreIndex].value);
                 }
-            });
+            }
+        });
 
         this.checkApi();
     }
 
     checkApi() {
-        return wp.apiFetch({
-            path: "lsq/v1/validate"
-        })
+        return wp
+            .apiFetch({
+                path: "lsq/v1/validate"
+            })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -85,9 +85,10 @@ class Edit extends Component {
             isLoadingProducts: true
         });
 
-        return wp.apiFetch({
-            path: `lsq/v1/products?store_id=${store_id}`
-        })
+        return wp
+            .apiFetch({
+                path: `lsq/v1/products?store_id=${store_id}`
+            })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -136,6 +137,10 @@ class Edit extends Component {
 
     onChangeUserData = prefillUserData => {
         this.props.setAttributes({ prefillUserData });
+    };
+
+    onAttributeChange = (attribute, value) => {
+        this.props.setAttributes({ [attribute]: value });
     };
 
     onChangeURLData = prefillFromURL => {
@@ -190,7 +195,12 @@ class Edit extends Component {
             overlay,
             prefillUserData,
             prefillFromURL,
-            customData
+            customData,
+            showLogo,
+            showMedia,
+            showDescription,
+            showDiscount,
+            quantity
         } = attributes;
 
         let customDataFields = [];
@@ -221,8 +231,8 @@ class Edit extends Component {
                                 onClick={() =>
                                     this.handleRemoveCustomData(index)
                                 }
-                                isSecondary
-                                isSmall
+                                variant="secondary"
+                                size="small"
                             >
                                 - Remove
                             </Button>
@@ -259,56 +269,69 @@ class Edit extends Component {
                                         ]}
                                     />
                                 </InspectorControls>
-                                <p>
+
+                                <SelectControl
+                                    label={__("Store", "lemonsqueezy")}
+                                    value={store}
+                                    options={this.state.stores}
+                                    onChange={this.onChangeStore}
+                                />
+                                {this.state.isLoadingProducts ? (
+                                    <span
+                                        style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}
+                                    >
+                                        {__("Loading...", "lemonsqueezy")}
+                                    </span>
+                                ) : this.state.products.length ? (
                                     <SelectControl
-                                        value={store}
-                                        options={this.state.stores}
-                                        onChange={this.onChangeStore}
+                                        label={__("Product", "lemonsqueezy")}
+                                        value={product}
+                                        options={this.state.products}
+                                        onChange={this.onChangeProduct}
                                     />
-                                </p>
-                                <p>
-                                    {this.state.isLoadingProducts ? (
-                                        <span
-                                            style={{
-                                                fontSize: "14px",
-                                                color: "rgb(117, 117, 117)"
-                                            }}
-                                        >
-                                            {__("Loading...", "lemonsqueezy")}
-                                        </span>
-                                    ) : this.state.products.length ? (
-                                        <SelectControl
-                                            value={product}
-                                            options={this.state.products}
-                                            onChange={this.onChangeProduct}
-                                        />
-                                    ) : (
-                                        <span
-                                            style={{
-                                                fontSize: "14px",
-                                                color: "rgb(117, 117, 117)"
-                                            }}
-                                        >
-                                            {__(
-                                                "No products found",
-                                                "lemonsqueezy"
-                                            )}
-                                        </span>
-                                    )}
-                                </p>
-                                <p>
-                                    <RichText
-                                        placeholder={__(
-                                            "Button text*",
+                                ) : (
+                                    <span
+                                        style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}
+                                    >
+                                        {__(
+                                            "No products found",
                                             "lemonsqueezy"
                                         )}
-                                        tagName="p"
-                                        className="lsq-link-text"
-                                        onChange={this.onChangeContent}
-                                        value={content}
-                                    />
-                                </p>
-                                <p>
+                                    </span>
+                                )}
+
+                                <BaseControl
+                                    label={__("Button text", "lemonsqueezy")}
+                                    __nextHasNoMarginBottom
+                                />
+                                <RichText
+                                    placeholder={__(
+                                        "Button text",
+                                        "lemonsqueezy"
+                                    )}
+                                    tagName="p"
+                                    className="lsq-link-text"
+                                    onChange={this.onChangeContent}
+                                    value={content}
+                                />
+                                <NumberControl
+                                    label={__("Quantity", "lemonsqueezy")}
+                                    __next40pxDefaultSize
+                                    isShiftStepEnabled={true}
+                                    shiftStep={1}
+                                    value={quantity}
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "quantity"
+                                    )}
+                                />
+                                <div className="lsq-block-settings">
                                     <ToggleControl
                                         label={__(
                                             "Use checkout overlay?",
@@ -328,8 +351,6 @@ class Edit extends Component {
                                         checked={overlay}
                                         onChange={this.onChangeOverlay}
                                     />
-                                </p>
-                                <p>
                                     <ToggleControl
                                         label={__(
                                             "Pre-fill User Data",
@@ -349,8 +370,6 @@ class Edit extends Component {
                                         }
                                         onChange={this.onChangeUserData}
                                     />
-                                </p>
-                                <p>
                                     <ToggleControl
                                         label={__(
                                             "Pre-fill from URL",
@@ -370,7 +389,89 @@ class Edit extends Component {
                                         }
                                         onChange={this.onChangeURLData}
                                     />
-                                </p>
+                                    <ToggleControl
+                                        label={__("Show Logo", "lemonsqueezy")}
+                                        checked={showLogo}
+                                        help={
+                                            showLogo
+                                                ? __(
+                                                      "Show the Lemon Squeezy logo in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                                : __(
+                                                      "It won't show the Lemon Squeezy logo in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                        }
+                                        onChange={this.onAttributeChange.bind(
+                                            this,
+                                            "showLogo"
+                                        )}
+                                    />
+                                    <ToggleControl
+                                        label={__("Show Media", "lemonsqueezy")}
+                                        help={
+                                            showMedia
+                                                ? __(
+                                                      "Show the product media in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                                : __(
+                                                      "It won't show the product media in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                        }
+                                        checked={showMedia}
+                                        onChange={this.onAttributeChange.bind(
+                                            this,
+                                            "showMedia"
+                                        )}
+                                    />
+                                    <ToggleControl
+                                        label={__(
+                                            "Show Description",
+                                            "lemonsqueezy"
+                                        )}
+                                        help={
+                                            showDescription
+                                                ? __(
+                                                      "Show the product description in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                                : __(
+                                                      "It won't show the product description in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                        }
+                                        checked={showDescription}
+                                        onChange={this.onAttributeChange.bind(
+                                            this,
+                                            "showDescription"
+                                        )}
+                                    />
+                                    <ToggleControl
+                                        label={__(
+                                            "Show Discount",
+                                            "lemonsqueezy"
+                                        )}
+                                        help={
+                                            showDiscount
+                                                ? __(
+                                                      "Show the product discount in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                                : __(
+                                                      "It won't show the product discount in the checkout.",
+                                                      "lemonsqueezy"
+                                                  )
+                                        }
+                                        checked={showDiscount}
+                                        onChange={this.onAttributeChange.bind(
+                                            this,
+                                            "showDiscount"
+                                        )}
+                                    />
+                                </div>
                                 <p>
                                     <small
                                         className={
@@ -380,8 +481,8 @@ class Edit extends Component {
                                         <strong>Custom Data</strong>
                                         <br />
                                         <Button
-                                            isSmall
-                                            isLink
+                                            size="small"
+                                            variant="link"
                                             href={
                                                 "https://docs.lemonsqueezy.com/help/checkout/passing-custom-data"
                                             }
@@ -435,8 +536,8 @@ class Edit extends Component {
                                             onClick={() =>
                                                 this.handleAddCustomData()
                                             }
-                                            isSecondary
-                                            isSmall
+                                            variant="secondary"
+                                            size="small"
                                         >
                                             + Add Data
                                         </Button>

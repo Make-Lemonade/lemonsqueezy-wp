@@ -184,6 +184,22 @@ class LSQ_Register_Block {
 			}
 		}
 
+		if ( isset( $args['showLogo'] ) ) {
+			$link = add_query_arg( 'logo', $args['showLogo'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showMedia'] ) ) {
+			$link = add_query_arg( 'media', $args['showMedia'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showDescription'] ) ) {
+			$link = add_query_arg( 'desc', $args['showDescription'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showDiscount'] ) ) {
+			$link = add_query_arg( 'discount', $args['showDiscount'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['quantity'] ) ) {
+			$link = add_query_arg( 'quantity', $args['quantity'], $link );
+		}
+
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
 		     && isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 

@@ -57,10 +57,11 @@ class AdminSettings extends Component {
     removeTestKey() {
         this.setState({ isTestAPISaving: true });
 
-        return wp.apiFetch({
-            path: "lsq/v1/delete_test_key",
-            method: "DELETE"
-        })
+        return wp
+            .apiFetch({
+                path: "lsq/v1/delete_test_key",
+                method: "DELETE"
+            })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -82,11 +83,12 @@ class AdminSettings extends Component {
     saveTestApiKey() {
         this.setState({ isTestAPISaving: true });
 
-        return wp.apiFetch({
-            path: "lsq/v1/save_test_key",
-            method: "POST",
-            data: { test_key: this.state.enteredApiKeyTest }
-        })
+        return wp
+            .apiFetch({
+                path: "lsq/v1/save_test_key",
+                method: "POST",
+                data: { test_key: this.state.enteredApiKeyTest }
+            })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -111,21 +113,23 @@ class AdminSettings extends Component {
             isAPILoading: true
         });
 
-        return wp.apiFetch({
-            path: "lsq/v1/validate",
-        }).then(response => {
-            if (true == response.success) {
-                this.setState({
-                    isAPILoading: false,
-                    lsqUser: response.user
-                });
-            } else {
-                this.setState({
-                    isAPILoading: false,
-                    lsqUser: null
-                });
-            }
-        });
+        return wp
+            .apiFetch({
+                path: "lsq/v1/validate"
+            })
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        isAPILoading: false,
+                        lsqUser: response.user
+                    });
+                } else {
+                    this.setState({
+                        isAPILoading: false,
+                        lsqUser: null
+                    });
+                }
+            });
     }
 
     changeOptions(option, value) {
