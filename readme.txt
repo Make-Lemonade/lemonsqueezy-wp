@@ -1,5 +1,5 @@
 === Easy Peasy Digital Downloads — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
-Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
+Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner, mauryaratan
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
