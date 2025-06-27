@@ -326,7 +326,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$response = wp_remote_post(
-			LSQ_API_URL . "/v1/licenses/activate?license_key=${license_key}&instance_name={$instance_name}",
+			LSQ_API_URL . "/v1/licenses/activate?license_key={$license_key}&instance_name={$instance_name}",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -383,7 +383,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$response = wp_remote_post(
-			LSQ_API_URL . "/v1/licenses/deactivate?license_key=${license_key}&instance_id={$instance_name}",
+			LSQ_API_URL . "/v1/licenses/deactivate?license_key={$license_key}&instance_id={$instance_name}",
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
