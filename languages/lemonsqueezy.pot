@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-27T19:27:28+00:00\n"
+"POT-Creation-Date: 2025-06-28T10:16:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lemonsqueezy\n"
@@ -18,9 +18,8 @@ msgstr ""
 #. Author of the plugin
 #: lemonsqueezy.php
 #: src/class-lsq-register-block.php:52
-#: build/editor.js:330
+#: build/editor.js:1
 #: src/blocks/button/index.js:385
-#: build/editor.js:404
 msgid "Lemon Squeezy"
 msgstr ""
 
@@ -76,413 +75,340 @@ msgstr ""
 msgid "Missing file version"
 msgstr ""
 
-#: build/admin.js:303
-#: src/admin/admin.js:169
-#: build/admin.js:241
+#: build/admin.js:308
+#: src/admin/admin.js:175
+#: build/admin.js:247
 msgid "Connected to Lemon Squeezy"
 msgstr ""
 
-#: build/admin.js:303
-#: build/admin.js:304
-#: src/admin/admin.js:170
-#: src/admin/admin.js:173
-#: build/admin.js:242
-#: build/admin.js:245
+#: build/admin.js:308
+#: build/admin.js:309
+#: src/admin/admin.js:176
+#: src/admin/admin.js:179
+#: build/admin.js:248
+#: build/admin.js:251
 msgid "Connect to Lemon Squeezy"
 msgstr ""
 
-#: build/admin.js:304
-#: src/admin/admin.js:172
-#: build/admin.js:244
+#: build/admin.js:309
+#: src/admin/admin.js:178
+#: build/admin.js:250
 msgid "Checking..."
 msgstr ""
 
-#: build/admin.js:313
-#: src/admin/admin.js:180
-#: build/admin.js:252
+#: build/admin.js:318
+#: src/admin/admin.js:186
+#: build/admin.js:258
 msgid "LemonSqueezy.com"
 msgstr ""
 
-#: build/admin.js:316
-#: src/admin/admin.js:183
-#: build/admin.js:255
+#: build/admin.js:321
+#: src/admin/admin.js:189
+#: build/admin.js:261
 msgid "Want to make money with digital products?"
 msgstr ""
 
-#: build/admin.js:321
-#: src/admin/admin.js:193
-#: build/admin.js:265
+#: build/admin.js:326
+#: src/admin/admin.js:199
+#: build/admin.js:271
 msgid "Start selling today"
 msgstr ""
 
-#: build/admin.js:331
-#: src/admin/admin.js:201
-#: build/admin.js:273
+#: build/admin.js:336
+#: src/admin/admin.js:207
+#: build/admin.js:279
 msgid "Connect your store"
 msgstr ""
 
-#: build/admin.js:333
-#: src/admin/admin.js:203
-#: build/admin.js:275
+#: build/admin.js:338
+#: src/admin/admin.js:209
+#: build/admin.js:281
 msgid "The Lemon Squeezy plugin connects your Lemon Squeezy stores to your WordPress site to bring your products right into the block editor."
 msgstr ""
 
-#: build/admin.js:338
-#: src/admin/admin.js:211
-#: build/admin.js:283
+#: build/admin.js:343
+#: src/admin/admin.js:217
+#: build/admin.js:289
 msgid "1. Connect to Lemon Squeezy"
 msgstr ""
 
-#: build/admin.js:340
-#: src/admin/admin.js:217
-#: build/admin.js:289
+#: build/admin.js:345
+#: src/admin/admin.js:223
+#: build/admin.js:295
 msgid "To get started, use the \"Connect to Lemon Squeezy\" button on the right. When prompted, click \"Authorize\" to connect your Lemon Squeezy account with this WordPress site."
 msgstr ""
 
-#: build/admin.js:345
-#: src/admin/admin.js:225
-#: build/admin.js:297
+#: build/admin.js:350
+#: src/admin/admin.js:231
+#: build/admin.js:303
 msgid "2. Add the Lemon Squeezy block and start selling!"
 msgstr ""
 
-#: build/admin.js:347
-#: src/admin/admin.js:231
-#: build/admin.js:303
-msgid "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you’d like to insert. Use the block settings to select a checkout link or a checkout overlay."
+#: build/admin.js:352
+#: src/admin/admin.js:237
+#: build/admin.js:309
+msgid "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you'd like to insert. Use the block settings to select a checkout link or a checkout overlay."
 msgstr ""
 
-#: build/editor.js:265
-#: src/blocks/button/index.js:229
-#: build/editor.js:248
-msgid "Select Store"
-msgstr ""
-
-#: build/editor.js:276
-#: build/editor.js:674
-#: src/blocks/button/index.js:246
-#: src/blocks/ls-button/edit.js:342
-#: build/editor.js:265
-#: build/editor.js:821
-msgid "Loading..."
-msgstr ""
-
-#: build/editor.js:286
-#: build/editor.js:685
-#: src/blocks/button/index.js:261
-#: src/blocks/ls-button/edit.js:358
-#: build/editor.js:280
-#: build/editor.js:837
-msgid "No products found"
-msgstr ""
-
-#: build/editor.js:290
-#: build/editor.js:705
-#: src/blocks/button/index.js:270
-#: src/blocks/ls-button/edit.js:392
-#: build/editor.js:289
-#: build/editor.js:871
-msgid "Use checkout overlay?"
-msgstr ""
-
-#: build/editor.js:292
-#: build/editor.js:706
-#: src/blocks/button/index.js:277
-#: src/blocks/ls-button/edit.js:398
-#: build/editor.js:296
-#: build/editor.js:877
-msgid "Your checkout will be opened in a modal window."
-msgstr ""
-
-#: build/editor.js:292
-#: build/editor.js:706
-#: src/blocks/button/index.js:281
-#: src/blocks/ls-button/edit.js:402
-#: build/editor.js:300
-#: build/editor.js:881
-msgid "Your customer will be redirected to your checkout page."
-msgstr ""
-
-#: build/editor.js:297
-#: build/editor.js:710
-#: src/blocks/button/index.js:291
-#: src/blocks/ls-button/edit.js:411
-#: build/editor.js:310
-#: build/editor.js:890
-msgid "Pre-fill User Data"
-msgstr ""
-
-#: build/editor.js:299
-#: build/editor.js:712
-#: src/blocks/button/index.js:298
-#: src/blocks/ls-button/edit.js:418
-#: build/editor.js:317
-#: build/editor.js:897
-msgid "If logged-in, pre-fill user's data on checkout."
-msgstr ""
-
-#: build/editor.js:299
-#: build/editor.js:712
-#: src/blocks/button/index.js:302
-#: src/blocks/ls-button/edit.js:422
-#: build/editor.js:321
-#: build/editor.js:901
-msgid "It won't pre-fill user's data on checkout."
-msgstr ""
-
-#: build/editor.js:304
-#: build/editor.js:715
-#: src/blocks/button/index.js:312
-#: src/blocks/ls-button/edit.js:430
-#: build/editor.js:331
-#: build/editor.js:909
-msgid "Pre-fill from URL"
-msgstr ""
-
-#: build/editor.js:306
-#: build/editor.js:717
-#: src/blocks/button/index.js:319
-#: src/blocks/ls-button/edit.js:437
-#: build/editor.js:338
-#: build/editor.js:916
-msgid "If there are checkout query strings in URL, it'll pre-fill the checkout."
-msgstr ""
-
-#: build/editor.js:306
-#: build/editor.js:717
-#: src/blocks/button/index.js:323
-#: src/blocks/ls-button/edit.js:441
-#: build/editor.js:342
-#: build/editor.js:920
-msgid "It won't pre-fill URL data on checkout."
-msgstr ""
-
-#: build/editor.js:312
-#: src/blocks/button/index.js:336
-#: build/editor.js:355
-msgid "Checking connection status"
-msgstr ""
-
-#: build/editor.js:314
-#: build/editor.js:780
-#: src/blocks/button/index.js:345
-#: src/blocks/ls-button/edit.js:607
-#: build/editor.js:364
-#: build/editor.js:1086
-msgid "Uh oh! Looks like you haven't connected your store yet! Please visit the"
-msgstr ""
-
-#: build/editor.js:316
-#: build/editor.js:782
-#: src/blocks/button/index.js:354
-#: src/blocks/ls-button/edit.js:616
-#: build/editor.js:373
-#: build/editor.js:1095
-msgid "Lemon Squeezy Settings"
-msgstr ""
-
-#: build/editor.js:317
-#: build/editor.js:783
-#: src/blocks/button/index.js:359
-#: src/blocks/ls-button/edit.js:621
-#: build/editor.js:378
-#: build/editor.js:1100
-msgid "and connect to Lemon Squeezy."
-msgstr ""
-
-#: build/editor.js:321
-#: build/editor.js:787
-#: src/blocks/button/index.js:371
-#: src/blocks/ls-button/edit.js:632
-#: build/editor.js:390
-#: build/editor.js:1111
-msgid "We're fetching your data, hold on for a second!"
-msgstr ""
-
-#: build/editor.js:335
+#: build/editor.js:1
 #: src/blocks/button/index.js:391
-#: build/editor.js:410
 msgid "Apply Lemon Squeezy Checkout"
 msgstr ""
 
-#: build/editor.js:337
-#: src/blocks/button/index.js:398
-#: build/editor.js:417
-msgid "Your button will be used for Lemon Squeezy Checkout."
+#: build/editor.js:1
+#: src/blocks/button/index.js:229
+msgid "Select Store"
 msgstr ""
 
-#: build/editor.js:337
-#: src/blocks/button/index.js:402
-#: build/editor.js:421
-msgid "Your button will not be used for Lemon Squeezy Checkout."
+#: build/editor.js:1
+#: src/blocks/button/index.js:246
+#: src/blocks/ls-button/edit.js:369
+msgid "Loading..."
 msgstr ""
 
-#: build/editor.js:626
+#: build/editor.js:1
+#: src/blocks/button/index.js:261
+#: src/blocks/ls-button/edit.js:385
+msgid "No products found"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:270
+#: src/blocks/ls-button/edit.js:419
+msgid "Use checkout overlay?"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:291
+#: src/blocks/ls-button/edit.js:438
+msgid "Pre-fill User Data"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:312
+#: src/blocks/ls-button/edit.js:457
+msgid "Pre-fill from URL"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:336
+msgid "Checking connection status"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:345
+#: src/blocks/ls-button/edit.js:634
+msgid "Uh oh! Looks like you haven't connected your store yet! Please visit the"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:354
+#: src/blocks/ls-button/edit.js:643
+msgid "Lemon Squeezy Settings"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:359
+#: src/blocks/ls-button/edit.js:648
+msgid "and connect to Lemon Squeezy."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:371
+#: src/blocks/ls-button/edit.js:659
+msgid "We're fetching your data, hold on for a second!"
+msgstr ""
+
+#: build/editor.js:1
 #: src/blocks/ls-button/edit.js:254
-#: build/editor.js:733
 msgid "Lemon Squeezy Buy Button"
 msgstr ""
 
-#: build/editor.js:665
-#: src/blocks/ls-button/edit.js:330
-#: build/editor.js:809
-msgid "Store"
-msgstr ""
-
-#: build/editor.js:676
-#: src/blocks/ls-button/edit.js:346
-#: build/editor.js:825
-msgid "Product"
-msgstr ""
-
-#: build/editor.js:687
-#: build/editor.js:690
-#: src/blocks/ls-button/edit.js:314
-#: src/blocks/ls-button/edit.js:366
-#: src/blocks/ls-button/edit.js:370
-#: build/editor.js:845
-#: build/editor.js:849
-msgid "Button text"
-msgstr ""
-
-#: build/editor.js:696
-#: src/blocks/ls-button/edit.js:380
-#: build/editor.js:859
-msgid "Quantity"
-msgstr ""
-
-#: build/editor.js:720
-#: src/blocks/ls-button/edit.js:449
-#: build/editor.js:928
-msgid "Show Logo"
-msgstr ""
-
-#: build/editor.js:722
-#: src/blocks/ls-button/edit.js:453
-#: build/editor.js:932
-msgid "Show the Lemon Squeezy logo in the checkout."
-msgstr ""
-
-#: build/editor.js:722
-#: src/blocks/ls-button/edit.js:457
-#: build/editor.js:936
-msgid "It won't show the Lemon Squeezy logo in the checkout."
-msgstr ""
-
-#: build/editor.js:725
-#: src/blocks/ls-button/edit.js:468
-#: build/editor.js:947
-msgid "Show Media"
-msgstr ""
-
-#: build/editor.js:726
-#: src/blocks/ls-button/edit.js:471
-#: build/editor.js:950
-msgid "Show the product media in the checkout."
-msgstr ""
-
-#: build/editor.js:726
-#: src/blocks/ls-button/edit.js:475
-#: build/editor.js:954
-msgid "It won't show the product media in the checkout."
-msgstr ""
-
-#: build/editor.js:730
-#: src/blocks/ls-button/edit.js:487
-#: build/editor.js:966
-msgid "Show Description"
-msgstr ""
-
-#: build/editor.js:731
-#: src/blocks/ls-button/edit.js:493
-#: build/editor.js:972
-msgid "Show the product description in the checkout."
-msgstr ""
-
-#: build/editor.js:731
-#: src/blocks/ls-button/edit.js:497
-#: build/editor.js:976
-msgid "It won't show the product description in the checkout."
-msgstr ""
-
-#: build/editor.js:735
-#: src/blocks/ls-button/edit.js:509
-#: build/editor.js:988
-msgid "Show Discount"
-msgstr ""
-
-#: build/editor.js:736
-#: src/blocks/ls-button/edit.js:515
-#: build/editor.js:994
-msgid "Show the product discount in the checkout."
-msgstr ""
-
-#: build/editor.js:736
-#: src/blocks/ls-button/edit.js:519
-#: build/editor.js:998
-msgid "It won't show the product discount in the checkout."
-msgstr ""
-
-#: build/editor.js:757
-#: build/editor.js:758
-#: src/blocks/ls-button/edit.js:558
-#: src/blocks/ls-button/edit.js:562
-#: build/editor.js:1037
-#: build/editor.js:1041
-msgid "Data Key"
-msgstr ""
-
-#: build/editor.js:764
-#: build/editor.js:765
-#: src/blocks/ls-button/edit.js:574
-#: src/blocks/ls-button/edit.js:578
-#: build/editor.js:1053
-#: build/editor.js:1057
-msgid "Data Value"
-msgstr ""
-
-#: build/editor.js:897
-#: src/blocks/ls-button/index.js:83
-#: build/editor.js:1207
-msgid "The Lemon Squeezy Product Block"
-msgstr ""
-
-#: build/editor.js:919
-#: src/blocks/ls-button/index.js:112
-#: build/editor.js:1236
-msgid "ecommerce"
-msgstr ""
-
-#: build/editor.js:919
-#: src/blocks/ls-button/index.js:113
-#: build/editor.js:1237
-msgid "digital products"
-msgstr ""
-
+#: build/editor.js:1
 #: src/blocks/ls-button/edit.js:262
 msgid "Button colors"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:267
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:270
 msgid "Text"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:272
-#: src/blocks/ls-button/edit.js:287
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:278
+#: src/blocks/ls-button/edit.js:299
 msgid "Background"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:278
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:287
 msgid "Checkout colors"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:296
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:311
 msgid "Links"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:305
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:323
 msgid "Button"
 msgstr ""
 
-#: src/blocks/ls-button/edit.js:323
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:335
+#: src/blocks/ls-button/edit.js:393
+#: src/blocks/ls-button/edit.js:397
+msgid "Button text"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:347
 msgid "Terms + Privacy"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:357
+msgid "Store"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:373
+msgid "Product"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:407
+msgid "Quantity"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:277
+#: src/blocks/ls-button/edit.js:425
+msgid "Your checkout will be opened in a modal window."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:281
+#: src/blocks/ls-button/edit.js:429
+msgid "Your customer will be redirected to your checkout page."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:298
+#: src/blocks/ls-button/edit.js:445
+msgid "If logged-in, pre-fill user's data on checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:302
+#: src/blocks/ls-button/edit.js:449
+msgid "It won't pre-fill user's data on checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:319
+#: src/blocks/ls-button/edit.js:464
+msgid "If there are checkout query strings in URL, it'll pre-fill the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/button/index.js:323
+#: src/blocks/ls-button/edit.js:468
+msgid "It won't pre-fill URL data on checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:476
+msgid "Show Logo"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:480
+msgid "Show the Lemon Squeezy logo in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:484
+msgid "It won't show the Lemon Squeezy logo in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:495
+msgid "Show Media"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:498
+msgid "Show the product media in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:502
+msgid "It won't show the product media in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:514
+msgid "Show Description"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:520
+msgid "Show the product description in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:524
+msgid "It won't show the product description in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:536
+msgid "Show Discount"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:542
+msgid "Show the product discount in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:546
+msgid "It won't show the product discount in the checkout."
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:585
+#: src/blocks/ls-button/edit.js:589
+msgid "Data Key"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/edit.js:601
+#: src/blocks/ls-button/edit.js:605
+msgid "Data Value"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/index.js:83
+msgid "The Lemon Squeezy Product Block"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/index.js:112
+msgid "ecommerce"
+msgstr ""
+
+#: build/editor.js:1
+#: src/blocks/ls-button/index.js:113
+msgid "digital products"
+msgstr ""
+
+#: src/blocks/button/index.js:398
+msgid "Your button will be used for Lemon Squeezy Checkout."
+msgstr ""
+
+#: src/blocks/button/index.js:402
+msgid "Your button will not be used for Lemon Squeezy Checkout."
 msgstr ""
