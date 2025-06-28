@@ -9,9 +9,12 @@ import "./styles.editor.scss";
 const { __ } = wp.i18n;
 const { addFilter } = wp.hooks;
 const { Fragment, Component } = wp.element;
-const { InspectorControls } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.editor;
 const { createHigherOrderComponent } = wp.compose;
-const { ToggleControl, PanelBody, SelectControl } = wp.components;
+const { ToggleControl, PanelBody, SelectControl, __experimentalNumberControl } =
+    wp.components;
+
+const NumberControl = __experimentalNumberControl;
 
 // Restrict to specific block names.
 const allowedBlocks = ["core/button"];
@@ -56,6 +59,41 @@ function extendAttributes(settings) {
             prefillFromURL: {
                 type: "boolean",
                 default: false
+            },
+            showLogo: {
+                type: "boolean",
+                default: true
+            },
+            showMedia: {
+                type: "boolean",
+                default: true
+            },
+            showDescription: {
+                type: "boolean",
+                default: true
+            },
+            showDiscount: {
+                type: "boolean",
+                default: true
+            },
+            quantity: {
+                type: "number",
+                default: 1
+            },
+            checkoutBackgroundColor: {
+                type: "string"
+            },
+            checkoutLinksColor: {
+                type: "string"
+            },
+            checkoutButtonColor: {
+                type: "string"
+            },
+            checkoutButtonTextColor: {
+                type: "string"
+            },
+            checkoutTermsPrivacyColor: {
+                type: "string"
             }
         });
     }
@@ -203,6 +241,10 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
             this.props.setAttributes({ prefillFromURL });
         };
 
+        onAttributeChange = (attribute, value) => {
+            this.props.setAttributes({ [attribute]: value });
+        };
+
         render() {
             const { attributes } = this.props;
             const {
@@ -211,7 +253,17 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                 overlay,
                 use_ls,
                 prefillUserData,
-                prefillFromURL
+                prefillFromURL,
+                showLogo,
+                showMedia,
+                showDescription,
+                showDiscount,
+                quantity,
+                checkoutBackgroundColor,
+                checkoutLinksColor,
+                checkoutButtonColor,
+                checkoutButtonTextColor,
+                checkoutTermsPrivacyColor
             } = attributes;
 
             // If it's not a core button, do not include settings panel.
@@ -224,110 +276,250 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                     [
                         this.state.isApiConnectable ? (
                             <Fragment>
-                                <p>
+                                <SelectControl
+                                    label={__("Select Store", "lemonsqueezy")}
+                                    value={store}
+                                    options={this.state.stores}
+                                    onChange={this.onChangeStore}
+                                />
+                                {this.state.isLoadingProducts ? (
+                                    <p
+                                        style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}
+                                    >
+                                        {__("Loading...", "lemonsqueezy")}
+                                    </p>
+                                ) : this.state.products.length ? (
                                     <SelectControl
-                                        label={__(
-                                            "Select Store",
+                                        label={__("Product", "lemonsqueezy")}
+                                        value={product}
+                                        options={this.state.products}
+                                        onChange={this.onChangeProduct}
+                                    />
+                                ) : (
+                                    <p
+                                        style={{
+                                            fontSize: "14px",
+                                            color: "rgb(117, 117, 117)"
+                                        }}
+                                    >
+                                        {__(
+                                            "No products found",
                                             "lemonsqueezy"
                                         )}
-                                        value={store}
-                                        options={this.state.stores}
-                                        onChange={this.onChangeStore}
-                                    />
-                                </p>
-                                <p>
-                                    {this.state.isLoadingProducts ? (
-                                        <span
-                                            style={{
-                                                fontSize: "14px",
-                                                color: "rgb(117, 117, 117)"
-                                            }}
-                                        >
-                                            {__("Loading...", "lemonsqueezy")}
-                                        </span>
-                                    ) : this.state.products.length ? (
-                                        <SelectControl
-                                            value={product}
-                                            options={this.state.products}
-                                            onChange={this.onChangeProduct}
-                                        />
-                                    ) : (
-                                        <span
-                                            style={{
-                                                fontSize: "14px",
-                                                color: "rgb(117, 117, 117)"
-                                            }}
-                                        >
-                                            {__(
-                                                "No products found",
-                                                "lemonsqueezy"
-                                            )}
-                                        </span>
+                                    </p>
+                                )}
+                                <NumberControl
+                                    label={__("Quantity", "lemonsqueezy")}
+                                    __next40pxDefaultSize
+                                    isShiftStepEnabled={true}
+                                    shiftStep={1}
+                                    value={quantity}
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "quantity"
                                     )}
-                                </p>
-                                <p>
-                                    <ToggleControl
-                                        label={__(
-                                            "Use checkout overlay?",
-                                            "lemonsqueezy"
-                                        )}
-                                        checked={overlay}
-                                        help={
-                                            overlay
-                                                ? __(
-                                                      "Your checkout will be opened in a modal window.",
-                                                      "lemonsqueezy"
-                                                  )
-                                                : __(
-                                                      "Your customer will be redirected to your checkout page.",
-                                                      "lemonsqueezy"
-                                                  )
+                                />
+                                <ToggleControl
+                                    label={__(
+                                        "Use checkout overlay?",
+                                        "lemonsqueezy"
+                                    )}
+                                    checked={overlay}
+                                    help={
+                                        overlay
+                                            ? __(
+                                                  "Your checkout will be opened in a modal window.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "Your customer will be redirected to your checkout page.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    onChange={this.onChangeOverlay}
+                                />
+                                <ToggleControl
+                                    label={__(
+                                        "Pre-fill User Data",
+                                        "lemonsqueezy"
+                                    )}
+                                    checked={prefillUserData}
+                                    help={
+                                        prefillUserData
+                                            ? __(
+                                                  "If logged-in, pre-fill user's data on checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't pre-fill user's data on checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    onChange={this.onChangeUserData}
+                                />
+                                <ToggleControl
+                                    label={__(
+                                        "Pre-fill from URL",
+                                        "lemonsqueezy"
+                                    )}
+                                    checked={prefillFromURL}
+                                    help={
+                                        prefillFromURL
+                                            ? __(
+                                                  "If there are checkout query strings in URL, it'll pre-fill the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't pre-fill URL data on checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    onChange={this.onChangeURLData}
+                                />
+                                <ToggleControl
+                                    label={__("Show Logo", "lemonsqueezy")}
+                                    checked={showLogo}
+                                    help={
+                                        showLogo
+                                            ? __(
+                                                  "Show the Lemon Squeezy logo in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't show the Lemon Squeezy logo in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "showLogo"
+                                    )}
+                                />
+                                <ToggleControl
+                                    label={__("Show Media", "lemonsqueezy")}
+                                    help={
+                                        showMedia
+                                            ? __(
+                                                  "Show the product media in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't show the product media in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    checked={showMedia}
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "showMedia"
+                                    )}
+                                />
+                                <ToggleControl
+                                    label={__(
+                                        "Show Description",
+                                        "lemonsqueezy"
+                                    )}
+                                    help={
+                                        showDescription
+                                            ? __(
+                                                  "Show the product description in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't show the product description in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    checked={showDescription}
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "showDescription"
+                                    )}
+                                />
+                                <ToggleControl
+                                    label={__("Show Discount", "lemonsqueezy")}
+                                    help={
+                                        showDiscount
+                                            ? __(
+                                                  "Show the product discount in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                            : __(
+                                                  "It won't show the product discount in the checkout.",
+                                                  "lemonsqueezy"
+                                              )
+                                    }
+                                    checked={showDiscount}
+                                    onChange={this.onAttributeChange.bind(
+                                        this,
+                                        "showDiscount"
+                                    )}
+                                />
+                                <PanelColorSettings
+                                    title={__(
+                                        "Checkout colors",
+                                        "lemonsqueezy"
+                                    )}
+                                    colorSettings={[
+                                        {
+                                            value: checkoutBackgroundColor,
+                                            onChange:
+                                                this.onAttributeChange.bind(
+                                                    this,
+                                                    "checkoutBackgroundColor"
+                                                ),
+                                            label: __(
+                                                "Background",
+                                                "lemonsqueezy"
+                                            )
+                                        },
+                                        {
+                                            value: checkoutLinksColor,
+                                            onChange:
+                                                this.onAttributeChange.bind(
+                                                    this,
+                                                    "checkoutLinksColor"
+                                                ),
+                                            label: __("Links", "lemonsqueezy")
+                                        },
+                                        {
+                                            value: checkoutButtonColor,
+                                            onChange:
+                                                this.onAttributeChange.bind(
+                                                    this,
+                                                    "checkoutButtonColor"
+                                                ),
+                                            label: __("Button", "lemonsqueezy")
+                                        },
+                                        {
+                                            value: checkoutButtonTextColor,
+                                            onChange:
+                                                this.onAttributeChange.bind(
+                                                    this,
+                                                    "checkoutButtonTextColor"
+                                                ),
+                                            label: __(
+                                                "Button text",
+                                                "lemonsqueezy"
+                                            )
+                                        },
+                                        {
+                                            value: checkoutTermsPrivacyColor,
+                                            onChange:
+                                                this.onAttributeChange.bind(
+                                                    this,
+                                                    "checkoutTermsPrivacyColor"
+                                                ),
+                                            label: __(
+                                                "Terms + Privacy",
+                                                "lemonsqueezy"
+                                            )
                                         }
-                                        onChange={this.onChangeOverlay}
-                                    />
-                                </p>
-                                <p>
-                                    <ToggleControl
-                                        label={__(
-                                            "Pre-fill User Data",
-                                            "lemonsqueezy"
-                                        )}
-                                        checked={prefillUserData}
-                                        help={
-                                            prefillUserData
-                                                ? __(
-                                                      "If logged-in, pre-fill user's data on checkout.",
-                                                      "lemonsqueezy"
-                                                  )
-                                                : __(
-                                                      "It won't pre-fill user's data on checkout.",
-                                                      "lemonsqueezy"
-                                                  )
-                                        }
-                                        onChange={this.onChangeUserData}
-                                    />
-                                </p>
-                                <p>
-                                    <ToggleControl
-                                        label={__(
-                                            "Pre-fill from URL",
-                                            "lemonsqueezy"
-                                        )}
-                                        checked={prefillFromURL}
-                                        help={
-                                            prefillFromURL
-                                                ? __(
-                                                      "If there are checkout query strings in URL, it'll pre-fill the checkout.",
-                                                      "lemonsqueezy"
-                                                  )
-                                                : __(
-                                                      "It won't pre-fill URL data on checkout.",
-                                                      "lemonsqueezy"
-                                                  )
-                                        }
-                                        onChange={this.onChangeURLData}
-                                    />
-                                </p>
+                                    ]}
+                                />
                             </Fragment>
                         ) : (
                             <p>
