@@ -19,7 +19,7 @@ class LSQ_OAuth {
 	 * @param string $redirect_uri
 	 */
 	public function __construct( $client_id, $redirect_uri ) {
-		$this->client_id = $client_id;
+		$this->client_id    = $client_id;
 		$this->redirect_uri = $redirect_uri;
 	}
 
@@ -51,14 +51,14 @@ class LSQ_OAuth {
 
 		$query = http_build_query(
 			array(
-				'client_id' => $this->client_id,
-				'redirect_uri' => $this->redirect_uri,
-				'response_type' => 'code',
-				'scope' => '',
-				'state' => $_SESSION['lsq_oauth_code'],
-				'code_challenge' => $code_challenge,
+				'client_id'             => $this->client_id,
+				'redirect_uri'          => $this->redirect_uri,
+				'response_type'         => 'code',
+				'scope'                 => '',
+				'state'                 => $_SESSION['lsq_oauth_code'],
+				'code_challenge'        => $code_challenge,
 				'code_challenge_method' => 'S256',
-				'prompt' => 'consent',
+				'prompt'                => 'consent',
 			)
 		);
 
@@ -93,7 +93,7 @@ class LSQ_OAuth {
 			return;
 		}
 
-		$code = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
+		$code  = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
 		$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
 
 		if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
@@ -113,11 +113,11 @@ class LSQ_OAuth {
 			LSQ_APP_URL . '/oauth/token',
 			array(
 				'body' => array(
-					'grant_type' => 'authorization_code',
-					'client_id' => $this->client_id,
-					'redirect_uri' => $this->redirect_uri,
+					'grant_type'    => 'authorization_code',
+					'client_id'     => $this->client_id,
+					'redirect_uri'  => $this->redirect_uri,
 					'code_verifier' => $_SESSION['lsq_oauth_code_verifier'],
-					'code' => $code,
+					'code'          => $code,
 				),
 			)
 		);

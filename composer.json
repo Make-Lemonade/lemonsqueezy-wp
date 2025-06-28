@@ -7,10 +7,10 @@
     },
     "scripts": {
         "phpcs": [
-            "./vendor/bin/phpcs --standard=WordPress-Extra ./src"
+            "./vendor/bin/phpcs --standard=WordPress-Extra --extensions=php ./src"
         ],
         "phpcbf": [
-            "./vendor/bin/phpcbf --standard=WordPress-Extra ./src"
+            "./vendor/bin/phpcbf --standard=WordPress-Extra --extensions=php ./src"
         ]
     },
     "config": {

@@ -92,7 +92,6 @@ class LSQ_Register_Block {
 
 		$this->register_block_type( 'button' );
 		$this->register_block_type( 'ls-button' );
-
 	}
 
 	/**
@@ -201,10 +200,10 @@ class LSQ_Register_Block {
 		}
 
 		$colors = array(
-			'checkoutBackgroundColor' => 'background_color',
-			'checkoutLinksColor' => 'links_color',
-			'checkoutButtonColor' => 'button_color',
-			'checkoutButtonTextColor' => 'button_text_color',
+			'checkoutBackgroundColor'   => 'background_color',
+			'checkoutLinksColor'        => 'links_color',
+			'checkoutButtonColor'       => 'button_color',
+			'checkoutButtonTextColor'   => 'button_text_color',
 			'checkoutTermsPrivacyColor' => 'terms_privacy_color',
 		);
 
@@ -215,7 +214,7 @@ class LSQ_Register_Block {
 		}
 
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
-		     && isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
+			&& isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 
 			foreach ( $_GET['checkout'] as $checkout_name => $checkout_value ) {
 				if ( ! is_array( $checkout_value ) ) {
@@ -241,5 +240,4 @@ class LSQ_Register_Block {
 
 		return false;
 	}
-
 }

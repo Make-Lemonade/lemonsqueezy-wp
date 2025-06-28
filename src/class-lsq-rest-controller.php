@@ -47,7 +47,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'validate_key' ),
 				'args'                => array(),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -60,8 +60,8 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::DELETABLE,
 				'callback'            => array( $this, 'delete_test' ),
 				'args'                => array(),
-				'permission_callback' => function( \WP_REST_Request $request ) {
-					return current_user_can('manage_options');
+				'permission_callback' => function ( \WP_REST_Request $request ) {
+					return current_user_can( 'manage_options' );
 				},
 			)
 		);
@@ -73,15 +73,15 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'save_test' ),
 				'args'                => array(
-					'test_key' => [
-						'description' => 'Test API key.',
-						'type'        => 'string',
-						'required'    => true,
+					'test_key' => array(
+						'description'       => 'Test API key.',
+						'type'              => 'string',
+						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
-					],
+					),
 				),
-				'permission_callback' => function( \WP_REST_Request $request ) {
-					return current_user_can('manage_options');
+				'permission_callback' => function ( \WP_REST_Request $request ) {
+					return current_user_can( 'manage_options' );
 				},
 			)
 		);
@@ -93,20 +93,20 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'activate_key' ),
 				'args'                => array(
-					'license_key' => [
-						'description' => 'License key.',
-						'type'        => 'string',
-						'required'    => true,
+					'license_key'   => array(
+						'description'       => 'License key.',
+						'type'              => 'string',
+						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
-					],
-					'instance_name' => [
-						'description' => 'Instance name for the activation.',
-						'type'        => 'string',
-						'required'    => true,
+					),
+					'instance_name' => array(
+						'description'       => 'Instance name for the activation.',
+						'type'              => 'string',
+						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
-					],
+					),
 				),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -119,20 +119,20 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'deactivate_key' ),
 				'args'                => array(
-					'license_key' => [
-						'description' => 'License key.',
-						'type'        => 'string',
-						'required'    => true,
+					'license_key' => array(
+						'description'       => 'License key.',
+						'type'              => 'string',
+						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
-					],
-					'instance_id' => [
-						'description' => 'Instance ID of the existing activation.',
-						'type'        => 'string',
-						'required'    => true,
+					),
+					'instance_id' => array(
+						'description'       => 'Instance ID of the existing activation.',
+						'type'              => 'string',
+						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
-					],
+					),
 				),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -145,7 +145,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_stores' ),
 				'args'                => array(),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -158,7 +158,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_products' ),
 				'args'                => array(),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -171,7 +171,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_update' ),
 				'args'                => array(),
-				'permission_callback' => function( \WP_REST_Request $request ) {
+				'permission_callback' => function ( \WP_REST_Request $request ) {
 					return true;
 				},
 			)
@@ -203,7 +203,7 @@ class LSQ_Rest_Controller {
 	 * @return \WP_Error|\WP_REST_Request
 	 */
 	public function save_test( $request ) {
-		$test_key = $request->get_param('test_key');
+		$test_key = $request->get_param( 'test_key' );
 
 		$response = wp_remote_get(
 			LSQ_API_URL . '/v1/users/me',
@@ -236,7 +236,7 @@ class LSQ_Rest_Controller {
 		return new \WP_REST_Response(
 			array(
 				'success' => $is_valid,
-				'user' => $user,
+				'user'    => $user,
 				'error'   => $error_message,
 			),
 			$is_valid ? 200 : 400
@@ -260,7 +260,7 @@ class LSQ_Rest_Controller {
 			return new \WP_REST_Response(
 				array(
 					'success' => $is_valid,
-					'user' => $user,
+					'user'    => $user,
 					'error'   => __( 'Unauthorized request', 'lemonsqueezy' ),
 				),
 				401
@@ -295,7 +295,7 @@ class LSQ_Rest_Controller {
 		return new \WP_REST_Response(
 			array(
 				'success' => $is_valid,
-				'user' => $user,
+				'user'    => $user,
 				'error'   => $error_message,
 			),
 			$is_valid ? 200 : 400
@@ -337,13 +337,13 @@ class LSQ_Rest_Controller {
 			)
 		);
 
-		$body = json_decode( $response['body'], true);
+		$body = json_decode( $response['body'], true );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$is_valid = true;
 			} else {
-				$error_message = isset($body['error']) ? $body['error'] : wp_remote_retrieve_response_message( $response );
+				$error_message = isset( $body['error'] ) ? $body['error'] : wp_remote_retrieve_response_message( $response );
 			}
 		} else {
 			$error_message = $response->get_error_message();
@@ -395,11 +395,11 @@ class LSQ_Rest_Controller {
 		);
 
 		if ( ! is_wp_error( $response ) ) {
-			$body = json_decode( $response['body'], true);
+			$body = json_decode( $response['body'], true );
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$is_valid = $body['deactivated'];
 			} else {
-				$error_message = isset($body['error']) ? $body['error'] : wp_remote_retrieve_response_message( $response );
+				$error_message = isset( $body['error'] ) ? $body['error'] : wp_remote_retrieve_response_message( $response );
 			}
 		} else {
 			$error_message = $response->get_error_message();
@@ -452,7 +452,7 @@ class LSQ_Rest_Controller {
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$store_data = json_decode( $response['body'] );
-				$stores = array();
+				$stores     = array();
 
 				// Build product list.
 				if ( isset( $store_data ) && ! empty( $store_data ) ) {
@@ -514,7 +514,7 @@ class LSQ_Rest_Controller {
 		$page_size = rawurlencode( 'page[size]' );
 
 		$response = wp_remote_get(
-			LSQ_API_URL . "/v1/stores/{$store_id}/products?" . $page_size . "=100",
+			LSQ_API_URL . "/v1/stores/{$store_id}/products?" . $page_size . '=100',
 			array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
@@ -648,7 +648,7 @@ class LSQ_Rest_Controller {
 		}
 
 		$sorted_files = $lsq_updater->sort_files_by_version( $files->data );
-		$latest_file = array_pop( $sorted_files );
+		$latest_file  = array_pop( $sorted_files );
 		if ( empty( $latest_file->attributes->version ) ) {
 			return new \WP_REST_Response(
 				array(
@@ -660,15 +660,15 @@ class LSQ_Rest_Controller {
 			);
 		}
 
-		$store = $lsq_updater->relation_from_license_key( $license_key_obj, 'store' );
+		$store   = $lsq_updater->relation_from_license_key( $license_key_obj, 'store' );
 		$product = $lsq_updater->relation_from_license_key( $license_key_obj, 'product' );
 
 		return new \WP_REST_Response(
 			array(
-				'success' => true,
-				'error'   => '',
+				'success'    => true,
+				'error'      => '',
 				'error_code' => '',
-				'update' => array(
+				'update'     => array(
 					'version'        => $latest_file->attributes->version,
 					'tested'         => null,
 					'requires'       => null,
@@ -678,7 +678,7 @@ class LSQ_Rest_Controller {
 					'trunk'          => $latest_file->attributes->download_url,
 					'requires_php'   => null,
 					'last_updated'   => null,
-					'sections' => array(
+					'sections'       => array(
 						'description' => $product ? $product->attributes->description : null,
 						'changelog'   => $latest_file->attributes->version,
 					),
