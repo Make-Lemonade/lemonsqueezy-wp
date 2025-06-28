@@ -129,6 +129,12 @@ class AdminSettings extends Component {
                         lsqUser: null
                     });
                 }
+            })
+            .catch(() => {
+                this.setState({
+                    isAPILoading: false,
+                    lsqUser: null
+                });
             });
     }
 
@@ -229,7 +235,7 @@ class AdminSettings extends Component {
                             </h2>
                             <p>
                                 {__(
-                                    "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you’d like to insert. Use the block settings to select a checkout link or a checkout overlay.",
+                                    "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you'd like to insert. Use the block settings to select a checkout link or a checkout overlay.",
                                     "lemonsqueezy"
                                 )}
                             </p>

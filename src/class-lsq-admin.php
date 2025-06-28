@@ -83,7 +83,6 @@ class LSQ_Admin {
 
 		wp_localize_script( 'lemonsqueezy-admin-script', 'Lemonsqueezy', array(
 			'oauth_url' => admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ),
-            'nonce'     => wp_create_nonce('wp_rest')
 		) );
 	}
 
