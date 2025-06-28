@@ -43,7 +43,7 @@ class LSQ_Register_Block {
 	 * @param object $post current post.
 	 * @return array
 	 */
-	public function add_block_categories( $categories, $post ) {
+	public function add_block_categories( $categories ) {
 		return array_merge(
 			$categories,
 			array(
@@ -209,7 +209,7 @@ class LSQ_Register_Block {
 
 		foreach ( $colors as $color_key => $color_value ) {
 			if ( isset( $args[ $color_key ] ) && ! empty( $args[ $color_key ] ) ) {
-				$link = add_query_arg( $color_value, urlencode( $args[ $color_key ] ), $link );
+				$link = add_query_arg( $color_value, rawurlencode( $args[ $color_key ] ), $link );
 			}
 		}
 

@@ -47,7 +47,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'validate_key' ),
 				'args'                => array(),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -60,7 +60,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::DELETABLE,
 				'callback'            => array( $this, 'delete_test' ),
 				'args'                => array(),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
 			)
@@ -80,7 +80,7 @@ class LSQ_Rest_Controller {
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
 			)
@@ -106,7 +106,7 @@ class LSQ_Rest_Controller {
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -132,7 +132,7 @@ class LSQ_Rest_Controller {
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -145,7 +145,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_stores' ),
 				'args'                => array(),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -158,7 +158,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_products' ),
 				'args'                => array(),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -171,7 +171,7 @@ class LSQ_Rest_Controller {
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_update' ),
 				'args'                => array(),
-				'permission_callback' => function ( \WP_REST_Request $request ) {
+				'permission_callback' => function () {
 					return true;
 				},
 			)
@@ -182,9 +182,9 @@ class LSQ_Rest_Controller {
 	 * Delete Test API key.
 	 *
 	 * @param \WP_REST_Request $request Full data about the request.
-	 * @return \WP_Error|\WP_REST_Request
+	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function delete_test( $request ) {
+	public function delete_test() {
 
 		$deleted = delete_option( 'lsq_api_key_test' );
 
@@ -200,7 +200,7 @@ class LSQ_Rest_Controller {
 	 * Save Test API key with Lemon Squeezy API.
 	 *
 	 * @param \WP_REST_Request $request Full data about the request.
-	 * @return \WP_Error|\WP_REST_Request
+	 * @return \WP_Error|\WP_REST_Response
 	 */
 	public function save_test( $request ) {
 		$test_key = $request->get_param( 'test_key' );
@@ -246,10 +246,10 @@ class LSQ_Rest_Controller {
 	/**
 	 * Validate API key with Lemon Squeezy API.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Request
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function validate_key( $request ) {
+	public function validate_key() {
 		// Check LS API connection.
 		$api_key       = get_option( 'lsq_api_key' );
 		$is_valid      = false;
@@ -417,10 +417,10 @@ class LSQ_Rest_Controller {
 	/**
 	 * Get products from the Lemon Squeezy API.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Request
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function get_stores( $request ) {
+	public function get_stores() {
 		// Check LS API connection.
 		$api_key       = get_option( 'lsq_api_key' );
 		$error_message = '';
@@ -491,8 +491,8 @@ class LSQ_Rest_Controller {
 	/**
 	 * Get products from the Lemon Squeezy API.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Request
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
 	 */
 	public function get_products( $request ) {
 		// Check LS API connection.
@@ -531,7 +531,7 @@ class LSQ_Rest_Controller {
 				$products     = array();
 
 				foreach ( $product_data->data as $product ) {
-					if ( $product->attributes->status !== 'published' ) {
+					if ( 'published' !== $product->attributes->status ) {
 						continue;
 					}
 
@@ -568,8 +568,8 @@ class LSQ_Rest_Controller {
 	/**
 	 * Validate and return a software update from the Lemon Squeezy API.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Request
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
 	 */
 	public function get_update( $request ) {
 		$api_key = get_option( 'lsq_api_key' );

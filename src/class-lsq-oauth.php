@@ -79,7 +79,7 @@ class LSQ_OAuth {
 		if ( ! empty( $_GET['error'] ) ) {
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
-				'window.lsq_oauth = ' . json_encode(
+				'window.lsq_oauth = ' . wp_json_encode(
 					array(
 						'error' => filter_var( $_GET['error'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
 					)
@@ -99,7 +99,7 @@ class LSQ_OAuth {
 		if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
-				'window.lsq_oauth = ' . json_encode(
+				'window.lsq_oauth = ' . wp_json_encode(
 					array(
 						'error' => __( 'Invalid oauth state/code', 'lemonsqueezy' ),
 					)
@@ -125,7 +125,7 @@ class LSQ_OAuth {
 		if ( is_wp_error( $response ) ) {
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
-				'window.lsq_oauth = ' . json_encode(
+				'window.lsq_oauth = ' . wp_json_encode(
 					array(
 						'error' => $response->get_error_message(),
 					)
