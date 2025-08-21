@@ -12,19 +12,58 @@
     }
 
     .lsq-link-text {
-        border: 1px solid;
+        border: 1px solid var(--wp-components-color-gray-600, #949494);
         box-sizing: border-box;
         box-shadow: 0px 1px 1px rgba(10, 10, 11, 0.06);
-        border-radius: 8px;
         font-size: 13px !important;
         padding: 5px 10px;
+        font-weight: 400;
+        margin-top: 8px;
 
         span {
             font-size: 13px;
             top: -2px;
         }
     }
-    select {
-        padding: 0 5px !important;
+
+    .components-input-control__input {
+        height: 32px !important;
+        min-height: 32px !important;
+    }
+
+    .lemonsqueezy-custom-data-header {
+        display: flex;
+        justify-content: space-between;
+
+        a {
+            padding: 0;
+        }
+    }
+
+    .lemonsqueezy-custom-data-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 100px;
+        grid-gap: 10px;
+
+        button {
+            align-self: end;
+            height: 30px;
+        }
+
+        .components-base-control__field,
+        button {
+            margin-bottom: 8px;
+        }
+    }
+
+    .lsq-block-settings {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .components-base-control__label {
+        margin-bottom: 0;
     }
 }

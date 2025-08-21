@@ -1,11 +1,21 @@
 {
     "name": "makelemonade/lemonsqueezy",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.6",
-        "wp-coding-standards/wpcs": "^2.3"
+        "squizlabs/php_codesniffer": "^3.13",
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpcompatibility/php-compatibility": "^9.3"
     },
     "scripts": {
-        "post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
-        "post-update-cmd" : "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs"
+        "phpcs": [
+            "./vendor/bin/phpcs --standard=WordPress-Extra --extensions=php ./src"
+        ],
+        "phpcbf": [
+            "./vendor/bin/phpcbf --standard=WordPress-Extra --extensions=php ./src"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

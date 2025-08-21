@@ -1,5 +1,6 @@
 import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
+import { getColorClassName } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
 
@@ -14,6 +15,65 @@ const attributes = {
         type: "string"
     },
     product: {
+        type: "string"
+    },
+    textColor: {
+        type: "string"
+    },
+    customTextColor: {
+        type: "string"
+    },
+    backgroundColor: {
+        type: "string"
+    },
+    customBackgroundColor: {
+        type: "string"
+    },
+    prefillUserData: {
+        type: "boolean",
+        default: false
+    },
+    prefillFromURL: {
+        type: "boolean",
+        default: false
+    },
+    showLogo: {
+        type: "boolean",
+        default: true
+    },
+    showMedia: {
+        type: "boolean",
+        default: true
+    },
+    showDescription: {
+        type: "boolean",
+        default: true
+    },
+    showDiscount: {
+        type: "boolean",
+        default: true
+    },
+    quantity: {
+        type: "number",
+        default: 1
+    },
+    customData: {
+        type: "array",
+        default: []
+    },
+    checkoutBackgroundColor: {
+        type: "string"
+    },
+    checkoutLinksColor: {
+        type: "string"
+    },
+    checkoutButtonColor: {
+        type: "string"
+    },
+    checkoutButtonTextColor: {
+        type: "string"
+    },
+    checkoutTermsPrivacyColor: {
         type: "string"
     }
 };
@@ -53,28 +113,77 @@ registerBlockType("lemonsqueezy/ls-button", {
         __("digital products", "lemonsqueezy")
     ],
     attributes,
-    deprecated: [],
+    deprecated: [
+        {
+            attributes,
+            save: ({ attributes }) => {
+                const { content, overlay, product } = attributes;
+                let link = product;
+                let className = ["wp-block-button__link"];
+
+                if (overlay) {
+                    className.push("lemonsqueezy-button");
+                    link = product + "?embed=1";
+                }
+
+                return (
+                    <div className="wp-block-buttons">
+                        <div className="wp-block-button">
+                            <a className={className.join(" ")} href={link}>
+                                {content}
+                            </a>
+                        </div>
+                    </div>
+                );
+            }
+        }
+    ],
     edit: Edit,
     save: ({ attributes }) => {
-        const { content, overlay, product } = attributes;
+        const {
+            content,
+            overlay,
+            product,
+            textColor,
+            customTextColor,
+            backgroundColor,
+            customBackgroundColor
+        } = attributes;
+        let link = product;
+        let divStyles = {};
+        let className = ["wp-block-button__link"];
 
-        const embed_link = product + "?embed=1";
+        if (overlay) {
+            className.push("lemonsqueezy-button");
+            link = product + "?embed=1";
+        }
 
-        return overlay ? (
+        if (textColor != undefined) {
+            className.push(getColorClassName("color", textColor));
+        }
+
+        if (backgroundColor != undefined) {
+            className.push(
+                getColorClassName("background-color", backgroundColor)
+            );
+        }
+
+        if (customTextColor != undefined) {
+            divStyles.color = customTextColor;
+        }
+
+        if (customBackgroundColor != undefined) {
+            divStyles.backgroundColor = customBackgroundColor;
+        }
+
+        return (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
                     <a
-                        className="wp-block-button__link lemonsqueezy-button"
-                        href={embed_link}
+                        style={divStyles}
+                        className={className.join(" ")}
+                        href={link}
                     >
-                        {content}
-                    </a>
-                </div>
-            </div>
-        ) : (
-            <div className="wp-block-buttons">
-                <div className="wp-block-button">
-                    <a className="wp-block-button__link" href={product}>
                         {content}
                     </a>
                 </div>

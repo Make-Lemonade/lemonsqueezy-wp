@@ -19,7 +19,7 @@ class LSQ_Updater {
 					'Accept'        => 'application/json',
 					'Cache-Control' => 'no-cache',
 				),
-				'body' => array(
+				'body'    => array(
 					'license_key' => $license_key,
 				),
 			)
@@ -66,7 +66,7 @@ class LSQ_Updater {
 	 */
 	public function relation_from_license_key( $license_key, $relation_key ) {
 		$relation_type = $license_key->data->relationships->{$relation_key}->data->type;
-		$relation_id = $license_key->data->relationships->{$relation_key}->data->id;
+		$relation_id   = $license_key->data->relationships->{$relation_key}->data->id;
 
 		foreach ( $license_key->included as $relation ) {
 			if ( $relation->type === $relation_type && $relation->id === $relation_id ) {
@@ -111,7 +111,7 @@ class LSQ_Updater {
 	public function sort_files_by_version( $files ) {
 		usort(
 			$files,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				return version_compare( $a->attributes->version, $b->attributes->version );
 			}
 		);

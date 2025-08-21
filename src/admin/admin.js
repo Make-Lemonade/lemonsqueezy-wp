@@ -26,7 +26,11 @@ class AdminSettings extends Component {
             isSettingsLoaded: false,
             isAPILoading: false,
             isAPISaving: false,
+            isTestAPISaving: false,
             lsqApiKey: "",
+            lsqApiKeyTest: "",
+            showingTestInput: false,
+            enteredApiKeyTest: "",
             lsqUser: null,
             oauth: window.lsq_oauth || {}
         };
@@ -40,6 +44,7 @@ class AdminSettings extends Component {
                 this.settings.fetch().then(response => {
                     this.setState({
                         lsqApiKey: response.lsq_api_key,
+                        lsqApiKeyTest: response.lsq_api_key_test,
                         isSettingsLoaded: true
                     });
 
@@ -49,13 +54,69 @@ class AdminSettings extends Component {
         });
     }
 
+    removeTestKey() {
+        this.setState({ isTestAPISaving: true });
+
+        return wp
+            .apiFetch({
+                path: "lsq/v1/delete_test_key",
+                method: "DELETE"
+            })
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        lsqApiKeyTest: "",
+                        isTestAPISaving: false
+                    });
+                } else {
+                    this.setState({
+                        isTestAPISaving: false
+                    });
+
+                    if (response.error) {
+                        alert(response.error);
+                    }
+                }
+            });
+    }
+
+    saveTestApiKey() {
+        this.setState({ isTestAPISaving: true });
+
+        return wp
+            .apiFetch({
+                path: "lsq/v1/save_test_key",
+                method: "POST",
+                data: { test_key: this.state.enteredApiKeyTest }
+            })
+            .then(response => {
+                if (true == response.success) {
+                    this.setState({
+                        lsqApiKeyTest: this.state.enteredApiKeyTest,
+                        isTestAPISaving: false
+                    });
+                } else {
+                    this.setState({
+                        isTestAPISaving: false,
+                        lsqApiKeyTest: ""
+                    });
+
+                    if (response.error) {
+                        alert(response.error);
+                    }
+                }
+            });
+    }
+
     checkApi() {
         this.setState({
             isAPILoading: true
         });
 
-        return fetch("/wp-json/lsq/v1/validate")
-            .then(response => response.json())
+        return wp
+            .apiFetch({
+                path: "lsq/v1/validate"
+            })
             .then(response => {
                 if (true == response.success) {
                     this.setState({
@@ -68,6 +129,12 @@ class AdminSettings extends Component {
                         lsqUser: null
                     });
                 }
+            })
+            .catch(() => {
+                this.setState({
+                    isAPILoading: false,
+                    lsqUser: null
+                });
             });
     }
 
@@ -97,6 +164,10 @@ class AdminSettings extends Component {
                 lsqUser: null
             });
         });
+    }
+
+    saveTestKey() {
+        this.saveTestApiKey();
     }
 
     render() {
@@ -164,7 +235,7 @@ class AdminSettings extends Component {
                             </h2>
                             <p>
                                 {__(
-                                    "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you’d like to insert. Use the block settings to select a checkout link or a checkout overlay.",
+                                    "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you'd like to insert. Use the block settings to select a checkout link or a checkout overlay.",
                                     "lemonsqueezy"
                                 )}
                             </p>
@@ -260,25 +331,137 @@ class AdminSettings extends Component {
                                     )}
                                     <div className="lsq-panel__buttons">
                                         {this.state.lsqUser && (
-                                            <Button
-                                                isPrimary
-                                                isLarge
-                                                isBusy={this.state.isAPISaving}
-                                                disabled={
-                                                    this.state.isAPISaving
-                                                }
-                                                onClick={() =>
-                                                    this.oauthDisconnect()
-                                                }
-                                                className="lsq-button lsq-button--primary"
-                                            >
-                                                Disconnect from Lemon Squeezy
-                                            </Button>
+                                            <>
+                                                <Button
+                                                    isPrimary
+                                                    isBusy={
+                                                        this.state.isAPISaving
+                                                    }
+                                                    disabled={
+                                                        this.state.isAPISaving
+                                                    }
+                                                    onClick={() =>
+                                                        this.oauthDisconnect()
+                                                    }
+                                                    className="lsq-button lsq-button--primary"
+                                                >
+                                                    Disconnect from Lemon
+                                                    Squeezy
+                                                </Button>
+                                                {!this.state.lsqApiKeyTest && (
+                                                    <>
+                                                        {!this.state
+                                                            .showingTestInput && (
+                                                            <Button
+                                                                onClick={() =>
+                                                                    this.setState(
+                                                                        {
+                                                                            showingTestInput: true
+                                                                        }
+                                                                    )
+                                                                }
+                                                                isSmall
+                                                            >
+                                                                Need to Test?
+                                                                Enter your Test
+                                                                Key
+                                                            </Button>
+                                                        )}
+                                                        {this.state
+                                                            .showingTestInput && (
+                                                            <>
+                                                                <input
+                                                                    className={
+                                                                        "lsq-input"
+                                                                    }
+                                                                    onChange={el => {
+                                                                        this.setState(
+                                                                            {
+                                                                                enteredApiKeyTest:
+                                                                                    el
+                                                                                        .target
+                                                                                        .value
+                                                                            }
+                                                                        );
+                                                                    }}
+                                                                    type={
+                                                                        "text"
+                                                                    }
+                                                                    placeholder={
+                                                                        "Enter your Test API Key"
+                                                                    }
+                                                                />
+                                                                <Button
+                                                                    isBusy={
+                                                                        this
+                                                                            .state
+                                                                            .isTestAPISaving
+                                                                    }
+                                                                    isSecondary
+                                                                    onClick={() =>
+                                                                        this.saveTestKey()
+                                                                    }
+                                                                >
+                                                                    Save Test
+                                                                    API Key
+                                                                </Button>
+                                                                <Button
+                                                                    onClick={() =>
+                                                                        this.setState(
+                                                                            {
+                                                                                showingTestInput: false
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Cancel
+                                                                </Button>
+                                                                <div>
+                                                                    <br />
+                                                                    <Button
+                                                                        isLink
+                                                                        target={
+                                                                            "_blank"
+                                                                        }
+                                                                        href={
+                                                                            "https://docs.lemonsqueezy.com/help/getting-started/test-mode"
+                                                                        }
+                                                                    >
+                                                                        Read
+                                                                        about
+                                                                        the test
+                                                                        mode.
+                                                                    </Button>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </>
+                                                )}
+                                                {this.state.lsqApiKeyTest && (
+                                                    <>
+                                                        <p>
+                                                            You&apos;re on Test
+                                                            Mode.
+                                                        </p>
+                                                        <Button
+                                                            isBusy={
+                                                                this.state
+                                                                    .isTestAPISaving
+                                                            }
+                                                            isSecondary
+                                                            onClick={() =>
+                                                                this.removeTestKey()
+                                                            }
+                                                        >
+                                                            Remove Test Mode
+                                                        </Button>
+                                                    </>
+                                                )}
+                                            </>
                                         )}
                                         {!this.state.lsqUser && (
                                             <Button
                                                 isPrimary
-                                                isLarge
                                                 isBusy={
                                                     this.state.isAPILoading ||
                                                     !this.state.isSettingsLoaded

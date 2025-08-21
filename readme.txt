@@ -1,10 +1,10 @@
 === Easy Peasy Digital Downloads — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
-Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner
+Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner, mauryaratan
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
-Tested up to: 6.0.2
-Stable tag: 1.2.2
+Tested up to: 6.8.2
+Stable tag: 1.4.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -129,6 +129,29 @@ Any digital product you can dream of. Digital downloads, licensed software, eboo
 4. Using the Lemon Squeezy button block
 
 == Changelog ==
+
+= 1.4.0 =
+
+- Enhanced OAuth flow with improved security and user experience
+- Replaced native `fetch` calls with `wp.apiFetch` for better WordPress integration and multisite support
+- Improved Lemon Squeezy Buy Button block with enhanced customization options
+- Added quantity fields to both Button and Lemon Squeezy blocks
+- Added color controls for checkout customization (show logo, media, description, discount)
+- Added proper form labels for better accessibility compliance
+- Moved Lemon Squeezy menu item to bottom of admin menu for better organization
+- Switched to CDN URL for checkout script to improve performance
+- General code cleanup and formatting improvements
+- Fixed deprecated function calls and improved error handling
+- Updated translations and language files
+
+= 1.3.0 =
+
+- Improved performance of Lemon Squeezy in Block Editor on core Buttons
+- Added option to pre-fill logged-in user's data on Checkout
+- Added option to pre-fill data from URL query string following the same checkout pre-fill pattern
+- Added option to define Custom Data when using LS button block
+- Added option to define text and background colors for LS button block
+- Added option to enter Test API key and with that enable Test Mode
 
 = 1.2.2 =
 

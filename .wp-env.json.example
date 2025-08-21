@@ -4,5 +4,11 @@
         "LSQ_APP_URL": "https://app.lemonsqueezy.test",
         "LSQ_OAUTH_CLIENT_ID": ""
     },
-    "plugins": [ "." ]
+    "plugins": [".", "https://downloads.wordpress.org/plugin/query-monitor.zip"],
+    "phpVersion": "8.4",
+    "lifecycleScripts": {
+        "install": "composer install",
+        "build": "node --version && yarn --version && yarn install && yarn build",
+        "afterStart": "wp-env run cli wp rewrite structure /%postname%/ --hard && wp-env run cli wp rewrite flush --hard"
+    },
 }
