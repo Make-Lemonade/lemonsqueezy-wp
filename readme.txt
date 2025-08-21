@@ -3,8 +3,8 @@ Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner, mauryaratan
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
-Tested up to: 6.4.1
-Stable tag: 1.3.0
+Tested up to: 6.8.2
+Stable tag: 1.4.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -129,6 +129,20 @@ Any digital product you can dream of. Digital downloads, licensed software, eboo
 4. Using the Lemon Squeezy button block
 
 == Changelog ==
+
+= 1.4.0 =
+
+- Enhanced OAuth flow with improved security and user experience
+- Replaced native `fetch` calls with `wp.apiFetch` for better WordPress integration and multisite support
+- Improved Lemon Squeezy Buy Button block with enhanced customization options
+- Added quantity fields to both Button and Lemon Squeezy blocks
+- Added color controls for checkout customization (show logo, media, description, discount)
+- Added proper form labels for better accessibility compliance
+- Moved Lemon Squeezy menu item to bottom of admin menu for better organization
+- Switched to CDN URL for checkout script to improve performance
+- General code cleanup and formatting improvements
+- Fixed deprecated function calls and improved error handling
+- Updated translations and language files
 
 = 1.3.0 =
 
