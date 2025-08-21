@@ -18,16 +18,16 @@ const attributes = {
         type: "string"
     },
     textColor: {
-        type: 'string'
+        type: "string"
     },
     customTextColor: {
-        type: 'string'
+        type: "string"
     },
     backgroundColor: {
-        type: 'string'
+        type: "string"
     },
     customBackgroundColor: {
-        type: 'string'
+        type: "string"
     },
     prefillUserData: {
         type: "boolean",
@@ -37,9 +37,44 @@ const attributes = {
         type: "boolean",
         default: false
     },
+    showLogo: {
+        type: "boolean",
+        default: true
+    },
+    showMedia: {
+        type: "boolean",
+        default: true
+    },
+    showDescription: {
+        type: "boolean",
+        default: true
+    },
+    showDiscount: {
+        type: "boolean",
+        default: true
+    },
+    quantity: {
+        type: "number",
+        default: 1
+    },
     customData: {
         type: "array",
         default: []
+    },
+    checkoutBackgroundColor: {
+        type: "string"
+    },
+    checkoutLinksColor: {
+        type: "string"
+    },
+    checkoutButtonColor: {
+        type: "string"
+    },
+    checkoutButtonTextColor: {
+        type: "string"
+    },
+    checkoutTermsPrivacyColor: {
+        type: "string"
     }
 };
 
@@ -78,51 +113,59 @@ registerBlockType("lemonsqueezy/ls-button", {
         __("digital products", "lemonsqueezy")
     ],
     attributes,
-    deprecated: [{
-        attributes,
-        save: ({ attributes }) => {
-            const { content, overlay, product  } = attributes;
-            let link = product;
-            let className = [
-                'wp-block-button__link',
-            ];
+    deprecated: [
+        {
+            attributes,
+            save: ({ attributes }) => {
+                const { content, overlay, product } = attributes;
+                let link = product;
+                let className = ["wp-block-button__link"];
 
-            if ( overlay ) {
-                className.push('lemonsqueezy-button');
-                link = product + "?embed=1";
-            }
+                if (overlay) {
+                    className.push("lemonsqueezy-button");
+                    link = product + "?embed=1";
+                }
 
-            return (
-                <div className="wp-block-buttons">
-                    <div className="wp-block-button">
-                        <a className={className.join( ' ')} href={link}>
-                            {content}
-                        </a>
+                return (
+                    <div className="wp-block-buttons">
+                        <div className="wp-block-button">
+                            <a className={className.join(" ")} href={link}>
+                                {content}
+                            </a>
+                        </div>
                     </div>
-                </div>
-            )
+                );
+            }
         }
-    }],
+    ],
     edit: Edit,
     save: ({ attributes }) => {
-        const { content, overlay, product, textColor, customTextColor, backgroundColor, customBackgroundColor } = attributes;
+        const {
+            content,
+            overlay,
+            product,
+            textColor,
+            customTextColor,
+            backgroundColor,
+            customBackgroundColor
+        } = attributes;
         let link = product;
         let divStyles = {};
-        let className = [
-            'wp-block-button__link',
-        ];
+        let className = ["wp-block-button__link"];
 
-        if ( overlay ) {
-            className.push('lemonsqueezy-button');
+        if (overlay) {
+            className.push("lemonsqueezy-button");
             link = product + "?embed=1";
         }
 
         if (textColor != undefined) {
-            className.push( getColorClassName('color', textColor) );
+            className.push(getColorClassName("color", textColor));
         }
 
         if (backgroundColor != undefined) {
-            className.push( getColorClassName('background-color', backgroundColor) );
+            className.push(
+                getColorClassName("background-color", backgroundColor)
+            );
         }
 
         if (customTextColor != undefined) {
@@ -136,7 +179,11 @@ registerBlockType("lemonsqueezy/ls-button", {
         return (
             <div className="wp-block-buttons">
                 <div className="wp-block-button">
-                    <a style={divStyles} className={className.join( ' ')} href={link}>
+                    <a
+                        style={divStyles}
+                        className={className.join(" ")}
+                        href={link}
+                    >
                         {content}
                     </a>
                 </div>

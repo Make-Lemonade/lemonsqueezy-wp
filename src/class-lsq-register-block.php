@@ -43,7 +43,7 @@ class LSQ_Register_Block {
 	 * @param object $post current post.
 	 * @return array
 	 */
-	public function add_block_categories( $categories, $post ) {
+	public function add_block_categories( $categories ) {
 		return array_merge(
 			$categories,
 			array(
@@ -84,15 +84,14 @@ class LSQ_Register_Block {
 	 * @return void
 	 */
 	public function register_blocks() {
-		wp_register_script( 'lemonsqueezy-editor-script', LSQ_URL . '/build/editor.js', array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities', 'wp-compose', 'wp-block-editor' ), '1.0.0', true );
+		wp_register_script( 'lemonsqueezy-editor-script', LSQ_URL . '/build/editor.js', array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities', 'wp-compose', 'wp-block-editor', 'wp-api-fetch' ), '1.4.0', true );
 		wp_add_inline_script( 'lemonsqueezy-editor-script', 'var lsData = ' . wp_json_encode( array( 'settings_url' => admin_url( 'admin.php?page=lemonsqueezy' ) ) ), 'before' );
-		wp_register_script( 'lemonsqueezy-script', LSQ_URL . '/build/script.js', array(), '1.0.0', true );
-		wp_register_style( 'lemonsqueezy-style', LSQ_URL . '/build/style-script.css', array(), '1.0.0' );
-		wp_register_style( 'lemonsqueezy-editor-style', LSQ_URL . '/build/editor.css', array( 'wp-edit-blocks' ), '1.0.0' );
+		wp_register_script( 'lemonsqueezy-script', LSQ_URL . '/build/script.js', array(), '1.4.0', true );
+		wp_register_style( 'lemonsqueezy-style', LSQ_URL . '/build/style-script.css', array(), '1.4.0' );
+		wp_register_style( 'lemonsqueezy-editor-style', LSQ_URL . '/build/editor.css', array( 'wp-edit-blocks' ), '1.4.0' );
 
 		$this->register_block_type( 'button' );
 		$this->register_block_type( 'ls-button' );
-
 	}
 
 	/**
@@ -113,7 +112,7 @@ class LSQ_Register_Block {
 
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
 			}
 
 			$purchase_link = $this->get_purchase_link( $args, $block );
@@ -136,7 +135,7 @@ class LSQ_Register_Block {
 			$args = wp_parse_args( $block['attrs'] );
 
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://app.lemonsqueezy.com/js/checkout.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
 			}
 
 			$existing_href = $this->get_link_from_button( $block_content );
@@ -184,8 +183,38 @@ class LSQ_Register_Block {
 			}
 		}
 
+		if ( isset( $args['showLogo'] ) ) {
+			$link = add_query_arg( 'logo', $args['showLogo'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showMedia'] ) ) {
+			$link = add_query_arg( 'media', $args['showMedia'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showDescription'] ) ) {
+			$link = add_query_arg( 'desc', $args['showDescription'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['showDiscount'] ) ) {
+			$link = add_query_arg( 'discount', $args['showDiscount'] ? '1' : '0', $link );
+		}
+		if ( isset( $args['quantity'] ) ) {
+			$link = add_query_arg( 'quantity', $args['quantity'], $link );
+		}
+
+		$colors = array(
+			'checkoutBackgroundColor'   => 'background_color',
+			'checkoutLinksColor'        => 'links_color',
+			'checkoutButtonColor'       => 'button_color',
+			'checkoutButtonTextColor'   => 'button_text_color',
+			'checkoutTermsPrivacyColor' => 'terms_privacy_color',
+		);
+
+		foreach ( $colors as $color_key => $color_value ) {
+			if ( isset( $args[ $color_key ] ) && ! empty( $args[ $color_key ] ) ) {
+				$link = add_query_arg( $color_value, rawurlencode( $args[ $color_key ] ), $link );
+			}
+		}
+
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
-		     && isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
+			&& isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 
 			foreach ( $_GET['checkout'] as $checkout_name => $checkout_value ) {
 				if ( ! is_array( $checkout_value ) ) {
@@ -211,5 +240,4 @@ class LSQ_Register_Block {
 
 		return false;
 	}
-
 }

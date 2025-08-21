@@ -1,5 +1,26 @@
 {
   "name": "lemonsqueezy",
+  "private": true,
+  "version": "1.4.0",
+  "description": "Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy",
+  "author": "lemonsqueezy",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "lemonsqueezy",
+    "wordpress",
+    "plugin",
+    "digital products",
+    "subscriptions",
+    "licenses"
+  ],
+  "homepage": "https://github.com/Make-Lemonade/lemonsqueezy-wp#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp/issues"
+  },
   "files": [
     "src",
     "build",
@@ -11,34 +32,24 @@
     "changelog.*",
     "license.*"
   ],
-  "private": true,
+  "dependencies": {
+    "standard": "^17.1.2"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.27.5",
+    "@wordpress/scripts": "^30.19.0",
+    "move-file-cli": "^3.0.0"
+  },
   "scripts": {
     "build": "wp-scripts lint-js && wp-scripts build src/script.js src/editor.js src/admin/admin.js && yarn plugin-zip",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
-    "format": "wp-scripts format",
+    "format": "wp-scripts format ./src",
     "lint:js": "wp-scripts lint-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
     "plugin-zip": "wp-scripts plugin-zip && move-file lemonsqueezy.zip bundled/lemonsqueezy.zip",
-    "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js"
-  },
-  "author": "lemonsqueezy",
-  "license": "GPL-2.0+",
-  "bugs": {
-    "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp/issues"
-  },
-  "homepage": "https://github.com/Make-Lemonade/lemonsqueezy-wp#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Make-Lemonade/lemonsqueezy-wp.git"
-  },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.5.4",
-    "@wordpress/scripts": "^26.16.0",
-    "move-file-cli": "^3.0.0"
-  },
-  "dependencies": {
-    "standard": "^17.1.0"
+    "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js",
+    "translate": "wp i18n make-pot . languages/lemonsqueezy.pot"
   }
 }
