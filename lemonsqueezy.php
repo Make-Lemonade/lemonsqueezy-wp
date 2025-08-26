@@ -37,6 +37,10 @@ if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
 if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	add_action( 'plugins_loaded', 'lsq_run_plugin' );
 
+	if ( WP_DEBUG ) {
+		add_filter( 'https_ssl_verify', '__return_false' );
+	}
+
 	/**
 	 * Run plugin
 	 *

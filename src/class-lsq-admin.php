@@ -161,8 +161,7 @@ class LSQ_Admin {
 			session_start();
 		}
 
-		$redirect_uri = admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' );
-		$lsq_oauth    = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID, $redirect_uri );
+		$lsq_oauth    = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID );
 		$lsq_oauth->handle_authorize();
 		$lsq_oauth->handle_callback();
 

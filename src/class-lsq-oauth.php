@@ -18,9 +18,9 @@ class LSQ_OAuth {
 	 * @param string $client_id
 	 * @param string $redirect_uri
 	 */
-	public function __construct( $client_id, $redirect_uri ) {
+	public function __construct( $client_id ) {
 		$this->client_id    = $client_id;
-		$this->redirect_uri = $redirect_uri;
+		$this->redirect_uri = LSQ_APP_URL . '/oauth/callback/wordpress';
 	}
 
 	/**
@@ -59,6 +59,7 @@ class LSQ_OAuth {
 				'code_challenge'        => $code_challenge,
 				'code_challenge_method' => 'S256',
 				'prompt'                => 'consent',
+				'return_to'             => admin_url( 'admin.php?page=lemonsqueezy&oauth_callback=1' ),
 			)
 		);
 
