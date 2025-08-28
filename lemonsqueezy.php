@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Lemon Squeezy
  * Plugin URI:        https://www.lemonsqueezy.com
  * Description:       Sell digital products the easy-peasy way directly from WordPress.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Requires at least: 5.3
  * Requires PHP:      7.0
  * Author:            Lemon Squeezy
@@ -36,6 +36,10 @@ if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
 // Bootmanager for Lemon Squeety plugin.
 if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	add_action( 'plugins_loaded', 'lsq_run_plugin' );
+
+	if ( WP_DEBUG ) {
+		add_filter( 'https_ssl_verify', '__return_false' );
+	}
 
 	/**
 	 * Run plugin
