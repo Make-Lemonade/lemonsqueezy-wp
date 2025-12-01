@@ -1,10 +1,10 @@
-=== Easy Peasy Digital Downloads — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
+=== Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
 Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner, mauryaratan
 Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
 Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
 Requires at least: 5.3
-Tested up to: 6.8.2
-Stable tag: 1.4.1
+Tested up to: 6.8.3
+Stable tag: 1.4.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
