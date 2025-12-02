@@ -216,12 +216,17 @@ class LSQ_Register_Block {
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
 			&& isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 
-			foreach ( $_GET['checkout'] as $checkout_name => $checkout_value ) {
-				if ( ! is_array( $checkout_value ) ) {
-					$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . ']', sanitize_text_field( wp_unslash( $checkout_value ) ), $link );
-				} else {
-					foreach ( $checkout_value as $sub_checkout_name => $sub_checkout_value ) {
-						$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . '][' . sanitize_text_field( $sub_checkout_name ) . ']', sanitize_text_field( wp_unslash( $sub_checkout_value ) ), $link );
+			$checkout_data = isset( $_GET['checkout'] ) ? wp_unslash( $_GET['checkout'] ) : array();
+			if ( is_array( $checkout_data ) ) {
+				foreach ( $checkout_data as $checkout_name => $checkout_value ) {
+					$checkout_name = sanitize_text_field( $checkout_name );
+					if ( ! is_array( $checkout_value ) ) {
+						$link = add_query_arg( 'checkout[' . $checkout_name . ']', sanitize_text_field( $checkout_value ), $link );
+					} else {
+						foreach ( $checkout_value as $sub_checkout_name => $sub_checkout_value ) {
+							$sub_checkout_name = sanitize_text_field( $sub_checkout_name );
+							$link              = add_query_arg( 'checkout[' . $checkout_name . '][' . $sub_checkout_name . ']', sanitize_text_field( $sub_checkout_value ), $link );
+						}
 					}
 				}
 			}

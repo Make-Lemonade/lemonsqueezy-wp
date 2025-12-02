@@ -40,9 +40,12 @@ class LSQ_OAuth {
 			$_SESSION['lsq_oauth_code_verifier'] = wp_generate_password( 128, false );
 		}
 
+		$code_verifier = isset( $_SESSION['lsq_oauth_code_verifier'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code_verifier'] ) ) : '';
+		$oauth_code    = isset( $_SESSION['lsq_oauth_code'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code'] ) ) : '';
+
 		$code_challenge = strtr(
 			rtrim(
-				base64_encode( hash( 'sha256', $_SESSION['lsq_oauth_code_verifier'], true ) ),
+				base64_encode( hash( 'sha256', $code_verifier, true ) ),
 				'='
 			),
 			'+/',
@@ -55,7 +58,7 @@ class LSQ_OAuth {
 				'redirect_uri'          => $this->redirect_uri,
 				'response_type'         => 'code',
 				'scope'                 => '',
-				'state'                 => $_SESSION['lsq_oauth_code'],
+				'state'                 => $oauth_code,
 				'code_challenge'        => $code_challenge,
 				'code_challenge_method' => 'S256',
 				'prompt'                => 'consent',
@@ -78,11 +81,12 @@ class LSQ_OAuth {
 		}
 
 		if ( ! empty( $_GET['error'] ) ) {
+			$error = isset( $_GET['error'] ) ? sanitize_text_field( wp_unslash( $_GET['error'] ) ) : '';
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
 				'window.lsq_oauth = ' . wp_json_encode(
 					array(
-						'error' => filter_var( $_GET['error'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
+						'error' => $error,
 					)
 				),
 				'before'
@@ -94,10 +98,12 @@ class LSQ_OAuth {
 			return;
 		}
 
-		$code  = isset( $_GET['code'] ) ? filter_var( $_GET['code'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
-		$state = isset( $_GET['state'] ) ? filter_var( $_GET['state'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) : null;
+		$code  = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : null;
+		$state = isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : null;
 
-		if ( $_SESSION['lsq_oauth_code'] !== $state || ! $code ) {
+		$oauth_code = isset( $_SESSION['lsq_oauth_code'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code'] ) ) : '';
+
+		if ( $oauth_code !== $state || ! $code ) {
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
 				'window.lsq_oauth = ' . wp_json_encode(
@@ -110,6 +116,8 @@ class LSQ_OAuth {
 			return;
 		}
 
+		$code_verifier = isset( $_SESSION['lsq_oauth_code_verifier'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code_verifier'] ) ) : '';
+
 		$response = wp_remote_post(
 			LSQ_APP_URL . '/oauth/token',
 			array(
@@ -117,7 +125,7 @@ class LSQ_OAuth {
 					'grant_type'    => 'authorization_code',
 					'client_id'     => $this->client_id,
 					'redirect_uri'  => $this->redirect_uri,
-					'code_verifier' => $_SESSION['lsq_oauth_code_verifier'],
+					'code_verifier' => $code_verifier,
 					'code'          => $code,
 				),
 			)
