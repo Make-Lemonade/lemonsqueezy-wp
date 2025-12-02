@@ -63,7 +63,7 @@ class LSQ_OAuth {
 			)
 		);
 
-		wp_redirect( LSQ_APP_URL . '/oauth/authorize?' . $query );
+		wp_safe_redirect( LSQ_APP_URL . '/oauth/authorize?' . $query );
 		exit;
 	}
 

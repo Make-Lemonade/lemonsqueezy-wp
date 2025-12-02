@@ -33,7 +33,7 @@ if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
 	define( 'LSQ_OAUTH_CLIENT_ID', '94d59e1b-7459-4371-a131-7ad050c8ca0d' );
 }
 
-// Bootmanager for Lemon Squeety plugin.
+// Bootmanager for Lemon Squeezy plugin.
 if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	add_action( 'plugins_loaded', 'lsq_run_plugin' );
 

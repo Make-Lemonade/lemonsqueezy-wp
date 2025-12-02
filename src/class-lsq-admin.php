@@ -34,6 +34,12 @@ class LSQ_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_assets' ) );
 		add_action( 'init', array( $this, 'register_settings' ) );
 		add_filter( 'option_lsq_api_key', array( $this, 'maybe_return_test_key' ) );
+		add_filter( 'allowed_redirect_hosts', array( $this, 'allowed_redirect_hosts' ) );
+	}
+
+	public function allowed_redirect_hosts( $hosts ) {
+		$hosts[] = parse_url( LSQ_APP_URL, PHP_URL_HOST );
+		return $hosts;
 	}
 
 	/**
