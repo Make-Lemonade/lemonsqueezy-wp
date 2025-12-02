@@ -492,7 +492,10 @@ class Edit extends Component {
                                         )}
                                     />
                                     <ToggleControl
-                                        label={__("Show Media", "lemon-squeezy")}
+                                        label={__(
+                                            "Show Media",
+                                            "lemon-squeezy"
+                                        )}
                                         help={
                                             showMedia
                                                 ? __(
