@@ -277,7 +277,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         this.state.isApiConnectable ? (
                             <Fragment>
                                 <SelectControl
-                                    label={__("Select Store", "lemonsqueezy")}
+                                    label={__("Select Store", "lemon-squeezy")}
                                     value={store}
                                     options={this.state.stores}
                                     onChange={this.onChangeStore}
@@ -289,11 +289,11 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                             color: "rgb(117, 117, 117)"
                                         }}
                                     >
-                                        {__("Loading...", "lemonsqueezy")}
+                                        {__("Loading...", "lemon-squeezy")}
                                     </p>
                                 ) : this.state.products.length ? (
                                     <SelectControl
-                                        label={__("Product", "lemonsqueezy")}
+                                        label={__("Product", "lemon-squeezy")}
                                         value={product}
                                         options={this.state.products}
                                         onChange={this.onChangeProduct}
@@ -307,12 +307,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     >
                                         {__(
                                             "No products found",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                     </p>
                                 )}
                                 <NumberControl
-                                    label={__("Quantity", "lemonsqueezy")}
+                                    label={__("Quantity", "lemon-squeezy")}
                                     __next40pxDefaultSize
                                     isShiftStepEnabled={true}
                                     shiftStep={1}
@@ -325,18 +325,18 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 <ToggleControl
                                     label={__(
                                         "Use checkout overlay?",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     checked={overlay}
                                     help={
                                         overlay
                                             ? __(
                                                   "Your checkout will be opened in a modal window.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "Your customer will be redirected to your checkout page.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     onChange={this.onChangeOverlay}
@@ -344,18 +344,18 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 <ToggleControl
                                     label={__(
                                         "Pre-fill User Data",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     checked={prefillUserData}
                                     help={
                                         prefillUserData
                                             ? __(
                                                   "If logged-in, pre-fill user's data on checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't pre-fill user's data on checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     onChange={this.onChangeUserData}
@@ -363,34 +363,34 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 <ToggleControl
                                     label={__(
                                         "Pre-fill from URL",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     checked={prefillFromURL}
                                     help={
                                         prefillFromURL
                                             ? __(
                                                   "If there are checkout query strings in URL, it'll pre-fill the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't pre-fill URL data on checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     onChange={this.onChangeURLData}
                                 />
                                 <ToggleControl
-                                    label={__("Show Logo", "lemonsqueezy")}
+                                    label={__("Show Logo", "lemon-squeezy")}
                                     checked={showLogo}
                                     help={
                                         showLogo
                                             ? __(
                                                   "Show the Lemon Squeezy logo in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't show the Lemon Squeezy logo in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     onChange={this.onAttributeChange.bind(
@@ -399,16 +399,16 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     )}
                                 />
                                 <ToggleControl
-                                    label={__("Show Media", "lemonsqueezy")}
+                                    label={__("Show Media", "lemon-squeezy")}
                                     help={
                                         showMedia
                                             ? __(
                                                   "Show the product media in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't show the product media in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     checked={showMedia}
@@ -420,17 +420,17 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 <ToggleControl
                                     label={__(
                                         "Show Description",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     help={
                                         showDescription
                                             ? __(
                                                   "Show the product description in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't show the product description in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     checked={showDescription}
@@ -440,16 +440,16 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     )}
                                 />
                                 <ToggleControl
-                                    label={__("Show Discount", "lemonsqueezy")}
+                                    label={__("Show Discount", "lemon-squeezy")}
                                     help={
                                         showDiscount
                                             ? __(
                                                   "Show the product discount in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                             : __(
                                                   "It won't show the product discount in the checkout.",
-                                                  "lemonsqueezy"
+                                                  "lemon-squeezy"
                                               )
                                     }
                                     checked={showDiscount}
@@ -461,7 +461,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                 <PanelColorSettings
                                     title={__(
                                         "Checkout colors",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     colorSettings={[
                                         {
@@ -473,7 +473,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 ),
                                             label: __(
                                                 "Background",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )
                                         },
                                         {
@@ -483,7 +483,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                     this,
                                                     "checkoutLinksColor"
                                                 ),
-                                            label: __("Links", "lemonsqueezy")
+                                            label: __("Links", "lemon-squeezy")
                                         },
                                         {
                                             value: checkoutButtonColor,
@@ -492,7 +492,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                     this,
                                                     "checkoutButtonColor"
                                                 ),
-                                            label: __("Button", "lemonsqueezy")
+                                            label: __("Button", "lemon-squeezy")
                                         },
                                         {
                                             value: checkoutButtonTextColor,
@@ -503,7 +503,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 ),
                                             label: __(
                                                 "Button text",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )
                                         },
                                         {
@@ -515,7 +515,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                                 ),
                                             label: __(
                                                 "Terms + Privacy",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )
                                         }
                                     ]}
@@ -527,7 +527,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     <small>
                                         {__(
                                             "Checking connection status",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                     </small>
                                 )}
@@ -536,7 +536,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     <small>
                                         {__(
                                             "Uh oh! Looks like you haven't connected your store yet! Please visit the",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}{" "}
                                         <a
                                             href={
@@ -545,12 +545,12 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                         >
                                             {__(
                                                 "Lemon Squeezy Settings",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )}
                                         </a>{" "}
                                         {__(
                                             "and connect to Lemon Squeezy.",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                     </small>
                                 )}
@@ -562,7 +562,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                         <small>
                             {__(
                                 "We're fetching your data, hold on for a second!",
-                                "lemonsqueezy"
+                                "lemon-squeezy"
                             )}
                         </small>
                     </p>
@@ -574,7 +574,7 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                     <BlockEdit {...this.props} />
                     <InspectorControls>
                         <PanelBody
-                            title={__("Lemon Squeezy", "lemonsqueezy")}
+                            title={__("Lemon Squeezy", "lemon-squeezy")}
                             initialOpen={false}
                         >
                             <Fragment>
@@ -582,18 +582,18 @@ const extendControls = createHigherOrderComponent(BlockEdit => {
                                     <ToggleControl
                                         label={__(
                                             "Apply Lemon Squeezy Checkout",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         checked={use_ls}
                                         help={
                                             use_ls
                                                 ? __(
                                                       "Your button will be used for Lemon Squeezy Checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "Your button will not be used for Lemon Squeezy Checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         onChange={this.changeUseLS}

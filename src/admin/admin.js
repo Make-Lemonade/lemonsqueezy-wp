@@ -172,23 +172,23 @@ class AdminSettings extends Component {
 
     render() {
         const panelLabel = this.state.lsqUser
-            ? __("Connected to Lemon Squeezy", "lemonsqueezy")
-            : __("Connect to Lemon Squeezy", "lemonsqueezy");
+            ? __("Connected to Lemon Squeezy", "lemon-squeezy")
+            : __("Connect to Lemon Squeezy", "lemon-squeezy");
         let buttonLabel = this.state.isAPILoading
-            ? __("Checking...", "lemonsqueezy")
-            : __("Connect to Lemon Squeezy", "lemonsqueezy");
+            ? __("Checking...", "lemon-squeezy")
+            : __("Connect to Lemon Squeezy", "lemon-squeezy");
 
         return (
             <Fragment>
                 <div className="lsq-header">
                     <div className="lsq-header__logo">
                         <img src={lsqIcon} className="lsq-header__logo-icon" />
-                        {__("LemonSqueezy.com", "lemonsqueezy")}
+                        {__("LemonSqueezy.com", "lemon-squeezy")}
                     </div>
                     <div className="lsq-header__cta">
                         {__(
                             "Want to make money with digital products?",
-                            "lemonsqueezy"
+                            "lemon-squeezy"
                         )}
                         <a
                             href={lsqUrl}
@@ -196,7 +196,7 @@ class AdminSettings extends Component {
                             rel="noreferrer"
                             className="lsq-button lsq-button--secondary"
                         >
-                            {__("Start selling today", "lemonsqueezy")}
+                            {__("Start selling today", "lemon-squeezy")}
                         </a>
                     </div>
                 </div>
@@ -204,11 +204,11 @@ class AdminSettings extends Component {
                 <div className="lsq-main">
                     <div className="lsq-main__column lsq-main__column--left">
                         <div className="lsq-content lsq-content--intro">
-                            <h1>{__("Connect your store", "lemonsqueezy")}</h1>
+                            <h1>{__("Connect your store", "lemon-squeezy")}</h1>
                             <p>
                                 {__(
                                     "The Lemon Squeezy plugin connects your Lemon Squeezy stores to your WordPress site to bring your products right into the block editor.",
-                                    "lemonsqueezy"
+                                    "lemon-squeezy"
                                 )}
                             </p>
                         </div>
@@ -216,13 +216,13 @@ class AdminSettings extends Component {
                             <h2>
                                 {__(
                                     "1. Connect to Lemon Squeezy",
-                                    "lemonsqueezy"
+                                    "lemon-squeezy"
                                 )}
                             </h2>
                             <p>
                                 {__(
                                     'To get started, use the "Connect to Lemon Squeezy" button on the right. When prompted, click "Authorize" to connect your Lemon Squeezy account with this WordPress site.',
-                                    "lemonsqueezy"
+                                    "lemon-squeezy"
                                 )}
                             </p>
                         </div>
@@ -230,13 +230,13 @@ class AdminSettings extends Component {
                             <h2>
                                 {__(
                                     "2. Add the Lemon Squeezy block and start selling!",
-                                    "lemonsqueezy"
+                                    "lemon-squeezy"
                                 )}
                             </h2>
                             <p>
                                 {__(
                                     "To add products to your posts or pages, simply add the Lemon Squeezy block and select which product you'd like to insert. Use the block settings to select a checkout link or a checkout overlay.",
-                                    "lemonsqueezy"
+                                    "lemon-squeezy"
                                 )}
                             </p>
                         </div>

@@ -2,26 +2,21 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Lemon Squeezy 1.4.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lemonsqueezy-wp\n"
+"Project-Id-Version: Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses 1.4.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lemon-squeezy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-21T11:05:04+00:00\n"
+"POT-Creation-Date: 2025-12-02T08:19:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: lemonsqueezy\n"
+"X-Domain: lemon-squeezy\n"
 
 #. Plugin Name of the plugin
-#. Author of the plugin
 #: lemonsqueezy.php
-#: src/class-lsq-register-block.php:52
-#: build/editor.js:424
-#: src/blocks/button/index.js:577
-#: build/editor.js:596
-msgid "Lemon Squeezy"
+msgid "Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -34,12 +29,21 @@ msgstr ""
 msgid "Sell digital products the easy-peasy way directly from WordPress."
 msgstr ""
 
+#. Author of the plugin
+#: lemonsqueezy.php
+#: src/class-lsq-register-block.php:52
+#: build/editor.js:424
+#: src/blocks/button/index.js:577
+#: build/editor.js:596
+msgid "Lemon Squeezy"
+msgstr ""
+
 #. Author URI of the plugin
 #: lemonsqueezy.php
 msgid "https://www.lemonsqueezy.com/"
 msgstr ""
 
-#: src/class-lsq-oauth.php:104
+#: src/class-lsq-oauth.php:121
 msgid "Invalid oauth state/code"
 msgstr ""
 
@@ -551,16 +555,4 @@ msgstr ""
 #: src/blocks/ls-button/index.js:83
 #: build/editor.js:1426
 msgid "The Lemon Squeezy Product Block"
-msgstr ""
-
-#: build/editor.js:1013
-#: src/blocks/ls-button/index.js:112
-#: build/editor.js:1455
-msgid "ecommerce"
-msgstr ""
-
-#: build/editor.js:1013
-#: src/blocks/ls-button/index.js:113
-#: build/editor.js:1456
-msgid "digital products"
 msgstr ""
