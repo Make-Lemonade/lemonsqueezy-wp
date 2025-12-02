@@ -112,7 +112,7 @@ class LSQ_Register_Block {
 
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), '1.4.3', true );
 			}
 
 			$purchase_link = $this->get_purchase_link( $args, $block );
@@ -135,7 +135,7 @@ class LSQ_Register_Block {
 			$args = wp_parse_args( $block['attrs'] );
 
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), '1.4.3', true );
 			}
 
 			$existing_href = $this->get_link_from_button( $block_content );
