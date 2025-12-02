@@ -80,7 +80,7 @@ const attributes = {
 
 registerBlockType("lemonsqueezy/ls-button", {
     title: "Lemon Squeezy",
-    description: __("The Lemon Squeezy Product Block", "lemonsqueezy"),
+    description: __("The Lemon Squeezy Product Block", "lemon-squeezy"),
     category: "lemonsqueezy",
     icon: (
         <svg
@@ -109,8 +109,10 @@ registerBlockType("lemonsqueezy/ls-button", {
         </svg>
     ),
     keywords: [
-        __("ecommerce", "lemonsqueezy", "product", "digital"),
-        __("digital products", "lemonsqueezy")
+        __("ecommerce", "lemon-squeezy"),
+        __("product", "lemon-squeezy"),
+        __("digital", "lemon-squeezy"),
+        __("digital products", "lemon-squeezy")
     ],
     attributes,
     deprecated: [

@@ -1,10 +1,10 @@
-=== Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy ===
+=== Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses ===
 Contributors: lemonsqueezy, gilbitron, jamesckemp, patrickposner, mauryaratan
-Donate link: [https://lemonsqueezy.com](https://lemonsqueezy.com/)
-Tags: lemon squeezy, ecommerce, digital products, checkout, payments, subscriptions, memberships, licenses
+Donate link: https://lemonsqueezy.com
+Tags: ecommerce, digital products, checkout, payments, subscriptions
 Requires at least: 5.3
-Tested up to: 6.8.3
-Stable tag: 1.4.2
+Tested up to: 6.8
+Stable tag: 1.4.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -129,6 +129,12 @@ Any digital product you can dream of. Digital downloads, licensed software, eboo
 4. Using the Lemon Squeezy button block
 
 == Changelog ==
+
+= 1.4.3
+= Improve sanitization and security
+
+= 1.4.2 =
+- Bump version for republish
 
 = 1.4.1 =
 - Fixed oAuth authentication flow

@@ -1,7 +1,7 @@
 {
     "name": "lemonsqueezy",
     "private": true,
-    "version": "1.4.2",
+    "version": "1.4.3",
     "description": "Sell Digital Products, Subscriptions, and Licenses with Lemon Squeezy",
     "author": "lemonsqueezy",
     "license": "GPL-2.0-or-later",
@@ -37,7 +37,7 @@
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.27.5",
-        "@wordpress/scripts": "^30.19.0",
+        "@wordpress/scripts": "^31.1.0",
         "move-file-cli": "^3.0.0"
     },
     "scripts": {
@@ -50,6 +50,6 @@
         "packages-update": "wp-scripts packages-update",
         "plugin-zip": "wp-scripts plugin-zip && move-file lemonsqueezy.zip bundled/lemonsqueezy.zip",
         "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js",
-        "translate": "wp i18n make-pot . languages/lemonsqueezy.pot"
+        "translate": "wp i18n make-pot . languages/lemon-squeezy.pot"
     }
 }

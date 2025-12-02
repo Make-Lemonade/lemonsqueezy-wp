@@ -34,6 +34,12 @@ class LSQ_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_assets' ) );
 		add_action( 'init', array( $this, 'register_settings' ) );
 		add_filter( 'option_lsq_api_key', array( $this, 'maybe_return_test_key' ) );
+		add_filter( 'allowed_redirect_hosts', array( $this, 'allowed_redirect_hosts' ) );
+	}
+
+	public function allowed_redirect_hosts( $hosts ) {
+		$hosts[] = wp_parse_url( LSQ_APP_URL, PHP_URL_HOST );
+		return $hosts;
 	}
 
 	/**
@@ -85,7 +91,7 @@ class LSQ_Admin {
 			'lemonsqueezy-admin-script',
 			'Lemonsqueezy',
 			array(
-				'oauth_url' => admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ),
+				'oauth_url' => wp_nonce_url( admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ), 'lsq_oauth_authorize' ),
 			)
 		);
 	}
@@ -136,8 +142,9 @@ class LSQ_Admin {
 			'lsq_admin_settings',
 			'lsq_api_key',
 			array(
-				'type'         => 'string',
-				'show_in_rest' => true,
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 
@@ -145,8 +152,9 @@ class LSQ_Admin {
 			'lsq_admin_settings',
 			'lsq_api_key_test',
 			array(
-				'type'         => 'string',
-				'show_in_rest' => true,
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 	}
@@ -157,14 +165,8 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function load_page_hook() {
-		if ( ! session_id() ) {
-			session_start();
-		}
-
-		$lsq_oauth    = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID );
+		$lsq_oauth = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID );
 		$lsq_oauth->handle_authorize();
 		$lsq_oauth->handle_callback();
-
-		session_write_close();
 	}
 }

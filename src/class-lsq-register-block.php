@@ -49,7 +49,7 @@ class LSQ_Register_Block {
 			array(
 				array(
 					'slug'  => 'lemonsqueezy',
-					'title' => __( 'Lemon Squeezy', 'lemonsqueezy' ),
+					'title' => __( 'Lemon Squeezy', 'lemon-squeezy' ),
 					'icon'  => 'wordpress',
 				),
 			)
@@ -112,7 +112,7 @@ class LSQ_Register_Block {
 
 			// If overlay is activated we have to include the script and add parameter to URL.
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), '1.4.3', true );
 			}
 
 			$purchase_link = $this->get_purchase_link( $args, $block );
@@ -135,7 +135,7 @@ class LSQ_Register_Block {
 			$args = wp_parse_args( $block['attrs'] );
 
 			if ( ! empty( $args['overlay'] ) ) {
-				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), null, true );
+				wp_enqueue_script( 'lemonsqueezy-checkout', 'https://assets.lemonsqueezy.com/lemon.js', array(), '1.4.3', true );
 			}
 
 			$existing_href = $this->get_link_from_button( $block_content );
@@ -213,19 +213,26 @@ class LSQ_Register_Block {
 			}
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Frontend feature for prefilling checkout from URL params (marketing/affiliate links).
 		if ( ! empty( $args['prefillFromURL'] ) && $args['prefillFromURL']
 			&& isset( $_GET['checkout'] ) && is_array( $_GET['checkout'] ) ) {
 
-			foreach ( $_GET['checkout'] as $checkout_name => $checkout_value ) {
-				if ( ! is_array( $checkout_value ) ) {
-					$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . ']', sanitize_text_field( wp_unslash( $checkout_value ) ), $link );
-				} else {
-					foreach ( $checkout_value as $sub_checkout_name => $sub_checkout_value ) {
-						$link = add_query_arg( 'checkout[' . sanitize_text_field( $checkout_name ) . '][' . sanitize_text_field( $sub_checkout_name ) . ']', sanitize_text_field( wp_unslash( $sub_checkout_value ) ), $link );
+			$checkout_data = isset( $_GET['checkout'] ) ? map_deep( wp_unslash( $_GET['checkout'] ), 'sanitize_text_field' ) : array();
+			if ( is_array( $checkout_data ) ) {
+				foreach ( $checkout_data as $checkout_name => $checkout_value ) {
+					$checkout_name = sanitize_text_field( $checkout_name );
+					if ( ! is_array( $checkout_value ) ) {
+						$link = add_query_arg( 'checkout[' . $checkout_name . ']', $checkout_value, $link );
+					} else {
+						foreach ( $checkout_value as $sub_checkout_name => $sub_checkout_value ) {
+							$sub_checkout_name = sanitize_text_field( $sub_checkout_name );
+							$link              = add_query_arg( 'checkout[' . $checkout_name . '][' . $sub_checkout_name . ']', $sub_checkout_value, $link );
+						}
 					}
 				}
 			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		return apply_filters( 'lemonsqueezy_purchase_link', $link, $args, $block );
 	}

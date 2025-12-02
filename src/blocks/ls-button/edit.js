@@ -251,7 +251,7 @@ class Edit extends Component {
             <div className="lsq-block">
                 <h4>
                     <img src={lsqIcon} />
-                    {__("Lemon Squeezy Buy Button", "lemonsqueezy")}
+                    {__("Lemon Squeezy Buy Button", "lemon-squeezy")}
                 </h4>
                 {this.state && !this.state.isCheckingApi ? (
                     [
@@ -261,7 +261,7 @@ class Edit extends Component {
                                     <PanelColorSettings
                                         title={__(
                                             "Button colors",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         colorSettings={[
                                             {
@@ -269,7 +269,7 @@ class Edit extends Component {
                                                 onChange: setTextColor,
                                                 label: __(
                                                     "Text",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             },
                                             {
@@ -277,7 +277,7 @@ class Edit extends Component {
                                                 onChange: setBackgroundColor,
                                                 label: __(
                                                     "Background",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             }
                                         ]}
@@ -286,7 +286,7 @@ class Edit extends Component {
                                     <PanelColorSettings
                                         title={__(
                                             "Checkout colors",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         colorSettings={[
                                             {
@@ -298,7 +298,7 @@ class Edit extends Component {
                                                     ),
                                                 label: __(
                                                     "Background",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             },
                                             {
@@ -310,7 +310,7 @@ class Edit extends Component {
                                                     ),
                                                 label: __(
                                                     "Links",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             },
                                             {
@@ -322,7 +322,7 @@ class Edit extends Component {
                                                     ),
                                                 label: __(
                                                     "Button",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             },
                                             {
@@ -334,7 +334,7 @@ class Edit extends Component {
                                                     ),
                                                 label: __(
                                                     "Button text",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             },
                                             {
@@ -346,7 +346,7 @@ class Edit extends Component {
                                                     ),
                                                 label: __(
                                                     "Terms + Privacy",
-                                                    "lemonsqueezy"
+                                                    "lemon-squeezy"
                                                 )
                                             }
                                         ]}
@@ -354,7 +354,7 @@ class Edit extends Component {
                                 </InspectorControls>
 
                                 <SelectControl
-                                    label={__("Store", "lemonsqueezy")}
+                                    label={__("Store", "lemon-squeezy")}
                                     value={store}
                                     options={this.state.stores}
                                     onChange={this.onChangeStore}
@@ -366,11 +366,11 @@ class Edit extends Component {
                                             color: "rgb(117, 117, 117)"
                                         }}
                                     >
-                                        {__("Loading...", "lemonsqueezy")}
+                                        {__("Loading...", "lemon-squeezy")}
                                     </span>
                                 ) : this.state.products.length ? (
                                     <SelectControl
-                                        label={__("Product", "lemonsqueezy")}
+                                        label={__("Product", "lemon-squeezy")}
                                         value={product}
                                         options={this.state.products}
                                         onChange={this.onChangeProduct}
@@ -384,19 +384,19 @@ class Edit extends Component {
                                     >
                                         {__(
                                             "No products found",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                     </span>
                                 )}
 
                                 <BaseControl
-                                    label={__("Button text", "lemonsqueezy")}
+                                    label={__("Button text", "lemon-squeezy")}
                                     __nextHasNoMarginBottom
                                 />
                                 <RichText
                                     placeholder={__(
                                         "Button text",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                     tagName="p"
                                     className="lsq-link-text"
@@ -404,7 +404,7 @@ class Edit extends Component {
                                     value={content}
                                 />
                                 <NumberControl
-                                    label={__("Quantity", "lemonsqueezy")}
+                                    label={__("Quantity", "lemon-squeezy")}
                                     __next40pxDefaultSize
                                     isShiftStepEnabled={true}
                                     shiftStep={1}
@@ -418,17 +418,17 @@ class Edit extends Component {
                                     <ToggleControl
                                         label={__(
                                             "Use checkout overlay?",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         help={
                                             overlay
                                                 ? __(
                                                       "Your checkout will be opened in a modal window.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "Your customer will be redirected to your checkout page.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         checked={overlay}
@@ -437,18 +437,18 @@ class Edit extends Component {
                                     <ToggleControl
                                         label={__(
                                             "Pre-fill User Data",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         checked={prefillUserData}
                                         help={
                                             prefillUserData
                                                 ? __(
                                                       "If logged-in, pre-fill user's data on checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't pre-fill user's data on checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         onChange={this.onChangeUserData}
@@ -456,34 +456,34 @@ class Edit extends Component {
                                     <ToggleControl
                                         label={__(
                                             "Pre-fill from URL",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         checked={prefillFromURL}
                                         help={
                                             prefillFromURL
                                                 ? __(
                                                       "If there are checkout query strings in URL, it'll pre-fill the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't pre-fill URL data on checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         onChange={this.onChangeURLData}
                                     />
                                     <ToggleControl
-                                        label={__("Show Logo", "lemonsqueezy")}
+                                        label={__("Show Logo", "lemon-squeezy")}
                                         checked={showLogo}
                                         help={
                                             showLogo
                                                 ? __(
                                                       "Show the Lemon Squeezy logo in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't show the Lemon Squeezy logo in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         onChange={this.onAttributeChange.bind(
@@ -492,16 +492,19 @@ class Edit extends Component {
                                         )}
                                     />
                                     <ToggleControl
-                                        label={__("Show Media", "lemonsqueezy")}
+                                        label={__(
+                                            "Show Media",
+                                            "lemon-squeezy"
+                                        )}
                                         help={
                                             showMedia
                                                 ? __(
                                                       "Show the product media in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't show the product media in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         checked={showMedia}
@@ -513,17 +516,17 @@ class Edit extends Component {
                                     <ToggleControl
                                         label={__(
                                             "Show Description",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         help={
                                             showDescription
                                                 ? __(
                                                       "Show the product description in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't show the product description in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         checked={showDescription}
@@ -535,17 +538,17 @@ class Edit extends Component {
                                     <ToggleControl
                                         label={__(
                                             "Show Discount",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                         help={
                                             showDiscount
                                                 ? __(
                                                       "Show the product discount in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                                 : __(
                                                       "It won't show the product discount in the checkout.",
-                                                      "lemonsqueezy"
+                                                      "lemon-squeezy"
                                                   )
                                         }
                                         checked={showDiscount}
@@ -584,11 +587,11 @@ class Edit extends Component {
                                         <TextControl
                                             label={__(
                                                 "Data Key",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )}
                                             placeholder={__(
                                                 "Data Key",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )}
                                             value={this.state.newCustomDataKey}
                                             onChange={val =>
@@ -600,11 +603,11 @@ class Edit extends Component {
                                         <TextControl
                                             label={__(
                                                 "Data Value",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )}
                                             placeholder={__(
                                                 "Data Value",
-                                                "lemonsqueezy"
+                                                "lemon-squeezy"
                                             )}
                                             value={
                                                 this.state.newCustomDataValue
@@ -633,7 +636,7 @@ class Edit extends Component {
                                 <small>
                                     {__(
                                         "Uh oh! Looks like you haven't connected your store yet! Please visit the",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}{" "}
                                     <a
                                         href={
@@ -642,12 +645,12 @@ class Edit extends Component {
                                     >
                                         {__(
                                             "Lemon Squeezy Settings",
-                                            "lemonsqueezy"
+                                            "lemon-squeezy"
                                         )}
                                     </a>{" "}
                                     {__(
                                         "and connect to Lemon Squeezy.",
-                                        "lemonsqueezy"
+                                        "lemon-squeezy"
                                     )}
                                 </small>
                             </p>
@@ -658,7 +661,7 @@ class Edit extends Component {
                         <small>
                             {__(
                                 "We're fetching your data, hold on for a second!",
-                                "lemonsqueezy"
+                                "lemon-squeezy"
                             )}
                         </small>
                     </p>

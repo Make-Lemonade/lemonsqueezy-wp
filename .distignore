@@ -9,3 +9,13 @@
 
 .distignore
 .gitignore
+
+yarn.lock
+phpcs.xml
+package.json
+composer.lock
+composer.json
+.eslintrc.js
+.prettierignore
+.prettierrc
+.wp-env.json.example

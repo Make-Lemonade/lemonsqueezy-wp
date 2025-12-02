@@ -6,17 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Plugin Name:       Lemon Squeezy
+ * Plugin Name:       Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses
  * Plugin URI:        https://www.lemonsqueezy.com
  * Description:       Sell digital products the easy-peasy way directly from WordPress.
- * Version:           1.4.2
+ * Version:           1.4.3
  * Requires at least: 5.3
  * Requires PHP:      7.0
  * Author:            Lemon Squeezy
  * Author URI:        https://www.lemonsqueezy.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       lemonsqueezy
+ * Text Domain:       lemon-squeezy
  * Domain Path:       /languages
  */
 
@@ -33,9 +33,9 @@ if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
 	define( 'LSQ_OAUTH_CLIENT_ID', '94d59e1b-7459-4371-a131-7ad050c8ca0d' );
 }
 
-// Bootmanager for Lemon Squeety plugin.
-if ( ! function_exists( 'lsq_run_plugin' ) ) {
-	add_action( 'plugins_loaded', 'lsq_run_plugin' );
+// Bootmanager for Lemon Squeezy plugin.
+if ( ! function_exists( 'lemonsqueezy_run_plugin' ) ) {
+	add_action( 'plugins_loaded', 'lemonsqueezy_run_plugin' );
 
 	if ( WP_DEBUG ) {
 		add_filter( 'https_ssl_verify', '__return_false' );
@@ -46,11 +46,7 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	 *
 	 * @return void
 	 */
-	function lsq_run_plugin() {
-		// localize.
-		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
-		load_plugin_textdomain( 'lemonsqueezy', false, $textdomain_dir );
-
+	function lemonsqueezy_run_plugin() {
 		// Initialize classes.
 		include_once LSQ_PATH . 'src/class-lsq-oauth.php';
 		include_once LSQ_PATH . 'src/class-lsq-updater.php';
