@@ -142,8 +142,9 @@ class LSQ_Admin {
 			'lsq_admin_settings',
 			'lsq_api_key',
 			array(
-				'type'         => 'string',
-				'show_in_rest' => true,
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 
@@ -151,8 +152,9 @@ class LSQ_Admin {
 			'lsq_admin_settings',
 			'lsq_api_key_test',
 			array(
-				'type'         => 'string',
-				'show_in_rest' => true,
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 	}
