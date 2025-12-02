@@ -37,7 +37,7 @@
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.27.5",
-        "@wordpress/scripts": "^30.19.0",
+        "@wordpress/scripts": "^31.1.0",
         "move-file-cli": "^3.0.0"
     },
     "scripts": {
@@ -48,8 +48,8 @@
         "lint:js": "wp-scripts lint-js",
         "lint:pkg-json": "wp-scripts lint-pkg-json",
         "packages-update": "wp-scripts packages-update",
-        "plugin-zip": "wp-scripts plugin-zip && move-file lemonsqueezy.zip bundled/lemonsqueezy.zip",
+        "plugin-zip": "wp-scripts plugin-zip && move-file lemon-squeezy.zip bundled/lemon-squeezy.zip",
         "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js",
-        "translate": "wp i18n make-pot . languages/lemonsqueezy.pot"
+        "translate": "wp i18n make-pot . languages/lemon-squeezy.pot"
     }
 }
