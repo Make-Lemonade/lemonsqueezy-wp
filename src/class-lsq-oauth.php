@@ -24,6 +24,16 @@ class LSQ_OAuth {
 	}
 
 	/**
+	 * Get transient key for OAuth state storage.
+	 *
+	 * @param string $type Type of transient (code or code_verifier).
+	 * @return string
+	 */
+	private function get_transient_key( $type ) {
+		return 'lsq_oauth_' . $type . '_' . get_current_user_id();
+	}
+
+	/**
 	 * Handle OAuth authorization
 	 *
 	 * @return void
@@ -38,15 +48,17 @@ class LSQ_OAuth {
 			return;
 		}
 
-		if ( empty( $_SESSION['lsq_oauth_code'] ) ) {
-			$_SESSION['lsq_oauth_code'] = wp_generate_password( 40, false );
-		}
-		if ( empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
-			$_SESSION['lsq_oauth_code_verifier'] = wp_generate_password( 128, false );
-		}
+		$oauth_code    = get_transient( $this->get_transient_key( 'code' ) );
+		$code_verifier = get_transient( $this->get_transient_key( 'code_verifier' ) );
 
-		$code_verifier = isset( $_SESSION['lsq_oauth_code_verifier'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code_verifier'] ) ) : '';
-		$oauth_code    = isset( $_SESSION['lsq_oauth_code'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code'] ) ) : '';
+		if ( empty( $oauth_code ) ) {
+			$oauth_code = wp_generate_password( 40, false );
+			set_transient( $this->get_transient_key( 'code' ), $oauth_code, HOUR_IN_SECONDS );
+		}
+		if ( empty( $code_verifier ) ) {
+			$code_verifier = wp_generate_password( 128, false );
+			set_transient( $this->get_transient_key( 'code_verifier' ), $code_verifier, HOUR_IN_SECONDS );
+		}
 
 		$code_challenge = strtr(
 			rtrim(
@@ -102,7 +114,10 @@ class LSQ_OAuth {
 			return;
 		}
 
-		if ( empty( $_SESSION['lsq_oauth_code'] ) || empty( $_SESSION['lsq_oauth_code_verifier'] ) ) {
+		$oauth_code    = get_transient( $this->get_transient_key( 'code' ) );
+		$code_verifier = get_transient( $this->get_transient_key( 'code_verifier' ) );
+
+		if ( empty( $oauth_code ) || empty( $code_verifier ) ) {
 			return;
 		}
 
@@ -110,8 +125,6 @@ class LSQ_OAuth {
 		$code  = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : null;
 		$state = isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : null;
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
-
-		$oauth_code = isset( $_SESSION['lsq_oauth_code'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code'] ) ) : '';
 
 		if ( $oauth_code !== $state || ! $code ) {
 			wp_add_inline_script(
@@ -126,8 +139,6 @@ class LSQ_OAuth {
 			return;
 		}
 
-		$code_verifier = isset( $_SESSION['lsq_oauth_code_verifier'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code_verifier'] ) ) : '';
-
 		$response = wp_remote_post(
 			LSQ_APP_URL . '/oauth/token',
 			array(
@@ -140,6 +151,10 @@ class LSQ_OAuth {
 				),
 			)
 		);
+
+		// Clean up transients after use.
+		delete_transient( $this->get_transient_key( 'code' ) );
+		delete_transient( $this->get_transient_key( 'code_verifier' ) );
 
 		if ( is_wp_error( $response ) ) {
 			wp_add_inline_script(

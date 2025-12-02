@@ -165,14 +165,8 @@ class LSQ_Admin {
 	 * @return void
 	 */
 	public function load_page_hook() {
-		if ( ! session_id() ) {
-			session_start();
-		}
-
-		$lsq_oauth    = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID );
+		$lsq_oauth = new LSQ_OAuth( LSQ_OAUTH_CLIENT_ID );
 		$lsq_oauth->handle_authorize();
 		$lsq_oauth->handle_callback();
-
-		session_write_close();
 	}
 }
