@@ -38,7 +38,7 @@ class LSQ_Admin {
 	}
 
 	public function allowed_redirect_hosts( $hosts ) {
-		$hosts[] = parse_url( LSQ_APP_URL, PHP_URL_HOST );
+		$hosts[] = wp_parse_url( LSQ_APP_URL, PHP_URL_HOST );
 		return $hosts;
 	}
 

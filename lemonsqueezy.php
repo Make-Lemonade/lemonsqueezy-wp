@@ -34,8 +34,8 @@ if ( ! defined( 'LSQ_OAUTH_CLIENT_ID' ) ) {
 }
 
 // Bootmanager for Lemon Squeezy plugin.
-if ( ! function_exists( 'lsq_run_plugin' ) ) {
-	add_action( 'plugins_loaded', 'lsq_run_plugin' );
+if ( ! function_exists( 'lemonsqueezy_run_plugin' ) ) {
+	add_action( 'plugins_loaded', 'lemonsqueezy_run_plugin' );
 
 	if ( WP_DEBUG ) {
 		add_filter( 'https_ssl_verify', '__return_false' );
@@ -46,7 +46,7 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	 *
 	 * @return void
 	 */
-	function lsq_run_plugin() {
+	function lemonsqueezy_run_plugin() {
 		// Initialize classes.
 		include_once LSQ_PATH . 'src/class-lsq-oauth.php';
 		include_once LSQ_PATH . 'src/class-lsq-updater.php';
