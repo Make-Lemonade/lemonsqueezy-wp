@@ -29,7 +29,12 @@ class LSQ_OAuth {
 	 * @return void
 	 */
 	public function handle_authorize() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is handled below.
 		if ( empty( $_GET['oauth_authorize'] ) ) {
+			return;
+		}
+
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'lsq_oauth_authorize' ) ) {
 			return;
 		}
 
@@ -76,11 +81,14 @@ class LSQ_OAuth {
 	 * @return void
 	 */
 	public function handle_callback() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- OAuth callback from external provider, state parameter provides CSRF protection.
 		if ( empty( $_GET['oauth_callback'] ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- OAuth callback from external provider, state parameter provides CSRF protection.
 		if ( ! empty( $_GET['error'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- OAuth callback from external provider.
 			$error = isset( $_GET['error'] ) ? sanitize_text_field( wp_unslash( $_GET['error'] ) ) : '';
 			wp_add_inline_script(
 				'lemonsqueezy-admin-script',
@@ -98,8 +106,10 @@ class LSQ_OAuth {
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- OAuth callback from external provider, state parameter provides CSRF protection.
 		$code  = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : null;
 		$state = isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : null;
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		$oauth_code = isset( $_SESSION['lsq_oauth_code'] ) ? sanitize_text_field( wp_unslash( $_SESSION['lsq_oauth_code'] ) ) : '';
 

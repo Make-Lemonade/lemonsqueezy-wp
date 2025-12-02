@@ -91,7 +91,7 @@ class LSQ_Admin {
 			'lemonsqueezy-admin-script',
 			'Lemonsqueezy',
 			array(
-				'oauth_url' => admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ),
+				'oauth_url' => wp_nonce_url( admin_url( 'admin.php?page=lemonsqueezy&oauth_authorize=1' ), 'lsq_oauth_authorize' ),
 			)
 		);
 	}
