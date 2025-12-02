@@ -48,7 +48,7 @@
         "lint:js": "wp-scripts lint-js",
         "lint:pkg-json": "wp-scripts lint-pkg-json",
         "packages-update": "wp-scripts packages-update",
-        "plugin-zip": "wp-scripts plugin-zip && move-file lemon-squeezy.zip bundled/lemon-squeezy.zip",
+        "plugin-zip": "wp-scripts plugin-zip && move-file lemonsqueezy.zip bundled/lemonsqueezy.zip",
         "start": "wp-scripts start src/script.js src/editor.js src/admin/admin.js",
         "translate": "wp i18n make-pot . languages/lemon-squeezy.pot"
     }
