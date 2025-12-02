@@ -49,7 +49,7 @@ class LSQ_Register_Block {
 			array(
 				array(
 					'slug'  => 'lemonsqueezy',
-					'title' => __( 'Lemon Squeezy', 'lemonsqueezy' ),
+					'title' => __( 'Lemon Squeezy', 'lemon-squeezy' ),
 					'icon'  => 'wordpress',
 				),
 			)

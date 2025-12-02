@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Plugin Name:       Lemon Squeezy
+ * Plugin Name:       Lemon Squeezy — Sell Digital Products, Subscriptions, and Licenses
  * Plugin URI:        https://www.lemonsqueezy.com
  * Description:       Sell digital products the easy-peasy way directly from WordPress.
  * Version:           1.4.2
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author URI:        https://www.lemonsqueezy.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       lemonsqueezy
+ * Text Domain:       lemon-squeezy
  * Domain Path:       /languages
  */
 
@@ -47,10 +47,6 @@ if ( ! function_exists( 'lsq_run_plugin' ) ) {
 	 * @return void
 	 */
 	function lsq_run_plugin() {
-		// localize.
-		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
-		load_plugin_textdomain( 'lemonsqueezy', false, $textdomain_dir );
-
 		// Initialize classes.
 		include_once LSQ_PATH . 'src/class-lsq-oauth.php';
 		include_once LSQ_PATH . 'src/class-lsq-updater.php';
